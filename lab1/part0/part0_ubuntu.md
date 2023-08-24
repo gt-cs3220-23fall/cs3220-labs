@@ -61,5 +61,5 @@ Step 4: Run the exectuable file and obtain the waveform file (.vcd)
 ```
 
 Step 5: Open the GTKWaver to open the generated trace
-open "GTKWaver" -> "Open New Tab" -> "Select the generated waveform.vcd" -> "click on Top" -> "Right click the signals below" -> "Recurse Import" -> "Append" 
+open "File" -> "Open New Tab" -> "Select the generated waveform.vcd" -> "click on Top" -> "Right click the signals below" -> "Recurse Import" -> "Append" 
 Then all waveforms will show up in the Waves window.

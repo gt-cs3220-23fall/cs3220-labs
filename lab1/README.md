@@ -16,7 +16,11 @@ verilog. The ISA is a subset of RISC-V ISA.  We will use <a href="tinyrv-isa.txt
 
 Install verilator/GTK Wave and test your installation:
 
-Please look at [MAC](part0/part0_macos.md) [Linux](part0/part0_ubuntu.md) [Windows](part0/part0_window.md) to install verilator/GTK Wave and test the installation. Alternatively, you can run the experiments on the [PACE cluster](part0/part0_pace.md). 
+Please look at [PACE cluster](part0/part0_pace.md) on how to run the experiments on the PACE cluster. Alternatively, you can refer to [MAC](part0/part0_macos.md), [Linux](part0/part0_ubuntu.md) and [Windows](part0/part0_window.md) to install verilator/GTK Wave and test the installation on your own computer.
+
+**What to submit**:
+
+Take a screenshot of the GTKWave showing all the signals in part0, you will only need to submit the screenshot. If you failed to install in your own computer, please try PACE clsuter.
 
 ## Part 1: Minimal functionality
 

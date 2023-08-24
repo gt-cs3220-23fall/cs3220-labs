@@ -58,6 +58,6 @@ Inside `obj_dir` there should be a `Vadder_var_seq` executable. Run it.
 ```
 
 Step 5: Open the GTKWaver to open the generated trace
-open "GTKWaver" -> "Open New Tab" -> "Select the generated waveform.vcd" -> "click on Top" -> "Right click the signals below" -> "Recurse Import" -> "Append" 
+open "File" -> "Open New Tab" -> "Select the generated waveform.vcd" -> "click on Top" -> "Right click the signals below" -> "Recurse Import" -> "Append" 
 Then all waveforms will show up in the Waves window.
 

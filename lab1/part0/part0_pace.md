@@ -9,7 +9,7 @@ cd ~
 git clone https://github.com/gt-cs3220-23fall/cs3220-labs.git
 ```
 
-Step 1: Change to the path of tested hw1part2 and compile the verilog module of **adder_var_seq**. 
+Step 1: Change to the path of part0 and compile the verilog module of **adder_var_seq**. 
 ```
 cd cs3220-labs/lab1/part0
 verilator --cc adder_var_seq.v --top-module adder_var_seq
@@ -28,5 +28,5 @@ Step 4: Run the exectuable file and obtain the waveform file (.vcd)
 ```
 
 Step 5: Open the GTKWaver to open the generated trace
-open "GTKWaver" -> "Open New Tab" -> "Select the generated waveform.vcd" -> "click on Top" -> "Right click the signals below" -> "Recurse Import" -> "Append" 
+open "File" -> "Open New Tab" -> "Select the generated waveform.vcd" -> "click on Top" -> "Right click the signals below" -> "Recurse Import" -> "Append" 
 Then all waveforms will show up in the Waves window.
