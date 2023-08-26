@@ -61,13 +61,9 @@ In part-2, we start to use modified RISC-V test cases. ```*.S``` is assembly cod
 
 ***Please do not procrastinate.*** 
 
-## Part-3 (Optional) Complete the pipeline 
+## Part 3 (Optional) Complete the pipeline 
 
-1. [20pts] In this part, you will complete the pipeline to test RISC-V ISA (except CSR instructions). Your program should pass all the test cases under test/part3/.
-
-**Grading:** 
-
-If you pass test/part3/testall.mem (you need to see "Pass" ) you will get full credits. If you don't pass test/part3/testall.mem, you will get partial scores based on the coverage of part 3 test suites.
+1. [20pts] In this part, you will complete the pipeline to test RISC-V ISA (except CSR instructions). Your program should pass all the test cases under test/part3/. If you pass test/part3/testall.mem (you need to see "Pass" after running ```make```) you will get full credits. If you don't pass test/part3/testall.mem, you will get partial scores based on the coverage of part 3 test suites.
 
 **What to submit**: 
 
@@ -95,7 +91,7 @@ If you pass test/part3/testall.mem (you need to see "Pass" ) you will get full c
 **(A)** Please see ["define.vh"](define.vh): you need to change line 21 to change which test file to read: **`define IDMEMINITFILE  "test1.mem"**. You need to change "test1.mem" into "test2.mem" etc (be sure it points to the right file path, change "/home/zhifan/workspace/cs3220-23fall/lab1/" to your local lab1 folder), and then run command "make" in your terminal under lab1 folder. Please note that both imem and dmem use the SAME "IDMEMINITFILE".
 
 **(Q)** How do I know whether my implementation is correct or not? \
-**(A)** If you are using verilator, you would see "Pass" message. 
+**(A)** If you run ```make```, you would see "Pass" message. 
 
 **(Q)** Can I add new files? \
 **(A)** Yes, but please make sure they are added in the zip file. 
@@ -109,14 +105,14 @@ If you pass test/part3/testall.mem (you need to see "Pass" ) you will get full c
 **(Q)** BEQ t1, t1, imm : if a branch is taken, is the new PC = PC + imm or new PC = PC + 4+ imm? \
 **(A)** The answer is PC = PC + offset. Please be careful with converting imm to offset. 
 
-**(Q)** Do we need to worry whether we should prevent all writes to the zero register and treat it as always zero, or if that is solely up to us dependent on our design? \
+**(Q)** Do we need to worry about whether we should prevent all writes to the zero register and treat it as always zero, or if that is solely up to us dependent on our design? \
 **(A)** This is purely S/W job. The H/W doesn't have to check whether x0 is writable or not. The Hardware also doesn't have explicitly insert 0 in hardware. 
 
 **(Q)** Debugging takes so much time. Any tips to reduce the debugging time? \
 **(A)** Some suggestions.
-1. Review code carefully and understand the ISA behavior correctly 
+1. Review code carefully and understand the ISA behavior correctly. 
 2. If `make` command fails to compile, read the error messages carefully. 
-3. Verilator generates vcd file. Please use GTKWave to see each pipeline signal and check the signals works as expected. When debugging, it is always helpful to visualize `clk` signal and pc value along with other signals.
+3. Verilator generates vcd file. Please use GTKWave to see each pipeline signal and check the signals works as expected according to *.asm files or RISC-V enumlators. When debugging, it is always helpful to visualize `clk` signal and pc values along with other signals.
 
 **(Q)** Is the immediate field inside assembly code decimal? \
 **(A)** If the number starts with 0x, it's hexadecimal.
@@ -129,14 +125,14 @@ If you pass test/part3/testall.mem (you need to see "Pass" ) you will get full c
 **(Q)** What does ``` assign inst_FE = imem[PC_FE_latch[`IMEMADDRBITS-1:`IMEMWORDBITS]];``` mean? \
 **(A)** PC_FE_latch contains PC value. Again imem and dmem are word addressable, so we don't need LSB 2 bits. Since imem and dmem has only 2^14 size, we just use addr [15:2] bits to index imem/dmem.  
 
-**(Q)**  I'm not sure how to understand part 2 test code. \
+**(Q)** I'm not sure how to understand part 2 test code. \
 **(A)** The test in test/part2 is modified code from RISC-V test suite. It uses macro function to generate test code. 
 
 **(Q)** How do I know what is the correct instruction/code behavior? \
-**(A)** You can probably use RISC-V interpreter or other RISC-V machine to execute the code. One example is <a href ="https://www.cs.cornell.edu/courses/cs3410/2019sp/riscv/interpreter/" >  here </a>.
+**(A)** You can probably use RISC-V enumlators or other RISC-V machine to execute the code. One example is <a href ="https://www.cs.cornell.edu/courses/cs3410/2019sp/riscv/interpreter/" >  here </a>.
 
 **(Q)** How do I know whether I pass the code or not? \
-**(A)** For part 1, we provide test code. Your code should print out "Pass" message if you are using verilator.
+**(A)** For part 1, we provide test code. Your code should print out "Pass" message if you run ```make```.
 
 **(Q)** My code does not load any instructions. Do I need to change anything? \
 **(A)** Carefully check if you encountered any error messages and make sure you have set **IDMEMINITFILE** to the right path.
