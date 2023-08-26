@@ -89,7 +89,7 @@ If you pass test/part3/testall.mem (you need to see "Pass" ) you will get full c
 
 <a href="https://inst.eecs.berkeley.edu/~cs250/fa10/handouts/tut3-riscv.pdf"> Tutorial about RISC-V TEST SUITE </a> 
 
-## FAQ for part-1
+## FAQ for part 1
 
 **(Q)** How do I run a specific test file? \
 **(A)** Please see ["define.vh"](define.vh): you need to change line 21 to change which test file to read: **`define IDMEMINITFILE  "test1.mem"**. You need to change "test1.mem" into "test2.mem" etc (be sure it points to the right file path, change "/home/zhifan/workspace/cs3220-23fall/lab1/" to your local lab1 folder), and then run command "make" in your terminal under lab1 folder. Please note that both imem and dmem use the SAME "IDMEMINITFILE".
@@ -189,7 +189,7 @@ e.g.)  In the above example, let's assume that reval1_AGEX  is  0x0000 and regva
 **(Q)** Do I need to put the ```signed``` keyword for immediate values? \
 **(A)** Yes, even though immediate values are sign-extended, if we want to treat the immediate value as 2's complement value such as in ``` SLTI_I```  instruction case, you need to put ```signed``` keyword. 
 
-## FAQ - part 3 
+## FAQ for part 3 
 
 **(Q)** Can you explain the behavior of ```slti``` and ```sltiu```. Does it store the outcome of shift value?  \
 **(A)** The outcome of both instructions should be either 0 or 1. It checks whether (R[rs1] < sext(imm)) (signed comparisons for SLTI and unsigned comparisons for SLTIU) and if the condition is true, it sets 1 for the destination. 
