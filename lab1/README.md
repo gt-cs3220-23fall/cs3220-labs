@@ -24,11 +24,13 @@ You do not need to submit for part 0, but make sure you know how to run verilato
 In this part, you will implement a subset of RISC-V instructions. You only need to pass 5 tests under tests/part1 folder. 
 Please see the test cases for the part 1 requirements. You can refer to the README file under tests/ for more information about each test case. 
 
-1. [30pts] Please complete [agex_stage.v](agex_stage.v) according to the instructions in it, you do not need to modify other files. Your program should pass tests/part1/test[1-5].mem file. Based on the coverage of test cases, you will get partial scores.
+1. [20pts] Please complete [agex_stage.v](agex_stage.v) according to the instructions in it, you do not need to modify other files. Your program should pass tests/part1/test[1-5].mem file. Based on the coverage of test cases, you will get partial scores.
 
-2. [10pts] Explain how the your RISC-V processor solves Read-After-Write hazard in tests/part1/test2.mem, include a screenshot of waveforms that includes all the signals mentioned in your explanation.
+2. [10pts] Explain what has been done in each pipeline stage when executing tests/part1/test1.mem.
 
-3. [10pts] Explain how the your RISC-V processor solves brach misprediction in tests/part1/test4.mem, include a screenshot of waveforms that includes all the signals mentioned in your explanation.
+3. [10pts] Explain how the your RISC-V processor solves Read-After-Write hazard in tests/part1/test2.mem, include a screenshot of waveforms, that illustrates the relevant signals discussed in your explanation.
+
+4. [10pts] Explain how the your RISC-V processor solves brach misprediction in tests/part1/test4.mem, include a screenshot of waveforms, that illustrates the relevant signals discussed in your explanation.
 **Note: in lab1 we always predict branch instruction not taken, in lab2 your will implement your own branch predictor.**
 
 **What to submit**:

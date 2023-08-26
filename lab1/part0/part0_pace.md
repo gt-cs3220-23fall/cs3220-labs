@@ -2,6 +2,8 @@
 
 Follow this [document](https://docs.google.com/document/d/1AEyVnDq-EX87BF8rP6L7kGDFoxXFHFT3Fsqeemnlcyk/edit?usp=sharing) from lab0 to request an interactive desktop and setup experiment environment.
 
+Then, run `source /storage/ice-shared/cs3220/labs_setup.sh` in your terminal.
+
 ## Ready to run?
 Step 0: go back to home folder and then download the testing file from repo 
 ```
