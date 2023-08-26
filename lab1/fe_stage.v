@@ -105,24 +105,16 @@ module FE_STAGE(
   
 
   always @ (posedge clk) begin
-    if(reset) 
-        begin 
-            FE_latch <= {`FE_latch_WIDTH{1'b0}}; 
-            inst_count_FE <= 1;  /* inst_count starts from 1 for easy human reading. 1st fetch instructions can have 1 */ 
-            // ...
-        end 
-     else  
-        begin 
-         // this is just an example. you need to expand the contents of if/else
-          if (stall_pipe_FE) begin
-            FE_latch <= FE_latch; 
-          end
-          else if (br_mispred_AGEX)
-            PC_FE_latch <= br_target_AGEX;
-          else 
-            FE_latch <= FE_latch_contents; 
-            inst_count_FE <= inst_count_FE + 1;
-        end  
+    if (reset) begin 
+      FE_latch <= '0; 
+    end else begin 
+      if (br_mispred_AGEX)
+        FE_latch <= '0;
+      else if (stall_pipe_FE)
+        FE_latch <= FE_latch; 
+      else 
+        FE_latch <= FE_latch_contents; 
+    end  
   end
 
 endmodule

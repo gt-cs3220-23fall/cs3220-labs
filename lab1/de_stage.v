@@ -195,13 +195,11 @@ end
    reg  [`DBITS-1:0] sxt_imm_DE;
 always @(*) begin 
   case (type_immediate_DE )  
-  `I_immediate: 
-    sxt_imm_DE = {{21{inst_DE[31]}}, inst_DE[30:25], inst_DE[24:21], inst_DE[20]}; 
+  `I_immediate: sxt_imm_DE = {{21{inst_DE[31]}}, inst_DE[30:25], inst_DE[24:21], inst_DE[20]};
+   `B_immediate: sxt_imm_DE = {{20{inst_DE[31]}}, inst_DE[7], inst_DE[30:25], inst_DE[11:8], 1'b0};
     /*
   `S_immediate: 
      sxt_imm_DE =  ... 
-   `B_immediate: 
-     sxt_imm_DE = ... 
    `U_immediate: 
      sxt_imm_DE = ... 
    `J_immediate: 
