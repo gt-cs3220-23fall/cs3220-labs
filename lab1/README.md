@@ -1,6 +1,6 @@
 # CS3220 Assignment #1 : Pipeline Design 
 
-100 pts in total, will be rescaled into your final score of the course.  
+100 pts in total, will be rescaled into 11.25% of your final score of the course.  
 
 **Part 1**: 50 pts, submission ddl: Sep 11th
 
@@ -9,7 +9,7 @@
 **Part 3 (Optional)**: 20 bonus pts, submission ddl: Sep 18th
 
 **Description**:
-In this assignment, you will design a RISC-V 5-stage pipelined processor using verilog. The ISA is a subset of RISC-V ISA.  We will use <a href="tinyrv-isa.txt"> Tiny RISC-V version from Cornell </a>. In part-0, you will install the necessary softwares to run the experiments on your own computer or on the PACE cluster. In part-1, you only need to implement *addi, add, beq* instruction to pass all 5 test cases in tests/part1/test[1-5].mem file. (a subset of TinyRV1). In part-2, you will add more instructions to pass the test cases under tests/part2/. 
+In this assignment, you will design a 5-stage RISC-V pipelined processor using verilog. The ISA is a subset of RISC-V ISA.  We will use <a href="tinyrv-isa.txt"> Tiny RISC-V version from Cornell </a>. In part-0, you will try the essential softwares to run the experiments on your own computer or on the PACE cluster. In part-1, you only need to implement *addi, add, beq* instructions to pass all 5 test cases in tests/part1/test[1-5].mem file. (a subset of TinyRV1). In part-2, you will add more instructions to pass the test cases under tests/part2/. 
 
 ## Part 0: Software Installation
 
@@ -24,28 +24,28 @@ You do not need to submit for part 0, but make sure you know how to run verilato
 In this part, you will implement a subset of RISC-V instructions. You only need to pass 5 tests under tests/part1 folder. 
 Please see the test cases for the part 1 requirements. You can refer to the README file under tests/ for more information about each test case. 
 
-1. [20pts] Please complete [agex_stage.v](agex_stage.v) according to the instructions in it, you do not need to modify other files. Your program should pass tests/part1/test[1-5].mem file. Based on the coverage of test cases, you will get partial scores.
+1. [20pts] Please complete [agex_stage.v](agex_stage.v), you do not need to modify other files. Your program should pass tests/part1/test[1-5].mem. Based on the coverage of test cases, you will get partial scores.
 
 2. [10pts] Explain what has been done in each pipeline stage when executing tests/part1/test1.mem.
 
-3. [10pts] Explain how the your RISC-V processor solves Read-After-Write hazard in tests/part1/test2.mem, include a screenshot of waveforms, that illustrates the relevant signals discussed in your explanation.
+3. [10pts] Explain how the your RISC-V processor solves Read-After-Write hazard in tests/part1/test2.mem, include a screenshot of waveforms that illustrates the relevant signals discussed in your explanation.
 
-4. [10pts] Explain how the your RISC-V processor solves brach misprediction in tests/part1/test4.mem, include a screenshot of waveforms, that illustrates the relevant signals discussed in your explanation.
-**Note: in lab1 we always predict branch instruction not taken, in lab2 your will implement your own branch predictor.**
+4. [10pts] Explain how the your RISC-V processor solves brach misprediction in tests/part1/test4.mem, include a screenshot of waveforms that illustrates the relevant signals discussed in your explanation.
+**Note: in lab1 we always predict branch not-taken, in lab2 your will implement your own branch predictor.**
 
 **What to submit**:
 
-+ A zip file of your source code. Type ```make submit``` under lab1/ folder will generate a submission.zip. Please submit the submission.zip file. If you don't use Makefile, please execute the following command.  ```zip submission.zip ./*.v ./*.h ./*.vh ./sim_main.cpp ./Makefile ```  and submit submission.zip file. We strongly encourage you to use ```make submit``` command to generate the submission file so that it won't break our autograding script.
++ A zip file of your source code. Run command ```make submit``` will generate a submission.zip. Please submit the submission.zip file. Please do not manually generate a zip file since that will likely break the autograding script. Instead use ```make submit``` command to generate the submission.zip file. Breaking autograding script due to wrong directory structures/missing files might deduct 5% of your score.
 
 + A pdf file that contains your explanations and the corresponding screenshots.
 
 ***Please carefully read [FAQ for part 1](#faq-for-part-1) before reaching out to TAs for help.***
 
-***Please start part 2 as early as possible and do not wait untill the last week, because its worload much larger than part 1.*** 
+***Please start part 2 as early as possible and do not wait untill the last week, because its worload is heavier than part 1.*** 
 
 ## Part 2: Pass a subset of RISC-V test suite
 
-1. [50pts] In this part, you may need to modify all the *.v and *.vh files to pass all the test cases under tests/part2/ directory.Based on the coverage of test cases, you will get partial scores.
+1. [50pts] In this part, you may need to modify all the *.v and *.vh files to pass all the test cases under tests/part2/ directory. Based on the coverage of test cases, you will get partial scores.
 
 **Test cases**:
 
@@ -55,7 +55,7 @@ In part-2, we start to use modified RISC-V test cases. ```*.S``` is assembly cod
 
 **What to submit**:
 
-+ A zip file of your source code. Type ```make submit``` will generate a submission.zip. Please submit the submission.zip file. Please do not manually generate a zip file since that will likely break the autograding script. Instead ```use make submit``` command to generate the submission.zip file. Breaking autograding script due to wrong directory structures/missing files might deduct 5% of your score.
++ A zip file of your source code. Run command ```make submit``` will generate a submission.zip. Please submit the submission.zip file. Please do not manually generate a zip file since that will likely break the autograding script. Instead use ```make submit``` command to generate the submission.zip file. Breaking autograding script due to wrong directory structures/missing files might deduct 5% of your score.
 
 ***Please carefully read [FAQ for part 2](#faq-for-part-2) before reaching out to TAs for help.***
 
@@ -67,11 +67,11 @@ In part-2, we start to use modified RISC-V test cases. ```*.S``` is assembly cod
 
 **Grading:** 
 
-If you pass test/part3/testall.mem (you need to see "Pass" ) you will get full credits. If you don't pass test/part3/testall.mem, you will get a partial grading based on the coverage of part 3 test suites.
+If you pass test/part3/testall.mem (you need to see "Pass" ) you will get full credits. If you don't pass test/part3/testall.mem, you will get partial scores based on the coverage of part 3 test suites.
 
 **What to submit**: 
 
-A zip file for your source code. Type ```make submit``` will generate a submission.zip. Please submit the submission.zip file. Please do not manually generate a zip file since that will likely break the autograding script. Instead use ```make submit``` command to generate the submission.zip file. Breaking autograding script due to wrong directory structures/missing files might deduct 5% of your score. 
++ A zip file of your source code. Run command ```make submit``` will generate a submission.zip. Please submit the submission.zip file. Please do not manually generate a zip file since that will likely break the autograding script. Instead use ```make submit``` command to generate the submission.zip file. Breaking autograding script due to wrong directory structures/missing files might deduct 5% of your score.
 
 ***Please carefully read [FAQ for part 3](#faq-for-part-3) before reaching out to TAs for help.***
 
