@@ -85,7 +85,7 @@ module AGEX_STAGE(
                                   pcplus_AGEX,
                                   op_I_AGEX,
                                   inst_count_AGEX,
-                                          //  TODO: more signals might need
+                                          //  TODO: more signals might needed
                                   } = from_DE_latch; 
     
  
@@ -95,7 +95,7 @@ module AGEX_STAGE(
                                 PC_AGEX,
                                 op_I_AGEX,
                                 inst_count_AGEX,
-                                       // TODO: more signals might need
+                                       // TODO: more signals might needed
                                  }; 
  
   always @ (posedge clk ) begin
@@ -111,12 +111,12 @@ module AGEX_STAGE(
 
   // forward signals to FE stage
   assign from_AGEX_to_FE = { 
-      //  TODO: more signals might need
+      //  TODO: more signals might needed
   };
 
   // forward signals to DE stage
   assign from_AGEX_to_DE = { 
-    //  TODO: more signals might need
+    //  TODO: more signals might needed
   };
 
 endmodule
