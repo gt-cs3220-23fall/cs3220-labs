@@ -1,92 +1,86 @@
 # CS3220 Assignment #1 : Pipeline Design 
 
-**Part 0**: 10%
+100 pts in total, will be rescaled into your final score of the course.  
 
-**Part 1**: 40%
+**Part 1**: 50 pts, submission ddl: Sep 11th
 
-**Part 2**: 50%
+**Part 2**: 50 pts, submission ddl: Sep 18th
 
-This is a two-member group project.
+**Part 3 (Optional)**: 20 bonus pts, submission ddl: Sep 18th
 
 **Description**:
-In this assignment, you will design a RISC-V 5-stage pipelined processor using
-verilog. The ISA is a subset of RISC-V ISA.  We will use <a href="tinyrv-isa.txt"> Tiny RISC-V version from Cornell </a>. In part-0, you will install the necessary softwares to run the experiments on your own computer or on the PACE cluster. In part-1, you only need to implement *addi, add, beq* instruction to pass all 5 test cases in tests/part1/test[1-5].mem file. (a subset of TinyRV1). In part-2, you will add more instructions to pass more testcases in the test suites. 
+In this assignment, you will design a RISC-V 5-stage pipelined processor using verilog. The ISA is a subset of RISC-V ISA.  We will use <a href="tinyrv-isa.txt"> Tiny RISC-V version from Cornell </a>. In part-0, you will install the necessary softwares to run the experiments on your own computer or on the PACE cluster. In part-1, you only need to implement *addi, add, beq* instruction to pass all 5 test cases in tests/part1/test[1-5].mem file. (a subset of TinyRV1). In part-2, you will add more instructions to pass the test cases under tests/part2/. 
 
 ## Part 0: Software Installation
 
-Install verilator/GTK Wave and test your installation:
-
-Please look at [PACE cluster](part0/part0_pace.md) on how to run the experiments on the PACE cluster. Alternatively, you can refer to [MAC](part0/part0_macos.md), [Linux](part0/part0_ubuntu.md) and [Windows](part0/part0_window.md) to install verilator/GTK Wave and test the installation on your own computer.
+Please follow the [instructions](part0/part0_pace.md) on how to run the experiments on the PACE cluster.
 
 **What to submit**:
 
-Take a screenshot of the GTKWave showing all the signals in part0, you will only need to submit the screenshot. If you failed to install in your own computer, please try PACE clsuter.
+You do not need to submit for part 0, but make sure you know how to run verilator and how to use GTKWave to view waveforms.
 
 ## Part 1: Minimal functionality
 
-In this part, you will implement a subset of RISC-V Instructions. You only need to pass 5 tests under tests/part1 folder. 
-Please see the test cases for the part-1 requirements. You can locate those test files under the tests directory. You can refer to the README file under tests for more information about each test case. 
+In this part, you will implement a subset of RISC-V instructions. You only need to pass 5 tests under tests/part1 folder. 
+Please see the test cases for the part 1 requirements. You can refer to the README file under tests/ for more information about each test case. 
 
-You do not need to implement forwarding in this assignment. Your program should run with test[1-5].mem file.  
+1. [30pts] Please complete [agex_stage.v](agex_stage.v) according to the instructions in it, you do not need to modify other files. Your program should pass tests/part1/test[1-5].mem file. Based on the coverage of test cases, you will get partial scores.
 
+2. [10pts] Explain how the your RISC-V processor solves Read-After-Write hazard in tests/part1/test2.mem, include a screenshot of waveforms that includes all the signals mentioned in your explanation.
 
+3. [10pts] Explain how the your RISC-V processor solves brach misprediction in tests/part1/test4.mem, include a screenshot of waveforms that includes all the signals mentioned in your explanation.
+**Note: in lab1 we always predict branch instruction not taken, in lab2 your will implement your own branch predictor.**
 
 **What to submit**:
-A zip file of your source code. Type ```make submit``` under lab1/ folder will generate a submission.zip. Please submit the submission.zip file. Each submission for each group. If you don't use Makefile, please execute the following command.  ```zip submission.zip ./*.v ./*.h ./*.vh ./sim_main.cpp ./Makefile ```  and submit submission.zip file. We strongly encourage you to use ```make submit``` command to generate the submission file so that it won't break our autograding script.  
 
-**Grading**: 
-Based on the coverage of test suites, you will get partial scores.
++ A zip file of your source code. Type ```make submit``` under lab1/ folder will generate a submission.zip. Please submit the submission.zip file. If you don't use Makefile, please execute the following command.  ```zip submission.zip ./*.v ./*.h ./*.vh ./sim_main.cpp ./Makefile ```  and submit submission.zip file. We strongly encourage you to use ```make submit``` command to generate the submission file so that it won't break our autograding script.
 
-**Late submission**: 
-If you fail part-1 but if you submit part-2, we will use part-2 for part-1 regrading. 
-In that case, you will get 50% of part-1. 
++ A pdf file that contains your explanations and the corresponding screenshots.
 
+***Please carefully read [FAQ for part 1](#faq-for-part-1) before reaching out to TAs for help.***
 
-***Please do not procrastinate.*** 
+***Please start part 2 as early as possible and do not wait untill the last week, because its worload much larger than part 1.*** 
 
 ## Part 2: Pass a subset of RISC-V test suite
 
-In this part, you will add more instructions in your pipeline to test RISC-V ISA.
+1. [50pts] In this part, you may need to modify all the *.v and *.vh files to pass all the test cases under tests/part2/ directory.Based on the coverage of test cases, you will get partial scores.
 
-You need to pass the test cases in part-2 test suites under tests/part2 folder. We will provide RISC-V test suite modified for our ISA to test your design. Testing all the test suits is for your debugging purpose.
+**Test cases**:
 
-**Test cases**: 
-In part-2, all instructions in the test cases in part2 such as add, addi, auipc, beq, bge, (all branch instructions) jal, jalr instructions will be tested. 
-you need to pass all test cases in test/part2 directory. 
-To test all test cases together, you can use ```run_tests.sh part2``` 
-and it will produce part[1-3]_results.log and part[1-3]_tests.log. 
-test[7-9] are hand written assembly code which is easier to debug. please use those test cases first. 
-In part-2, we start to use modified RISC-V test suites. 
-```*.S``` is assembly code that takes RISC-V macro. Macro files are defined at include d/test_macros.h or include/riscv_test.h.
-It also uses ABI names and Pseudo Instructions. You can find a summary of information <a href="https://web.eecs.utk.edu/~smarz1/courses/ece356/notes/assembly/"> [here]  </a> 
-```*.dump``` is an dump file output from gcc riscv compiler. 
-```*.mem```  file has the format for verilog code. 
-```*.dec``` file is useful to use <a href="http://tice.sea.eseo.fr/riscv/">[RISC-V emulator] </a>
+In part-2, all instructions in the test cases under tests/part2/ such as add, addi, auipc, beq, bge, (all branch instructions) jal, jalr instructions will be tested. you need to pass all test cases in test/part2 directory.  To test all test cases together, you can use ```run_tests.sh part2``` and it will produce part[1-3]_results.log and part[1-3]_tests.log. test[7-9] are hand written assembly code which is easier to debug, please use those test cases first. 
+
+In part-2, we start to use modified RISC-V test cases. ```*.S``` is assembly code that takes RISC-V macro. Macro files are defined at include/test_macros.h or include/riscv_test.h. It also uses ABI names and Pseudo Instructions. You can find a summary of information <a href="https://web.eecs.utk.edu/~smarz1/courses/ece356/notes/assembly/"> [here].  </a> ```*.dump``` is an dump file output from gcc riscv compiler. ```*.mem```  file has the format for verilog code. ```*.dec``` file is useful when using <a href="http://tice.sea.eseo.fr/riscv/">[RISC-V emulator] </a>
 
 **What to submit**:
-A zip file of your source code. The zip file must contain the following:
-Type ```make submit``` will generate a submission.zip. 
-Please submit the submission.zip file. Each submission for each group. 
-Please do not manually generate a zip file since that will likely break the autograding script.  Instead use make submit command to generate the submission.zip file. Breaking autograding script due to wrong directory structures/missing files might deduct 5% of your score. 
+
++ A zip file of your source code. Type ```make submit``` will generate a submission.zip. Please submit the submission.zip file. Please do not manually generate a zip file since that will likely break the autograding script. Instead ```use make submit``` command to generate the submission.zip file. Breaking autograding script due to wrong directory structures/missing files might deduct 5% of your score.
+
+***Please carefully read [FAQ for part 2](#faq-for-part-2) before reaching out to TAs for help.***
+
+***Please do not procrastinate.*** 
+
+## Part-3 (Optional) Complete the pipeline 
+
+1. [20pts] In this part, you will complete the pipeline to test RISC-V ISA (except CSR instructions). Your program should pass all the test cases under test/part3/.
 
 **Grading:** 
-Based on the coverage of test suites, you will get partial scores. 
 
-**Late submission**: 
-No late submission is allowed.
+If you pass test/part3/testall.mem (you need to see "Pass" ) you will get full credits. If you don't pass test/part3/testall.mem, you will get a partial grading based on the coverage of part 3 test suites.
+
+**What to submit**: 
+
+A zip file for your source code. Type ```make submit``` will generate a submission.zip. Please submit the submission.zip file. Please do not manually generate a zip file since that will likely break the autograding script. Instead use ```make submit``` command to generate the submission.zip file. Breaking autograding script due to wrong directory structures/missing files might deduct 5% of your score. 
+
+***Please carefully read [FAQ for part 3](#faq-for-part-3) before reaching out to TAs for help.***
 
 ## Useful Information
 
 **References**
 
-<a href="https://riscvasm.lucasteske.dev/#"> RISC-V Assembly code  </a> 
-
- <a href="https://web.eecs.utk.edu/~smarz1/courses/ece356/notes/assembly/"> summary of RISC-V Assembly coding </a>  
+<a href="https://web.eecs.utk.edu/~smarz1/courses/ece356/notes/assembly/"> summary of RISC-V Assembly coding </a>  
  
 <a href="https://www.cs.cornell.edu/courses/cs3410/2019sp/riscv/interpreter/"> RISC-V emulator  (tiny RV2) </a> 
 
- <a href="http://tice.sea.eseo.fr/riscv/"> RISC-V emulator (full ISA support) </a> 
- 
 <a href="https://verilator.org/guide/latest/"> Verilator manual  </a> 
 
 <a href="http://gtkwave.sourceforge.net/gtkwave.pdf"> GTKWave manual</a> 
@@ -95,162 +89,74 @@ No late submission is allowed.
 
 ## FAQ for part-1
 
-**(Q)** How do I run a specific test file? 
+**(Q)** How do I run a specific test file? \
+**(A)** Please see ["define.vh"](define.vh): you need to change line 21 to change which test file to read: **`define IDMEMINITFILE  "test1.mem"**. You need to change "test1.mem" into "test2.mem" etc, and then run command "make" in your terminal under lab1 folder. Please note that both imem and dmem use the SAME "IDMEMINITFILE".
 
-**(A)** Please see "define.vh"  
- // [NOTICE] please note that both imem and dmem use the SAME "IDMEMINITFILE".
-  // you need to change this line to change which test file to read 
-  `define IDMEMINITFILE  "test1.mem"
- 
-You need to change "test1.mem" into "test2.mem" etc. 
-
-**(Q)** How do I know whether my implementation is correct or not? 
-
+**(Q)** How do I know whether my implementation is correct or not? \
 **(A)** If you are using verilator, you would see "Pass" message. 
 
-**(Q)** Can I add new files? 
-
+**(Q)** Can I add new files? \
 **(A)** Yes, but please make sure they are added in the zip file. 
 
-**(Q)** Do we need to implement a branch predictor? 
+**(Q)** Do we need to implement a branch predictor? \
+**(A)** It's not required for lab 1. 
 
-**(A)** It's not required but you could implement an always not-taken branch predictor. 
+**(Q)** Do we need to create a stack for nested JAL instructions? \
+**(A)** The hardware does not know any nested calls, so you do not need to implement it. 
 
-
-**(Q)** Do we need to create a stack for nested JAL instructions? 
-
-**(A)** The hardware does not know any nested calls. so you do not need to implement it. 
-
-
-**(Q)** BEQ t1, t1, imm : if a branch is taken, is the new PC = PC + imm or new PC = PC + 4+ imm? 
-
+**(Q)** BEQ t1, t1, imm : if a branch is taken, is the new PC = PC + imm or new PC = PC + 4+ imm? \
 **(A)** The answer is PC = PC + offset. Please be careful with converting imm to offset. 
 
-
-**(Q)** How to insert a bubble in the pipeline?
-
-**(A)** You could have a valid bit for each pipeline latch to indicate
-whether the contents in the latch is valid or not (FE_valid, DE_valid, etc.). Or you could insert zeros to all latch contents. This is your implementation decision.
-
-
-
-**(Q)** Do we need to worry whether  we should prevent all writes to the zero register and treat it as always zero, or if that is solely up to us dependent on our design? 
-
+**(Q)** Do we need to worry whether we should prevent all writes to the zero register and treat it as always zero, or if that is solely up to us dependent on our design? \
 **(A)** This is purely S/W job. The H/W doesn't have to check whether x0 is writable or not. The Hardware also doesn't have explicitly insert 0 in hardware. 
 
-
-
-**(Q)** Debugging takes so much time. Any tips to reduce the debugging time? 
-
-**(A)** Some suggestions. 
+**(Q)** Debugging takes so much time. Any tips to reduce the debugging time? \
+**(A)** Some suggestions.
 1. Review code carefully and understand the ISA behavior correctly 
-2. Verilator is faster to debug 
-3. Verilator provides an interface to access the verilog data structures. Please see under #ifdef DPRITF ...   in sim_main.cpp. and wb_stage.v to see an example of passing the contents of pipeline into c++ and use printf to debug. 
+2. If `make` command fails to compile, read the error messages carefully. 
+3. Verilator generates vcd file. Please use GTKWave to see each pipeline signal and check the signals works as expected. When debugging, it is always helpful to visualize `clk` signal and pc value along with other signals.
 
-4. Verilator generates vcd file. Please use GTKWave or other waveform viewer (Microsoft VSC provides trace viewer) to see each pipeline signal. You are recommanded to debug with GTKWave.
-
-
-
-**(Q)**  Is the immediate field inside assembly code decimal?
-
+**(Q)** Is the immediate field inside assembly code decimal? \
 **(A)** If the number starts with 0x, it's hexadecimal.
 
-**(Q)** When we access the memory, why we drop out LSB 2 bits? 
-
-**(A)** ISA is byte addressability but the verilog imem/dmem is declared as if it is word addressability since we don't do any unaligned accesses. Hence, we simply drop out lower two bits. 
- Please note that, you don't need to do anything to support that 
-The frame already includes the code to ignore the lower 2 bits. 
+**(Q)** When we access the memory, why we drop out LSB 2 bits? \
+**(A)** ISA is byte addressability but the verilog imem/dmem is declared as if it is word addressability since we don't do any unaligned accesses. Hence, we simply drop out lower two bits. Please note that, you don't need to do anything to support that. The framework already includes the code to ignore the lower 2 bits. 
   ```assign inst_FE = imem[PC_FE_latch[`IMEMADDRBITS-1:`IMEMWORDBITS]]; ```
 ```dmem[memaddr_MEM[`DMEMADDRBITS-1:`DMEMWORDBITS]]; ``` 
 
-**(Q)** What does ``` assign inst_FE = imem[PC_FE_latch[`IMEMADDRBITS-1:`IMEMWORDBITS]];``` mean?
+**(Q)** What does ``` assign inst_FE = imem[PC_FE_latch[`IMEMADDRBITS-1:`IMEMWORDBITS]];``` mean? \
+**(A)** PC_FE_latch contains PC value. Again imem and dmem are word addressable, so we don't need LSB 2 bits. Since imem and dmem has only 2^14 size, we just use addr [15:2] bits to index imem/dmem.  
 
-**(A)** PC_FE_latch contains PC value. again imem and dmem are word addressable. so we don't need LSB 2 bits. Since imem and dmem has only 2^14 size, we just use addr [15:2] bits to index imem/dmem.  
+**(Q)**  I'm not sure how to understand part 2 test code. \
+**(A)** The test in test/part2 is modified code from RISC-V test suite. It uses macro function to generate test code. 
 
+**(Q)** How do I know what is the correct instruction/code behavior? \
+**(A)** You can probably use RISC-V interpreter or other RISC-V machine to execute the code. One example is <a href ="https://www.cs.cornell.edu/courses/cs3410/2019sp/riscv/interpreter/" >  here </a>.
 
-**(Q)**  I'm not sure how to understand Part-2 test code. 
+**(Q)** How do I know whether I pass the code or not? \
+**(A)** For part 1, we provide test code. Your code should print out "Pass" message if you are using verilator.
 
-**(A)** The test in part-2 is modified code from RISC-V test suite. It uses macro function to generate test code. 
+**(Q)** My code does not load any instructions. Do I need to change anything? \
+**(A)** Carefully check if you encountered any error messages and make sure you have set **IDMEMINITFILE** to the right path.
 
+## FAQ  for part 2
 
+**(Q)** what is li instructions in add.dump? \
+**(A)** li instruction is one of the pseudo instructions. It is the same as addi x0, imm
 
-**(Q)** How do I know what is the correct instruction/code behavior? 
+**(Q)** I passed test[1-5].mem. why do I fail addi.mem? \
+**(A)** It contains bne, auipc, jal instructions. So in order to pass part 2 test cases, you need to complete those instructions.
 
-**(A)** 
-you can probably use  RISC-V interpreter or other RISC-V machine to execute the code. One example is <a href ="https://www.cs.cornell.edu/courses/cs3410/2019sp/riscv/interpreter/" >  here </a> 
-
-**(Q)** How do I know whether I pass the code or not? 
-
-**(A)** For part-1, we provide test code. Your code should print out "Pass" message if you are using verilator.
-
-**(Q)** My frame does not load any instruction. Do I need to change anything? 
-
-**(A)** The provided frame should load the first instruction correctly. If you don't see any instruction, please check whether the contents of imem. With Verilator, FE_stage.v has the code to print out the imem contents.
-
-
-## FAQ  for part-2
-
-**(Q)** can I change the print messages of sim_main.cpp? 
-
-**(A)** yes you can add/change debug messages. 
-but please do not change 
-``` if(1 == exitcode)
-
-        std::cout<<"Passed!"<<std::endl;
-        
-    else
-    
-        std::cout<<"Failed. exitcode: "<<exitcode<<std::endl;
-```       
-        
-   
-         
-
-**(Q)** what is li instructions in add.dump? 
-
-**(A)** li instruction is one of the pseudo instructions. It is the same as addi reg# x0, imm
-
-**(Q)** I passed test[1-5].mem. why do I fail addi.mem ? 
-
-**(A)** RISC-V test suites test code all contain bne, auipc, jal instructions. So in order to pass RISC-V test suites, you need to complete those instructions.
-
-**(Q)** I'd like to use RISC-V emulator for testing the test code. but it won't take dump file. what should I do? 
-
-**(A)** Unfortunately RISC-V emulator does take only assembly instructions. Hence, we recommend to use another <a href="http://tice.sea.eseo.fr/riscv/"> emulator </a> . you can use *.dec file to copy and paste the contents. 
-
+**(Q)** I'd like to use RISC-V emulator for testing the test code, but it won't take dump file. what should I do? \
+**(A)** Unfortunately RISC-V emulator only takes assembly instructions. Hence, we recommend to use another <a href="http://tice.sea.eseo.fr/riscv/"> emulator </a> . You can use *.dec file in this simulator. 
   
-**(Q)** I get the error "%Warning-LATCH: de_stage.v:120:1: Latch inferred for signal 'my_DE_stage.type_I_DE' (not all control paths of combinational always assign a value)" when running `make` with Verilator.\
-**(A)** You can disable the Verilator linter by adding the comment `/* verilator lint_off LATCH */` on the line before the warning. 
+**(Q)** I get the error "%Warning-LATCH: de_stage.v:120:1: Latch inferred for signal 'my_DE_stage.type_I_DE' (not all control paths of combinational always assign a value)" when running `make` with Verilator. \
+**(A)** You can disable the Verilator linter by adding the comment `/* verilator lint_off LATCH */` on the line before the warning.
 
-**(Q)** trace.vcd does not show the entire program execution. what should I do? 
-
-**(A)** please increase the number in 	``` prj->trace(trace, 2999);``` in sim_main.cpp 
-We don't want to put a high number since longer period means a longer file to work on.  But if this cycle is not sufficient enough, you should increase it. 
-
-
-  **(Q)** SED error in  ./run_tests.sh 
-  
-  **(A)**  Some Mac users have run into issues with the run_tests script. The error caused by sed
-
-        sed: 1: " ...": undefined label
-
-can be fixed by adding '.bak' to the command in the makefile. 
-
-Line 59 of the makefile should then look like this 
-
-sed -i '.bak' $(SED_STRING) $(VX_DEFINE)
-If this continues to be an issue, please check out this post as it discusses different solutions for different MacOS versions. 
-
-https://stackoverflow.com/questions/4247068/sed-command-with-i-option-failing-on-mac-but-works-on-linux
-
-
-**(Q)** Behavior of ```lui``` .  The documentation says that ``` - Semantics : R[rd] = imm << 12```
-But U-immediate already shifted the immediate by 12 bits. Do I need to shift the sxt_imm_DE. Do I need to shift immediate value again? 
-
+**(Q)** Behavior of ```lui```.  The documentation says that ``` - Semantics : R[rd] = imm << 12```. But U-immediate already shifted the immediate by 12 bits. Do I need to shift the sxt_imm_DE. Do I need to shift immediate value again? \
 **(A)** No. if you have already shift immediage bits in instruction into sxt_imm_DE, you don't have to shift sxt_imm_DE again. 
 
-**(Q)** ```bge``` is signed comparison and ```bgeu``` is unsigned comparison. What does it mean and what should I do? 
-
+**(Q)** ```bge``` is signed comparison and ```bgeu``` is unsigned comparison. What does it mean and what should I do? \
 **(A)**  by default, in verilog all operations are unsigned. However, you can use signed comparisons in verilog by defining wires as signed variables. 
 Here is an example for signed comparisons and unsigned comparisons 
 
@@ -271,23 +177,20 @@ assign less = (regval1_AGEX < regval2_AGEX);
 
 ``` 
 
-Other methods are discussed <a href="https://www.excamera.com/sphinx/fpga-verilog-sign.html"> here as well </a> 
+**(Q)** ```bgeu``` and ```bltu``` use unsigned comparisons. Does it mean I shouldn't sign extend immediage values at the decode stage and keep both unsiged and signed extension versions? \
+**(A)** No, in RISC-V, all immediate values are sign-extended. ```begu``` and ```bltu``` are unsigned comparisons with sing-extended values (e.g. ```sxt_imm_DE```)
 
-**(Q)** ```bgeu``` and ```bltu``` use unsigned comparisons. Does it mean I shouldn't sign extend immediage values at the decode stage and keep both unsiged and signed extension versions? 
+**(Q)** I'm still confused with ```signed``` keyword in verilog. Does it perform any sign conversion when I put ```signed``` keyword in the above example? \
+**(A)** In Verilog, values are just binaries.  s_regval1_AGEX and regval1_AGEX have the same value. Signed unsigned are just a matter of interpretation. When arithmetic operations are used such as comparator, signed/unsigned decide how to interpret the value. 
+e.g.)  In the above example, let's assume that reval1_AGEX  is  0x0000 and regval2_AGEX is  0xFFFF. In that case, s_regval1_AGEX is  0x0000 and s_regval2_AGEX is still 0xFFFF. However, s_regval2_AGEX is interpreted as -1 whereas regval2_AGEX is interpreted as 65535. Hence, `if (regval1_AGEX < regval2_AGEX)` returns false but `if (s_regval1_AGEX < s_regval2_AGEX)` returns true. 
 
-**(A)** No, in RISC-V, all immediate values are sign-extended. ```begu``` and ```bltu``` are unsigned comparisons with sing-extended values (e.g. ```sxt_imm_DE```) 
-
-
-
-**(Q)** I'm still confused with ```signed``` keyword in verilog. Does it perform any sign conversion when I put ```signed``` keyword in the above example? 
-
-**(A)** In Verilog, values are just binary.  s_regval1_AGEX and regval1_AGEX have the same value. Signed unsigned are just a matter of interpretation. When arithmetic operations are used such as comparator, signed/unsigned decide how to interpret the value. 
-e.g.)  In the above example, let's assume that reval1_AGEX  is  0x0000 and regval2_AGEX is  0xFFFF. In that case, s_regval1_AGEX is  0x0000 and s_regval2_AGEX is still 0xFFFF. However, s_regval2_AGEX is interpreted as -1 whereas regval2_AGEX is interpreted as 65535. Hence, 
-
-if (regval1_AGEX < regval2_AGEX) returns false 
-but if (s_regval1_AGEX < s_regval2_AGEX) returns true. 
-
-
-**(Q)** Do I need to put ```signed``` keyword for immediate values? 
-
+**(Q)** Do I need to put the ```signed``` keyword for immediate values? \
 **(A)** Yes, even though immediate values are sign-extended, if we want to treat the immediate value as 2's complement value such as in ``` SLTI_I```  instruction case, you need to put ```signed``` keyword. 
+
+## FAQ - part 3 
+
+**(Q)** Can you explain the behavior of ```slti``` and ```sltiu```. Does it store the outcome of shift value?  \
+**(A)** The outcome of both instructions should be either 0 or 1. It checks whether (R[rs1] < sext(imm)) (signed comparisons for SLTI and unsigned comparisons for SLTIU) and if the condition is true, it sets 1 for the destination. 
+
+**(Q)**  In tiny-isa description, ```srai``` , ```srli``` and  ```slli```  do not have immediate type. What should I do ? \
+**(A)** Those instructions follow I-immediate type. However, only LSB 5-bits are used for immediate value (i.e. INST[24:20]). Please note that SRAI, SRL, SLL also use LSB 5-bits as source operand values.

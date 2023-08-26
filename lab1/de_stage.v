@@ -211,12 +211,33 @@ always @(*) begin
     sxt_imm_DE = 32'b0; 
   endcase  
 end 
-   wire wr_reg_WB; 
  
 
+  wire [`REGNOBITS-1:0] rs1_DE;
+  wire [`REGNOBITS-1:0] rs2_DE;
+  wire [`REGNOBITS-1:0] rd_DE;
+  
+  wire [`DBITS-1:0] rs1_val_DE;
+  wire [`DBITS-1:0] rs2_val_DE;
+
+  wire is_br_DE;    // is conditional branch instr
+  wire wr_reg_DE;   // is writing back to register file
+
+  // Decode instruction registers
+  assign rs1_DE = inst_DE[19:15];
+  assign rs2_DE = inst_DE[24:20];
+  assign rd_DE  = inst_DE[11:7]; 
+
+  // Read register file
+  assign rs1_val_DE = regs[rs1_DE];
+  assign rs2_val_DE = regs[rs2_DE];
 
 
- 
+  assign is_br_DE  = ((op_I_DE == `BEQ_I) || (op_I_DE == `BNE_I))? 1 : 0;
+  assign wr_reg_DE = ((op_I_DE == `ADD_I) || 
+                      (op_I_DE == `ADDI_I) || 
+                      (op_I_DE == `ANDI_I)) ? ((rd_DE != 0) ? 1 : 0): 0; 
+
  /* this signal is passed from WB stage */ 
   wire wr_reg_WB; // is this instruction writing into a register file? 
   wire [`REGNOBITS-1:0] wregno_WB; // destination register ID 
@@ -230,6 +251,63 @@ end
   wire pipeline_stall_DE; 
   assign from_DE_to_FE = {pipeline_stall_DE}; // pass the DE stage stall signal to FE stage 
 
+  reg use_rs1_DE;
+  reg use_rs2_DE;
+  
+  always @(*) begin 
+    case (type_I_DE) 
+    `I_Type: begin
+      use_rs1_DE = 1;
+      use_rs2_DE = 0; 
+    end
+    `R_Type: begin
+      use_rs1_DE = 1;
+      use_rs2_DE = 1; 
+    end
+    `S_Type: begin 
+      use_rs1_DE = 1; 
+      use_rs2_DE = 1; 
+    end
+    `U_Type: begin 
+      use_rs1_DE = 0; 
+      use_rs2_DE = 0;
+    end
+    default: begin
+      use_rs1_DE = 0; 
+      use_rs2_DE = 0;
+    end
+    endcase
+  end
+  
+  // Handle data dependency
+
+  reg [31:0] in_use_regs;
+  wire has_data_hazards;
+  wire br_mispred_AGEX;
+
+  // process AGEX forwarding
+  assign { 
+    br_mispred_AGEX          
+  } = from_AGEX_to_DE;
+
+  assign has_data_hazards = (use_rs1_DE && in_use_regs[rs1_DE]) 
+                         || (use_rs2_DE && in_use_regs[rs2_DE]);
+
+  assign pipeline_stall_DE = has_data_hazards || br_mispred_AGEX;
+
+
+  always @(posedge clk) begin
+    if (reset) begin
+      in_use_regs <= '0;
+    end else begin
+      if (~pipeline_stall_DE && wr_reg_DE) begin
+        in_use_regs[rd_DE] <= 1;
+      end 
+      if (wr_reg_WB) begin
+        in_use_regs[wregno_WB] <= 0;
+      end
+    end
+  end
 
 // decoding the contents of FE latch out. the order should be matched with the fe_stage.v 
   assign {
@@ -250,8 +328,14 @@ end
                                   PC_DE,
                                   pcplus_DE,
                                   op_I_DE,
-                                  inst_count_DE
+                                  inst_count_DE,
                                   // more signals might need
+                                  rs1_val_DE,
+                                  rs2_val_DE,    
+                                  sxt_imm_DE,
+                                  is_br_DE,
+                                  wr_reg_DE,
+                                  rd_DE
                                   }; 
 
 

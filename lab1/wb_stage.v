@@ -25,6 +25,8 @@ module WB_STAGE(
   wire [`DBITS-1:0] regval_WB;  // the contents to be written in the register file (or CSR )
   
 
+  wire [`DBITS-1:0] aluout_WB;
+  wire [`DBITS-1:0] rd_val_WB;
 
   // **TODO: Complete the rest of the pipeline**
  
@@ -34,14 +36,26 @@ module WB_STAGE(
                                 inst_WB,
                                 PC_WB,
                                 op_I_WB,
-                                inst_count_WB
-                                // more signals might need                        
+                                inst_count_WB,
+                                // more signals might need   
+                                aluout_WB, 
+                                wr_reg_WB,
+                                wregno_WB        
                                  } = from_MEM_latch; 
         
         // write register by sending data to the DE stage 
         
 
+assign regval_WB = aluout_WB;
 
+// forward signals to FE stage
+assign from_WB_to_FE = '0;
+
+// forward signals to AGEX stage
+assign from_WB_to_AGEX = '0;
+
+// forward signals to MEM stage
+assign from_WB_to_MEM = '0;
 
 // we send register write (and CSR register) information to DE stage 
 assign from_WB_to_DE = {wr_reg_WB, wregno_WB, regval_WB} ;  

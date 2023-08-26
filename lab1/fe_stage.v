@@ -74,7 +74,18 @@ module FE_STAGE(
 
 
   // **TODO: Complete the rest of the pipeline 
-   assign stall_pipe_FE = 1;  // you need to modify this line for your design 
+  //assign stall_pipe_FE = 1;   // you need
+  wire br_mispred_AGEX;  
+  wire [`DBITS-1:0] br_target_AGEX;  
+
+  assign {
+    stall_pipe_FE
+  } = from_DE_to_FE[0]; 
+
+  assign {
+    br_mispred_AGEX,
+    br_target_AGEX
+  } = from_AGEX_to_FE;
 
   always @ (posedge clk) begin
   /* you need to extend this always block */
@@ -82,12 +93,14 @@ module FE_STAGE(
       PC_FE_latch <= `STARTPC;
       inst_count_FE <= 1;  /* inst_count starts from 1 for easy human reading. 1st fetch instructions can have 1 */ 
       end 
-     else if(!stall_pipe_FE) begin 
+    else if (br_mispred_AGEX)
+      PC_FE_latch <= br_target_AGEX;
+    else if (stall_pipe_FE) 
+      PC_FE_latch <= PC_FE_latch; 
+    else begin 
       PC_FE_latch <= pcplus_FE;
       inst_count_FE <= inst_count_FE + 1; 
       end 
-    else 
-      PC_FE_latch <= PC_FE_latch;
   end
   
 
@@ -101,12 +114,14 @@ module FE_STAGE(
      else  
         begin 
          // this is just an example. you need to expand the contents of if/else
-         if  (stall_pipe_FE) begin 
+          if (stall_pipe_FE) begin
             FE_latch <= FE_latch; 
-            inst_count_FE <= inst_count_FE + 1;
-            end  
+          end
+          else if (br_mispred_AGEX)
+            PC_FE_latch <= br_target_AGEX;
           else 
             FE_latch <= FE_latch_contents; 
+            inst_count_FE <= inst_count_FE + 1;
         end  
   end
 

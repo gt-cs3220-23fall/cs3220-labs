@@ -1,6 +1,5 @@
 `include "define.vh" 
 
-
 module AGEX_STAGE(
   input wire clk,
   input wire reset,
@@ -27,13 +26,24 @@ module AGEX_STAGE(
   wire [`DBITS-1:0] inst_count_AGEX; 
   wire [`DBITS-1:0] pcplus_AGEX; 
   wire [`IOPBITS-1:0] op_I_AGEX;
-  reg br_cond_AGEX; // 1 means a branch condition is satisified. 0 means a branch condition is not satisifed 
-
-
+  reg br_cond_AGEX; // 1 means a branch condition is satisified. 0 means a branch condition is not satisifed
  
- // **TODO: Complete the rest of the pipeline 
- 
+  /////////////////////////////////////////////////////////////////////////////
+
+  wire is_br_AGEX;
+  wire wr_reg_AGEX;
+  wire [`REGNOBITS-1:0] wregno_AGEX;
+
+  wire [`DBITS-1:0] regval1_AGEX;
+  wire [`DBITS-1:0] regval2_AGEX;
+  wire [`DBITS-1:0] sxt_imm_AGEX;
+
+  reg [`DBITS-1:0] br_target_AGEX;
+  wire br_mispred_AGEX;
+
   
+  // Calculate branch condition
+  // TODO: complete the code
   always @ (*) begin
     case (op_I_AGEX)
       `BEQ_I : br_cond_AGEX = 1; // write correct code to check the branch condition. 
@@ -48,30 +58,25 @@ module AGEX_STAGE(
     endcase
   end
 
-
- // compute ALU operations  (alu out or memory addresses)
- 
+  // Compute ALU operations  (alu out or memory addresses)
+  // TODO: complete the code
   always @ (*) begin
-  /*
-  case (op_I_AGEX)
-    `ADD_I: 
-       //  ...
-
-	 endcase 
-   */
+    // case (op_I_AGEX)
+    //   default: begin
+    //     aluout_AGEX  = '0;
+    //   end
+    // endcase
   end 
 
-// branch target needs to be computed here 
-// computed branch target needs to send to other pipeline stages (pctarget_AGEX)
+  // branch target needs to be computed here 
+  // computed branch target needs to send to other pipeline stages (br_target_AGEX)
+  // TODO: complete the code
+  always @(*)begin
+    // if (is_br_AGEX && br_cond_AGEX) 
+  end
 
-always @(*)begin  
-/*
-  if (op_I_AGEX == `JAL_I) 
-  ... 
-  */
-end 
-
-
+  assign br_mispred_AGEX = (is_br_AGEX
+                         && (br_target_AGEX != pcplus_AGEX)) ? 1 : 0;
 
     assign  {                     
                                   valid_AGEX,
@@ -79,8 +84,8 @@ end
                                   PC_AGEX,
                                   pcplus_AGEX,
                                   op_I_AGEX,
-                                  inst_count_AGEX
-                                          // more signals might need
+                                  inst_count_AGEX,
+                                          //  TODO: more signals might need
                                   } = from_DE_latch; 
     
  
@@ -89,23 +94,29 @@ end
                                 inst_AGEX,
                                 PC_AGEX,
                                 op_I_AGEX,
-                                inst_count_AGEX
-                                       // more signals might need
+                                inst_count_AGEX,
+                                       // TODO: more signals might need
                                  }; 
  
   always @ (posedge clk ) begin
     if(reset) begin
       AGEX_latch <= {`AGEX_latch_WIDTH{1'b0}};
-      // might need more code here  
         end 
     else 
         begin
-      // need to complete 
             AGEX_latch <= AGEX_latch_contents ;
         end 
   end
 
 
+  // forward signals to FE stage
+  assign from_AGEX_to_FE = { 
+      //  TODO: more signals might need
+  };
 
+  // forward signals to DE stage
+  assign from_AGEX_to_DE = { 
+    //  TODO: more signals might need
+  };
 
 endmodule

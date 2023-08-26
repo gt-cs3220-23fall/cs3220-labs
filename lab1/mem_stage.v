@@ -37,6 +37,10 @@ module MEM_STAGE(
 
 // **TODO: Complete the rest of the pipeline 
 
+  wire [`DBITS-1:0] aluout_MEM;  // memory write value 
+  wire [`REGNOBITS-1:0] wregno_MEM;
+  wire wr_reg_MEM;
+
   wire [`DBITS-1:0] memaddr_MEM;  // memory address. need to be computed in AGEX stage and pass through a latch 
   wire [`DBITS-1:0] rd_val_MEM;  // memory read value 
   wire [`DBITS-1:0] wr_val_MEM;  // memory write value 
@@ -64,8 +68,11 @@ module MEM_STAGE(
                                 inst_MEM,
                                 PC_MEM,
                                 op_I_MEM,
-                                inst_count_MEM
+                                inst_count_MEM,
                                  // more signals might need
+                                aluout_MEM,
+                                wr_reg_MEM,
+                                wregno_MEM
                                  } = from_AGEX_latch;  
  
 
@@ -75,8 +82,11 @@ module MEM_STAGE(
                                 inst_MEM,
                                 PC_MEM,
                                 op_I_MEM,
-                                inst_count_MEM
-                                        // more signals might need                 
+                                inst_count_MEM,
+                                        // more signals might need 
+                                aluout_MEM,
+                                wr_reg_MEM,
+                                wregno_MEM                
    };
  
 
@@ -91,6 +101,13 @@ module MEM_STAGE(
     
   end
 
+  // forward signals to AGEX stage
+  assign from_MEM_to_AGEX = '0;
 
+  // forward signals to DE stage
+  assign from_MEM_to_DE = '0;
+
+  // forward signals to FE stage
+  assign from_MEM_to_FE = '0;
 
 endmodule
