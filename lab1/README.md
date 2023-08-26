@@ -24,7 +24,7 @@ You do not need to submit for part 0, but make sure you know how to run verilato
 In this part, you will implement a subset of RISC-V instructions. You only need to pass 5 tests under tests/part1 folder. 
 Please see the test cases for the part 1 requirements. You can refer to the README file under tests/ for more information about each test case. 
 
-1. [20pts] Please complete [agex_stage.v](agex_stage.v), you do not need to modify other files. Your program should pass tests/part1/test[1-5].mem. Based on the coverage of test cases, you will get partial scores.
+1. [20pts] Please complete [agex_stage.v](agex_stage.v), you do not need to modify other files. Your program should pass tests/part1/test[1-5].mem. Based on the coverage of test cases, you will get partial scores. To test all test cases together, you can use ```run_tests.sh part2``` and it will produce part2_results.log and part2_tests.log. You can also run each test case independently, see [FAQ for part 1](#faq-for-part-1).
 
 2. [10pts] Explain what has been done in each pipeline stage when executing tests/part1/test1.mem.
 
@@ -49,7 +49,7 @@ Please see the test cases for the part 1 requirements. You can refer to the READ
 
 **Test cases**:
 
-In part-2, all instructions in the test cases under tests/part2/ such as add, addi, auipc, beq, bge, (all branch instructions) jal, jalr instructions will be tested. you need to pass all test cases in test/part2 directory.  To test all test cases together, you can use ```run_tests.sh part2``` and it will produce part[1-3]_results.log and part[1-3]_tests.log. test[7-9] are hand written assembly code which is easier to debug, please use those test cases first. 
+In part-2, all instructions in the test cases under tests/part2/ such as add, addi, auipc, beq, bge, (all branch instructions) jal, jalr instructions will be tested. you need to pass all test cases in test/part2 directory. To test all test cases together, you can use ```run_tests.sh part2``` and it will produce part2_results.log and part2_tests.log. test[7-9] are hand written assembly code which is easier to debug, please use those test cases first. 
 
 In part-2, we start to use modified RISC-V test cases. ```*.S``` is assembly code that takes RISC-V macro. Macro files are defined at include/test_macros.h or include/riscv_test.h. It also uses ABI names and Pseudo Instructions. You can find a summary of information <a href="https://web.eecs.utk.edu/~smarz1/courses/ece356/notes/assembly/"> [here].  </a> ```*.dump``` is an dump file output from gcc riscv compiler. ```*.mem```  file has the format for verilog code. ```*.dec``` file is useful when using <a href="http://tice.sea.eseo.fr/riscv/">[RISC-V emulator] </a>
 
@@ -92,7 +92,7 @@ If you pass test/part3/testall.mem (you need to see "Pass" ) you will get full c
 ## FAQ for part-1
 
 **(Q)** How do I run a specific test file? \
-**(A)** Please see ["define.vh"](define.vh): you need to change line 21 to change which test file to read: **`define IDMEMINITFILE  "test1.mem"**. You need to change "test1.mem" into "test2.mem" etc, and then run command "make" in your terminal under lab1 folder. Please note that both imem and dmem use the SAME "IDMEMINITFILE".
+**(A)** Please see ["define.vh"](define.vh): you need to change line 21 to change which test file to read: **`define IDMEMINITFILE  "test1.mem"**. You need to change "test1.mem" into "test2.mem" etc (be sure it points to the right file path, change "/home/zhifan/workspace/cs3220-23fall/lab1/" to your local lab1 folder), and then run command "make" in your terminal under lab1 folder. Please note that both imem and dmem use the SAME "IDMEMINITFILE".
 
 **(Q)** How do I know whether my implementation is correct or not? \
 **(A)** If you are using verilator, you would see "Pass" message. 
