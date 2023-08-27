@@ -9,7 +9,7 @@
 **Part 3 (Optional)**: 20 bonus pts, submission ddl: Sep 18th
 
 **Description**:
-In this assignment, you will design a 5-stage RISC-V pipelined processor using verilog. The ISA is a subset of RISC-V ISA.  We will use <a href="tinyrv-isa.txt"> Tiny RISC-V version from Cornell </a>. In part 0, you will try the essential softwares to run the experiments on the PACE cluster. In part-1, you only need to implement *addi, add, beq* instructions to pass all 5 test cases in tests/part1/test[1-5].mem file. (a subset of TinyRV1). In part 2, you will add more instructions to pass the test cases under tests/part2/. Part 3 is optional for bonus pts.
+In this assignment, you will design a 5-stage RISC-V pipelined processor using verilog. The ISA is a subset of RISC-V ISA.  We will use <a href="tinyrv-isa.txt"> Tiny RISC-V version from Cornell</a>. In part 0, you will try the essential softwares to run the experiments on the PACE cluster. In part-1, you only need to implement *addi, add, beq* instructions to pass all 5 test cases in tests/part1/test[1-5].mem file. In part 2, you will add more instructions to pass the test cases under tests/part2/. Part 3 is optional for bonus pts.
 
 ## Part 0: Software Installation
 
