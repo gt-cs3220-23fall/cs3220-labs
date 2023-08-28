@@ -88,7 +88,13 @@ In part-2, we start to use modified RISC-V test cases. ```*.S``` is assembly cod
 ## FAQ for part 1
 
 **(Q)** How do I run a specific test file? \
-**(A)** Please see ["define.vh"](define.vh): you need to change line 21 to change which test file to read: **`define IDMEMINITFILE  "test1.mem"**. You need to change "test1.mem" into "test2.mem" etc (be sure it points to the right file path, change "/home/zhifan/workspace/cs3220-23fall/lab1/" to your local lab1 folder), and then run command "make" in your terminal under lab1 folder. Please note that both imem and dmem use the SAME "IDMEMINITFILE".
+**(A)** Please see ["define.vh"](define.vh): you need to change line 21 to change which test file to read: **`define IDMEMINITFILE  "test1.mem"**. You need to change "test1.mem" into "test2.mem" etc (be sure it points to the right file path, change "/home/zhifan/workspace/cs3220-23fall/lab1/" to your local lab1 folder), and then run command "make" in your terminal under lab1 folder. Please note that both imem and dmem use the SAME "IDMEMINITFILE". You can then use gtkwave to visualize the waveforms of your selected test case.
+
+**(Q)** Debugging takes so much time. Any tips to reduce the debugging time? \
+**(A)** Some suggestions.
+1. Review code carefully and understand the ISA behavior correctly. 
+2. If `make` command fails to compile, read the error messages carefully. 
+3. `make` command generates vcd file. Please use GTKWave to see each pipeline signal and check the signals works as expected according to *.asm files or RISC-V enumlators. When debugging, it is always helpful to visualize `clk` signal and pc values along with other signals.
 
 **(Q)** How do I know whether my implementation is correct or not? \
 **(A)** If you run ```make```, you would see "Pass" message. 
@@ -107,12 +113,6 @@ In part-2, we start to use modified RISC-V test cases. ```*.S``` is assembly cod
 
 **(Q)** Do we need to worry about whether we should prevent all writes to the zero register and treat it as always zero, or if that is solely up to us dependent on our design? \
 **(A)** This is purely S/W job. The H/W doesn't have to check whether x0 is writable or not. The Hardware also doesn't have explicitly insert 0 in hardware. 
-
-**(Q)** Debugging takes so much time. Any tips to reduce the debugging time? \
-**(A)** Some suggestions.
-1. Review code carefully and understand the ISA behavior correctly. 
-2. If `make` command fails to compile, read the error messages carefully. 
-3. Verilator generates vcd file. Please use GTKWave to see each pipeline signal and check the signals works as expected according to *.asm files or RISC-V enumlators. When debugging, it is always helpful to visualize `clk` signal and pc values along with other signals.
 
 **(Q)** Is the immediate field inside assembly code decimal? \
 **(A)** If the number starts with 0x, it's hexadecimal.
