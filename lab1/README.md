@@ -9,7 +9,7 @@
 **Part 3 (Optional)**: 20 bonus pts, submission ddl: Sep 18th
 
 **Description**:
-In this assignment, you will design a 5-stage RISC-V pipelined processor using verilog. The ISA is a subset of RISC-V ISA.  We will use <a href="tinyrv-isa.txt"> Tiny RISC-V version from Cornell</a>. In part 0, you will try the essential softwares to run the experiments on the PACE cluster. In part-1, you only need to implement *addi, add, beq* instructions to pass all 5 test cases in tests/part1/test[1-5].mem file. In part 2, you will add more instructions to pass the test cases under tests/part2/. Part 3 is optional for bonus pts.
+In this assignment, you will design a 5-stage RISC-V pipelined processor using verilog. The ISA is a subset of RISC-V ISA.  We will use <a href="tinyrv-isa.txt"> Tiny RISC-V version from Cornell</a>. In part 0, you will try the essential softwares to run the experiments on the PACE cluster. In part-1, you only need to implement *addi, add, beq* instructions to pass all 5 test cases in test/part1/test[1-5].mem file. In part 2, you will add more instructions to pass the test cases under test/part2/. Part 3 is optional for bonus pts.
 
 ## Part 0: Experiment Setup
 
@@ -21,16 +21,16 @@ You do not need to submit for part 0, but make sure you know how to run verilato
 
 ## Part 1: Minimal functionality
 
-In this part, you will implement a subset of RISC-V instructions. You only need to pass 5 tests under tests/part1 folder. 
-Please see the test cases for the part 1 requirements. You can refer to the README file under tests/part1/ for more information about each test case. 
+In this part, you will implement a subset of RISC-V instructions. You only need to pass 5 tests under test/part1 folder. 
+Please see the test cases for the part 1 requirements. You can refer to the README file under test/part1/ for more information about each test case. 
 
-1. [20pts] Please complete [agex_stage.v](agex_stage.v), you do not need to modify other files. Your program should pass tests/part1/test[1-5].mem. If you do not pass all test cases, based on the coverage of test cases, you will get partial scores. To test all test cases together, you can run command ```run_tests.sh part1``` and it will produce part1_results.log and part1_tests.log. You can also run each test case independently, see [FAQ for part 1](#faq-for-part-1). **Note: if you encounter an error on latch size, you may need to change the corresponding latch size definition in [define.vh](define.vh).**
+1. [20pts] Please complete [agex_stage.v](agex_stage.v), you do not need to modify other files. Your program should pass test/part1/test[1-5].mem. If you do not pass all test cases, based on the coverage of test cases, you will get partial scores. To test all test cases together, you can run command ```run_tests.sh part1``` and it will produce part1_results.log and part1_tests.log. You can also run each test case independently, see [FAQ for part 1](#faq-for-part-1). **Note: if you encounter an error on latch size, you may need to change the corresponding latch size definition in [define.vh](define.vh).**
 
-2. [10pts] Explain what has been done in each pipeline stage when executing tests/part1/test1.mem, include screenshots of waveforms that illustrates the relevant signals discussed in your explanation. For example, in [EX stag](agex_stage.v), you should visualize the input (regval1_AGEX, regval2_AGEX) and output (aluout_AGEX) of ALU and the opcode (op_I_AGEX).
+2. [10pts] Explain what has been done in each pipeline stage when executing test/part1/test1.mem, include screenshots of waveforms that illustrates the relevant signals discussed in your explanation. For example, in [EX stag](agex_stage.v), you should visualize the input (regval1_AGEX, regval2_AGEX) and output (aluout_AGEX) of ALU and the opcode (op_I_AGEX).
 
-3. [10pts] Explain how the your RISC-V processor solves Read-After-Write hazard in tests/part1/test2.mem, include screenshots of waveforms that illustrates the relevant signals discussed in your explanation. 
+3. [10pts] Explain how the your RISC-V processor solves Read-After-Write hazard in test/part1/test2.mem, include screenshots of waveforms that illustrates the relevant signals discussed in your explanation. 
 
-4. [10pts] Explain how the your RISC-V processor solves brach misprediction in tests/part1/test4.mem, include screenshots of waveforms that illustrates the relevant signals discussed in your explanation.
+4. [10pts] Explain how the your RISC-V processor solves brach misprediction in test/part1/test4.mem, include screenshots of waveforms that illustrates the relevant signals discussed in your explanation.
 **Note: in lab1 we always predict branch not-taken, in lab2 your will implement your own branch predictor.**
 
 **What to submit**:
@@ -45,11 +45,11 @@ Please see the test cases for the part 1 requirements. You can refer to the READ
 
 ## Part 2: Pass a subset of RISC-V test suite
 
-1. [50pts] In this part, you need to implement more instructions to pass all the test cases under tests/part2/ directory. In this part, you may need to edit all the *.vh and *.v files. If you do not pass all test cases, based on the coverage of test cases, you will get partial scores.
+1. [50pts] In this part, you need to implement more instructions to pass all the test cases under test/part2/ directory. In this part, you may need to edit all the *.vh and *.v files. If you do not pass all test cases, based on the coverage of test cases, you will get partial scores.
 
 **Test cases**:
 
-In part-2, all instructions in the test cases under tests/part2/ such as add, addi, auipc, beq, bge, (all branch instructions) jal, jalr instructions will be tested. you need to pass all test cases in test/part2 directory. To test all test cases together, you can use ```run_tests.sh part2``` and it will produce part2_results.log and part2_tests.log. test[7-9] are hand written assembly code which is easier to debug, please use those test cases first. 
+In part-2, all instructions in the test cases under test/part2/ such as add, addi, auipc, beq, bge, (all branch instructions) jal, jalr instructions will be tested. you need to pass all test cases in test/part2 directory. To test all test cases together, you can use ```run_tests.sh part2``` and it will produce part2_results.log and part2_tests.log. test[7-9] are hand written assembly code which is easier to debug, please use those test cases first. 
 
 In part-2, we start to use modified RISC-V test cases. ```*.S``` is assembly code that takes RISC-V macro. Macro files are defined at include/test_macros.h or include/riscv_test.h. It also uses ABI names and Pseudo Instructions. You can find a summary of information <a href="https://web.eecs.utk.edu/~smarz1/courses/ece356/notes/assembly/"> [here].  </a> ```*.dump``` is an dump file output from gcc riscv compiler. ```*.mem```  file has the format for verilog code. ```*.dec``` file is useful when using <a href="http://tice.sea.eseo.fr/riscv/">[RISC-V emulator] </a>
 
