@@ -9,65 +9,66 @@
 **Part 3 (Optional)**: 20 bonus pts, submission ddl: Sep 18th
 
 **Description**:
-In this assignment, you will design a 5-stage RISC-V pipelined processor using verilog. The ISA is a subset of RISC-V ISA.  We will use <a href="tinyrv-isa.txt"> Tiny RISC-V version from Cornell</a>. In part 0, you will try the essential softwares to run the experiments on the PACE cluster. In part-1, you only need to implement *addi, add, beq* instructions to pass all 5 test cases in test/part1/test[1-5].mem file. In part 2, you will add more instructions to pass the test cases under test/part2/. Part 3 is optional for bonus pts.
+In this assignment, you will create a 5-stage RISC-V pipelined processor using Verilog, focusing on a subset of the RISC-V ISA. We will be using the Tiny RISC-V version from Cornell, which is provided in the [Tiny RISC-V ISA](tinyrv-isa.txt) file. 
+
+In part 0, you will familiarize yourself with the essential software tools required for the experiments on the PACE cluster. In part-1, you only need to implement *addi, add, beq* instructions to pass all 5 test cases in test/part1/test[1-5].mem. In part 2, you will expand your processor by adding more instructions to pass the test cases under test/part2/. Part 3 is optional for bonus pts.
 
 ## Part 0: Experiment Setup
 
-Please follow the [instructions](part0/part0_pace.md) to run the experiments on the PACE cluster.
+Please follow the [instructions](part0/part0_pace.md) provided to run experiments on the PACE cluster.
 
 **What to submit**:
 
-You do not need to submit for part 0, but make sure you know how to run verilator and how to use GTKWave to view waveforms.
+No submission is required for Part 0. However, ensure that you can independently utilize GTKWave to visualize waveforms effectively.
 
 ## Part 1: Minimal functionality
 
-In this part, you will implement a subset of RISC-V instructions. You only need to pass 5 tests under test/part1 folder. 
-Please see the test cases for the part 1 requirements. You can refer to the README file under test/part1/ for more information about each test case. 
+In this part, you'll implement a subset of RISC-V instructions and aim to pass 5 tests in the test/part1 directory. Refer to the test cases and the README file in test/part1 for detailed requirements. 
 
-1. [20pts] Please complete [agex_stage.v](agex_stage.v), you do not need to modify other files. Your program should pass test/part1/test[1-5].mem. If you do not pass all test cases, based on the coverage of test cases, you will get partial scores. To test all test cases together, you can run command ```run_tests.sh part1``` and it will produce part1_results.log and part1_tests.log. You can also run each test case independently, see [FAQ for part 1](#faq-for-part-1). **Note: if you encounter an error on latch size, you may need to change the corresponding latch size definition in [define.vh](define.vh).**
+1. [20pts] Complete the agex_stage.v file. No modifications to other files are necessary. Your implementation should pass test/part1/test[1-5].mem. If all test cases don't pass, you'll receive partial scores. To test all cases together, run `run_tests.sh part1`, and it will produce part1_results.log and part1_tests.log for you. You can also run each test case independently, see [FAQ for part 1](#faq-for-part-1). Note: If you encounter latch size errors, modify the corresponding latch size definition in define.vh.
 
-2. [10pts] Explain what has been done in each pipeline stage when executing test/part1/test1.mem, include screenshots of waveforms that illustrates the relevant signals discussed in your explanation. For example, in [EX stag](agex_stage.v), you should visualize the input (regval1_AGEX, regval2_AGEX) and output (aluout_AGEX) of ALU and the opcode (op_I_AGEX).
+2. [10pts] Explain the actions in each pipeline stage while executing test/part1/test1.mem. Include waveform screenshots illustrating relevant signals. For example, in the Execute stage (EX stag), you should visualize input (regval1_AGEX, regval2_AGEX) and output (aluout_AGEX) signals of the ALU, and the opcode (op_I_AGEX).
 
-3. [10pts] Explain how the your RISC-V processor solves Read-After-Write hazard in test/part1/test2.mem, include screenshots of waveforms that illustrates the relevant signals discussed in your explanation. 
+3. [10pts]Explain how your RISC-V processor resolves Read-After-Write hazards in test/part1/test2.mem. Include waveform screenshots illustrating the discussed signals. 
 
-4. [10pts] Explain how the your RISC-V processor solves brach misprediction in test/part1/test4.mem, include screenshots of waveforms that illustrates the relevant signals discussed in your explanation.
-**Note: in lab1 we always predict branch not-taken, in lab2 your will implement your own branch predictor.**
+4. [10pts] Explain how your RISC-V processor handles branch misprediction in test/part1/test4.mem. Include waveform screenshots illustrating relevant signals. Note: In Lab 1, branches are always predicted as not-taken; in Lab 2, you will implement your own branch predictor.
 
 **What to submit**:
 
-+ A zip file of your source code. Run command ```make submit``` will generate a submission.zip. Please submit the submission.zip file. Please do not manually generate a zip file since that will likely break the autograding script. Instead use ```make submit``` command to generate the submission.zip file. Breaking autograding script due to wrong directory structures/missing files might deduct 5% of your score.
++ Provide a zip file of your source code. Use the command `make submit` to generate submission.zip. Do not manually create a zip file to avoid breaking the autograding script, as this may result in a 5% score deduction.
 
-+ A pdf file that contains your explanations and the corresponding screenshots.
++ Include a PDF file containing your explanations and corresponding screenshots.
 
-***Please carefully read [FAQ for part 1](#faq-for-part-1) before reaching out to TAs for help.***
+***Please carefully read [FAQ for part 1](#faq-for-part-1) before seeking assistance from TAs.***
 
-***Please start part 2 as early as possible and do not wait untill the last week, because its worload is heavier than part 1.*** 
+***Start part 2 as early as possible and do not wait untill the last week, as it involves heavier workload than part 1.*** 
 
-## Part 2: Pass a subset of RISC-V test suite
+## Part 2: Expanding instruction set
 
-1. [50pts] In this part, you need to implement more instructions to pass all the test cases under test/part2/ directory. In this part, you may need to edit all the *.vh and *.v files. If you do not pass all test cases, based on the coverage of test cases, you will get partial scores.
+1. [50pts] you'll extend your RISC-V processor to handle a broader range of instructions and aim to pass all the test cases in the test/part2/ directory. You may need to make changes to all the *.vh and *.v files. Partial scores will be assigned based on the test case coverage if all cases do not pass.
 
 **Test cases**:
 
-In part-2, all instructions in the test cases under test/part2/ such as add, addi, auipc, beq, bge, (all branch instructions) jal, jalr instructions will be tested. you need to pass all test cases in test/part2 directory. To test all test cases together, you can use ```run_tests.sh part2``` and it will produce part2_results.log and part2_tests.log. test[7-9] are hand written assembly code which is easier to debug, please use those test cases first. 
+In part-2, all instructions in the test cases under test/part2/ such as add, addi, auipc, beq, bge, (all branch instructions) jal, jalr instructions will be tested. To test all test cases together, use `run_tests.sh part2`, which will generate part2_results.log and part2_tests.log. Tests [7-9] are hand-written assembly code, which are easier to debug, so start with those. 
 
-In part-2, we start to use modified RISC-V test cases. ```*.S``` is assembly code that takes RISC-V macro. Macro files are defined at include/test_macros.h or include/riscv_test.h. It also uses ABI names and Pseudo Instructions. You can find a summary of information <a href="https://web.eecs.utk.edu/~smarz1/courses/ece356/notes/assembly/"> [here].  </a> ```*.dump``` is an dump file output from gcc riscv compiler. ```*.mem```  file has the format for verilog code. ```*.dec``` file is useful when using <a href="http://tice.sea.eseo.fr/riscv/">[RISC-V emulator] </a>
+In part-2, we start to use modified RISC-V test cases. ```*.S``` is assembly code that takes RISC-V macro. Macros are defined at include/test_macros.h or include/riscv_test.h. It also uses ABI names and Pseudo Instructions. You can find a summary of information <a href="https://web.eecs.utk.edu/~smarz1/courses/ece356/notes/assembly/"> [here].  </a> ```*.dump``` is an dump file output from gcc riscv compiler. ```*.mem```  file has the format for verilog code. ```*.dec``` file is useful when using <a href="http://tice.sea.eseo.fr/riscv/">[RISC-V emulator] </a>
 
 **What to submit**:
 
-+ A zip file of your source code. Run command ```make submit``` will generate a submission.zip. Please submit the submission.zip file. Please do not manually generate a zip file since that will likely break the autograding script. Instead use ```make submit``` command to generate the submission.zip file. Breaking autograding script due to wrong directory structures/missing files might deduct 5% of your score.
++ Provide a zip file containing your source code. Use the command `make submit` to generate submission.zip. Do not manually create a zip file to avoid issues with the autograding script, which may result in a 5% score deduction.
 
-***Please carefully read [FAQ for part 2](#faq-for-part-2) before reaching out to TAs for help.***
 
-***Please do not procrastinate.*** 
+***Please carefully read [FAQ for part 2](#faq-for-part-2) before seeking assistance from TAs.***
+
+***Avoid procrastination; start early to manage the workload effectively.*** 
 
 ## Part 3 (Optional) Complete the pipeline 
 
-1. [20pts] In this part, you will complete the pipeline to test RISC-V ISA (except CSR instructions). Your program should pass all the test cases under test/part3/. If you pass test/part3/testall.mem (you need to see "Pass" after running ```make```) you will get full credits. If you don't pass test/part3/testall.mem, you will get partial scores based on the coverage of part 3 test suites.
+1. [20pts] In this part, you will complete the pipeline to support the RISC-V ISA (except CSR instructions). Your goal is to ensure your program passes all the test cases in the test/part3/ directory. To receive full credits, your program must pass test/part3/testall.mem. Partial scores will be awarded based on the coverage of the Part 3 test suites.
 
 **What to submit**: 
 
-+ A zip file of your source code. Run command ```make submit``` will generate a submission.zip. Please submit the submission.zip file. Please do not manually generate a zip file since that will likely break the autograding script. Instead use ```make submit``` command to generate the submission.zip file. Breaking autograding script due to wrong directory structures/missing files might deduct 5% of your score.
++ Provide a zip file containing your source code. Use the command `make submit` to generate submission.zip. Do not manually create a zip file to avoid issues with the autograding script, which may result in a 5% score deduction.
 
 ***Please carefully read [FAQ for part 3](#faq-for-part-3) before reaching out to TAs for help.***
 
@@ -88,13 +89,13 @@ In part-2, we start to use modified RISC-V test cases. ```*.S``` is assembly cod
 ## FAQ for part 1
 
 **(Q)** How do I run a specific test file? \
-**(A)** Please see ["define.vh"](define.vh): you need to change line 21 to change which test file to read: **`define IDMEMINITFILE  "test1.mem"**. You need to change "test1.mem" into "test2.mem" etc (be sure it points to the right file path, change "/home/zhifan/workspace/cs3220-23fall/lab1/" to your local lab1 folder), and then run command "make" in your terminal under lab1 folder. Please note that both imem and dmem use the SAME "IDMEMINITFILE". You can then use gtkwave to visualize the waveforms of your selected test case.
+**(A)** Please see ["define.vh"](define.vh): you need to change line 21 to change which test file to read: **`define IDMEMINITFILE  "/home/zhifan/workspace/cs3220-23fall/lab1/test/part1/test4.mem"**. You need to change "test4.mem" into "test2.mem" etc (be sure it points to the right file path, replace "/home/zhifan/workspace/cs3220-23fall/lab1/" with your local lab1 folder path), and then run command "make" in your terminal under lab1 folder. Please note that both imem and dmem use the SAME "IDMEMINITFILE". You can then use gtkwave to visualize the waveforms of your selected test case.
 
 **(Q)** Debugging takes so much time. Any tips to reduce the debugging time? \
-**(A)** Some suggestions.
+**(A)** Some suggestions:
 1. Review code carefully and understand the ISA behavior correctly. 
 2. If `make` command fails to compile, read the error messages carefully. 
-3. `make` command generates vcd file. Please use GTKWave to see each pipeline signal and check the signals works as expected according to *.asm files or RISC-V enumlators. When debugging, it is always helpful to visualize `clk` signal and pc values along with other signals.
+3. `make` command generates vcd file. Please use GTKWave to see important signals and check whether the signals works as expected according to *.asm files or RISC-V enumlators. When debugging, it is always helpful to visualize `clk` signal and pc values along with other important signals.
 
 **(Q)** How do I know whether my implementation is correct or not? \
 **(A)** If you run ```make```, you would see "Pass" message. 

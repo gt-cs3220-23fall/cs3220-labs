@@ -1,6 +1,6 @@
 # Lab1 Part0
 
-Follow this [document](https://docs.google.com/document/d/1AEyVnDq-EX87BF8rP6L7kGDFoxXFHFT3Fsqeemnlcyk/edit?usp=sharing) from lab0 to request an interactive desktop and setup experiment environment.
+Follow this [document](https://docs.google.com/document/d/1AEyVnDq-EX87BF8rP6L7kGDFoxXFHFT3Fsqeemnlcyk/edit?usp=sharing) from lab0 to request an interactive desktop and setup experiment environment (you do not need to run step7 and step8 in the lab0 instruction).
 
 Then, run `source /storage/ice-shared/cs3220/labs_setup.sh` in your terminal.
 
