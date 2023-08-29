@@ -11,7 +11,7 @@
 **Description**:
 In this assignment, you will create a 5-stage RISC-V pipelined processor using Verilog, focusing on a subset of the RISC-V ISA. We will be using the Tiny RISC-V version from Cornell, which is provided in the [Tiny RISC-V ISA](tinyrv-isa.txt) file. 
 
-In part 0, you will familiarize yourself with the essential software tools required for the experiments on the PACE cluster. In part-1, you only need to implement *addi, add, beq* instructions to pass all 5 test cases in test/part1/test[1-5].mem. In part 2, you will expand your processor by adding more instructions to pass the test cases under test/part2/. Part 3 is optional for bonus pts.
+In part 0, you will familiarize yourself with the essential software tools required for the experiments on the PACE cluster. In part-1, you only need to implement *addi, add, beq* instructions to pass all 5 test cases in test/part1/test[1-5].mem. In part 2, you will expand your processor by adding more instructions to pass the test cases under test/part2/. Part 3 is optional for bonus pts, where you will complete the RISC-V processor.
 
 ## Part 0: Experiment Setup
 
@@ -35,6 +35,8 @@ In this part, you'll implement a subset of RISC-V instructions and aim to pass 5
 
 **What to submit**:
 
+Submit the following to Canvas:
+
 + Provide a zip file of your source code. Use the command `make submit` to generate submission.zip. Do not manually create a zip file to avoid breaking the autograding script, as this may result in a 5% score deduction.
 
 + Include a PDF file containing your explanations and corresponding screenshots.
@@ -55,6 +57,8 @@ In part-2, we start to use modified RISC-V test cases. ```*.S``` is assembly cod
 
 **What to submit**:
 
+Submit the following to Canvas:
+
 + Provide a zip file containing your source code. Use the command `make submit` to generate submission.zip. Do not manually create a zip file to avoid issues with the autograding script, which may result in a 5% score deduction.
 
 
@@ -62,11 +66,13 @@ In part-2, we start to use modified RISC-V test cases. ```*.S``` is assembly cod
 
 ***Avoid procrastination; start early to manage the workload effectively.*** 
 
-## Part 3 (Optional) Complete the pipeline 
+## Part 3 (Optional) Complete the processor 
 
-1. [20pts] In this part, you will complete the pipeline to support the RISC-V ISA (except CSR instructions). Your goal is to ensure your program passes all the test cases in the test/part3/ directory. To receive full credits, your program must pass test/part3/testall.mem. Partial scores will be awarded based on the coverage of the Part 3 test suites.
+1. [20pts] In this part, you will complete the processor to fully support the RISC-V ISA (except CSR instructions). Your goal is to ensure your program passes all the test cases in the test/part3/ directory. To receive full credits, your program must pass test/part3/testall.mem. Partial scores will be awarded based on the coverage of the Part 3 test suites.
 
 **What to submit**: 
+
+Submit the following to Canvas:
 
 + Provide a zip file containing your source code. Use the command `make submit` to generate submission.zip. Do not manually create a zip file to avoid issues with the autograding script, which may result in a 5% score deduction.
 
