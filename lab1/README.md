@@ -1,4 +1,4 @@
-# CS3220 Assignment #1 : Pipeline Design 
+# CS3220 Lab #1 : Pipeline Design 
 
 100 pts in total, will be rescaled into 11.25% of your final score of the course.  
 
