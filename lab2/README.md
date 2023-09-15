@@ -11,6 +11,9 @@
 This lab is a continuation of lab #1. In this project, you will implement a branch predictor for your RISC-V CPU. If your RISC-V CPU fails to pass all testcaese in lab1, you should work on top of the reference solution for lab #1 from the TAs.
 
 ## Part 1: Baseline Branch Predictor (60 points): 
+
+[Zhifan: Added more detailed description for g-share predictor]
+
 In this design, you will add a baseline branch predictor and a branch target buffer to your pipeline. 
 
 The baseline branch predictor uses a G-share branch predictor (Before Releasing: refer to the speicific slides page): 
@@ -55,6 +58,8 @@ Please submit the submission.zip file. Each submission for each group. -->
 
 ## Part 2: Performance Measurement & Optimization (40 points + 10 bonus pts)
 
+[Only repharsed 23 spring instructions]
+
 1. [10 pts] In this part, you will add counters to the measure branch prediction accuracy (# of correctlt predicted branchs /# branch insts). You should use the </test/towers/towers.mem> testcase for part2 measurement. Write a report about your evaluations.
 
 2. [30 pts + 10 pts bonus] Improve the performance of your branch predictor: you can change your branch predictor design to improve performance of </test/towers/towers.mem>. You can explore other BHR hashing functions (e.g. using different bits of PC for the XOR operation), or change the PHT or BTB size. Please try at least 3 different design changes that you have made, explain your design changes and the performance outcome in your report. If you get more than 5% prediction accuracy improvement over the baseline branch predictor, you will receive 10 bonus pts. 
@@ -82,6 +87,9 @@ Please discuss what design parameters have you changed and discuss why it change
 Report (max 2 pages) (No need to submit the code again)  -->
 
 ## FAQ 
+
+[Only repharsed 23 spring instructions]
+
 [Q]  I’m debugging my code. I see that there is an X in the BTB. How would it be possible? \
 [A] FE stage can have pipeline bubbles. BTB/BP might be indexed with uninitialized values. Please also make it sure when you update BTB/BP, only branch instructions/signals (not including X) can change the BP/BTB values.
 
