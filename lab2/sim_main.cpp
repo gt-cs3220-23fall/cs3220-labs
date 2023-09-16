@@ -12,7 +12,7 @@
 #include <verilated_vcd_c.h>
 #endif
 
-#define RUN_CYCLES 50000
+#define RUN_CYCLES 100000
 
 #define CLOCK_PERIOD 2
 

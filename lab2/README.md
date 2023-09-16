@@ -18,7 +18,7 @@ In this part, you'll be implementing a baseline branch predictor and a branch ta
 
 The baseline design adopts a G-share branch predictor (TODO: refer to the speicific slides page): 
 
-1. Its branch history register (BHR) has a length of 8 bits, you will use `PC[9:2] XOR BHR` to index a Pattern History Table (PHT), which is composed of 2^8 2-bit counters for branch prediction. Each counter is initialized with 1 (indicating a weakly taken).
+1. Its branch history register (BHR) has a length of 8 bits, you will use `PC[9:2] XOR BHR` to index a Pattern History Table (PHT), which is composed of 2^8 2-bit counters for branch prediction. Each counter is initialized with 1 (indicating a weakly not taken).
 
 2. The branch target buffer (BTB) has 16 entries, and you will use `PC[5:2]` to index it.
 
@@ -61,8 +61,6 @@ Please submit the submission.zip file. Each submission for each group. -->
 1. [10 pts] For this part, you will evaluate branch prediction accuracy by adding counters to measure it (# of correctly predicted branches / # total branch instructions). Utilize the [towers.mem](test/towers/towers.mem) testcase for this assessment and write your measurement results in a pdf report.
 
 2. [30 pts + 10 pts bonus] Enhance the performance of your branch predictor on the [towers.mem](test/towers/towers.mem) testcase by making design changes: you can explore other BHR hashing functions (e.g. using different bits of PC for the XOR operation), or change the PHT or BTB sizes. Implement at least three different design changes, and present the corresponding performance outcomes in your report. If your modifications result in more than a 5% increase in prediction accuracy compared to the baseline branch predictor, you will earn 10 bonus points.
-
-*Note: before running [towers.mem](test/towers/towers.mem), please set `#define RUN_CYCLES 100000` in line 15 of [sim_main.cpp](sim_main.cpp)*
 
 ## Submission
 
