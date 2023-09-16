@@ -42,7 +42,7 @@ Summary of the G-share branch prediction algorithm:
 
     4. Update the BHR. 
 
-To pass this part and earn full credit, implement the baseline branch predictor described above and run your baseline branch predictor on </test/part4/testall.mem> and ensure it passes this testcase.
+To pass this part and earn full credit, implement the baseline branch predictor described above and run your baseline branch predictor on [testall.mem](/test/part4/testall.mem) and ensure it passes this testcase.
 
 <!-- **Grading**:
 We will check whether </test/part4/testall.mem> is correctly executed or not. 
