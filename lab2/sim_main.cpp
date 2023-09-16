@@ -1,13 +1,9 @@
-// DESCRIPTION: Verilator: Verilog example module
-//
-// This file ONLY is placed into the Public Domain, for any use,
-// without warranty, 2017 by Wilson Snyder.
+// DESCRIPTION:  simulation of pipeline 
 //======================================================================
 #include <iostream>
 
 // Include common routines
 #include <verilated.h>
-
 // Include model header, generated from Verilating "pipeline.v"
 #include "Vpipeline.h"
 #include "Vpipeline__Syms.h"
@@ -16,7 +12,7 @@
 #include <verilated_vcd_c.h>
 #endif
 
-#define RUN_CYCLES  50000
+#define RUN_CYCLES 100000
 
 #define CLOCK_PERIOD 2
 
