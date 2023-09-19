@@ -12,8 +12,6 @@ This lab is a continuation of lab #1. In this project, you will implement a bran
 
 ## Part 1: Baseline Branch Predictor (60 points): 
 
-[Zhifan: Added more detailed description for g-share predictor]
-
 In this part, you'll be implementing a baseline branch predictor and a branch target buffer for your RISC-V CPU. Here's a concise overview of the design: 
 
 The baseline design adopts a G-share branch predictor (TODO: refer to the speicific slides page): 
@@ -56,15 +54,11 @@ Please submit the submission.zip file. Each submission for each group. -->
 
 ## Part 2: Performance Measurement & Optimization (40 points + 10 bonus pts)
 
-[Repharsed 23 spring instructions and reassign scores]
-
 1. [10 pts] For this part, you will evaluate branch prediction accuracy by adding counters to measure it (# of correctly predicted branches / # total branch instructions). Utilize the [towers.mem](test/towers/towers.mem) testcase for this assessment and write your measurement results in a pdf report.
 
 2. [30 pts + 10 pts bonus] Enhance the performance of your branch predictor on the [towers.mem](test/towers/towers.mem) testcase by making design changes: you can explore other BHR hashing functions (e.g. using different bits of PC for the XOR operation), or change the PHT or BTB sizes. Implement at least three different design changes, and present the corresponding performance outcomes in your report. If your modifications result in more than a 5% increase in prediction accuracy compared to the baseline branch predictor, you will earn 10 bonus points.
 
 ## Submission
-
-[Revised by Zhifan]
 
 + Provide a zip file containing your source code for Part 1. Generate the submission.zip file using the command make submit. Avoid manual zip file creation to prevent any issues with the autograding script, which could lead to a 30% score deduction.
 
@@ -87,8 +81,6 @@ Please discuss what design parameters have you changed and discuss why it change
 Report (max 2 pages) (No need to submit the code again)  -->
 
 ## FAQ 
-
-[Only repharsed 23 spring instructions]
 
 [Q]  I’m debugging my code. I see that there is an X in the BTB. How would it be possible? \
 [A] FE stage can have pipeline bubbles. BTB/BHT might be indexed with uninitialized values. Please also make it sure when you update BTB/BHT, only branch instructions/signals (not including X) can change the BTB/BHT values.
