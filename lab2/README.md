@@ -14,7 +14,7 @@ This lab is a continuation of lab #1. In this project, you will implement a bran
 
 In this part, you'll be implementing a baseline branch predictor and a branch target buffer for your RISC-V CPU. Here's a concise overview of the design: 
 
-The baseline design adopts a G-share branch predictor (TODO: refer to the speicific slides page): 
+The baseline design adopts a G-share branch predictor (please refer to lecture-8's slides page 54): 
 
 1. Its branch history register (BHR) has a length of 8 bits, you will use `PC[9:2] XOR BHR` to index a Pattern History Table (PHT), which is composed of 2^8 2-bit counters for branch prediction. Each counter is initialized with 1 (indicating a weakly not taken).
 
@@ -82,6 +82,10 @@ Report (max 2 pages) (No need to submit the code again)  -->
 
 ## FAQ 
 
+[Q] I passed [testall.mem](test/part4/testall.mem) but failed to pass some testcases under [test/part2](test/part2). What should I do? \
+[A] Please carefully check whether your when-to-flush logic is correctly implemented in the AGEX stage based on the following criteria: When should we flush the pipeline? If the branch is not taken, and next instruction we fetched is not PC+4, we should flush the pipeline; if the branch is taken, and the next instruction we fetched is not the branch target, we are supposed flush the pipeline as well.
+
+
 [Q]  I’m debugging my code. I see that there is an X in the BTB. How would it be possible? \
 [A] FE stage can have pipeline bubbles. BTB/BHT might be indexed with uninitialized values. Please also make it sure when you update BTB/BHT, only branch instructions/signals (not including X) can change the BTB/BHT values.
 
@@ -126,4 +130,4 @@ Which value of BHR should FE use? The old value or the updated value from EX? \
 [A] You should explicitly put 1s when it resets. 
 
 [Q] I ran tower.mem and my test case is failed unlike other test cases. Is that expected?\
-[A] Yes. The tower.mem returns "255", which does not match the PASS cateria of the simulator. You do not need to worry about it.
+[A] Yes. The tower.mem returns "255", which does not match the PASS criteria of the simulator. You do not need to worry about it.
