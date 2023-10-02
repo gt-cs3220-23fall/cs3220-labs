@@ -80,3 +80,4 @@
 - Grading:
     - Two modules’ full documentation at [this level](https://github.com/nvdla/hw/blob/nvdlav1/vmod/nvdla/cmac/NV_NVDLA_CMAC_CORE_MAC_mul.v) will lead to full points
     - Your documentation will be scaled with the above level
+- Late submission policy: 3 hours grace period for potential canvas submission issues; 10% per day late, up to 3 days. No credit will be given for submissions later than 3 days.

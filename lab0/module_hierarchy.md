@@ -61,6 +61,6 @@ In summary, there are three modules in this design:
 - `add16`, provided — A 16-bit adder module that is composed of 16 of...
 - `add1` — A 1-bit full adder module.
 
-![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/98ca81c5-052e-411b-a1c0-d3433bf6674c/Untitled.png)
+![Untitled](https://hdlbits.01xz.net/mw/images/f/f3/Module_fadd.png)
 
 [in [compile.sh](https://www.dropbox.com/sh/ckqqx7szw2ens62/AACRAQTWIlEHda-J4R4MOsHba?dl=0) : copy and change the mode of vivado project creation command to gui mode and run it on an interactive terminal, e.g., vivado -mode gui -source compile_vector_signals.tcl](https://www.notion.so/in-compile-sh-copy-and-change-the-mode-of-vivado-project-creation-command-to-gui-mode-and-run-it-o-fc673d2500ba4394ac2668ee29591bdf?pvs=21)
