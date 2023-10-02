@@ -22,21 +22,21 @@ We've settled remote access to the pynq board. Please follow the instructions ou
 
 ### Remote Desktop
 
-In this lab, you'll be working with Vivado and Vitis HLS 2020.2. For the best experience, we recommend accessing the remote desktop. Follow the steps outlinedn in the [above document](https://docs.google.com/document/d/1WEvITUjTsU5aGcmtTOyS6S6BRdve-n_P11pqTyLeIaU/edit?usp=sharing), The only difference is in Step 3: Click on "Synth & Emu" > "Synthesia Desktop" instead.
+In this lab, you'll be working with Vivado and Vitis HLS 2020.2. For the best experience, we recommend accessing the remote desktop, where all the toolchains have been installed for you. Follow the same steps outlined in the [above document](https://docs.google.com/document/d/1WEvITUjTsU5aGcmtTOyS6S6BRdve-n_P11pqTyLeIaU/edit?usp=sharing), The only difference is in Step 3: Click on "Synth & Emu" > "Synthesia Desktop" instead.
 
 ### Updalod & Download Files
 
-You can access the root directory of your remote machine through your browser. Refer to step 4 of the [above document](https://docs.google.com/document/d/1WEvITUjTsU5aGcmtTOyS6S6BRdve-n_P11pqTyLeIaU/edit?usp=sharing), click on the "data root directory" at the bottom of the screen. The remote desktop and pynq board shares the same data storage, so it is not needed to transfer data between them.
+You can access the root directory of your remote machine through your browser. Refer to step 4 of the [above document](https://docs.google.com/document/d/1WEvITUjTsU5aGcmtTOyS6S6BRdve-n_P11pqTyLeIaU/edit?usp=sharing), click on the "data root directory" at the bottom of the screen. The remote desktop and pynq board share the same data storage, so it is not needed to transfer data between them.
 
 ## Part-1: Deployment on Pynq-Jupyter (10pts)
 
-In this part, you will deploy your RISC-V processor on a pynq board. The pynq board is a [field programmable gate array](https://en.wikipedia.org/wiki/Field-programmable_gate_array), which allows you to program its hardware. You will be able to communicate with the board through AXI lite protocol with a Jupyter notebook.
+In this part, you will deploy your RISC-V processor on a pynq board. The pynq board provides a [field programmable gate array](https://en.wikipedia.org/wiki/Field-programmable_gate_array), which allows you to program its hardware. You will be able to communicate with the board through AXI lite protocol with a Jupyter notebook.
 
 ### Step-1: Vitis for Creating a Communication Adapter
 
-In this step, you will generate a communication adapter using [comm.cpp](comm.cpp)in Vitis HLS. This allows you to communicate with the verilog modules (your RISC-V processor) in the field programmable gate array.
+In this step, you will generate a communication adapter using [comm.cpp](comm.cpp) in Vitis HLS. This allows you to communicate with the verilog modules (your RISC-V processor).
 
-The code only defines ports (inputs and output arguments) to verilog modules with memory-mapped connection using AXI lite protocol. So you can consider this vitis code as an communication adapter, and vitis generates most of the necessary logics for us.
+The code [comm.cpp](comm.cpp) only defines ports (inputs and output arguments) to verilog modules with memory-mapped connection using AXI lite protocol. So you can consider this vitis code as an communication adapter, and vitis generates most of the necessary logics for us.
 
 For a detailed, step-by-step video demonstration, refer to this [link](https://drive.google.com/file/d/1GYrVq5hJ2KwMEMfOCgT8xiaIQPkq5pFb/view?usp=sharing). Additionally, you may find helpful guidance in the following tutorial: (https://www.hackster.io/whitney-knitter/rapid-prototyping-vitis-hls-ip-designs-using-pynq-f76910). 
 
@@ -45,7 +45,7 @@ For a detailed, step-by-step video demonstration, refer to this [link](https://d
 
 #### [1] Prepare your codes:
 
-Modify the [pipeline.v](pipeline.v) to have two additional ports and change reset to rest_n, you will interact with it from the CPU (Jupyter Notebook) side through these ports.
+Modify the [pipeline.v](pipeline.v) to have two additional ports and change reset to rest_n, you will interact with it from the CPU side (Jupyter Notebook) through these ports.
 
 Before:
 
@@ -70,7 +70,7 @@ output[31:0] out2
 wire reset = ~reset_n;  
 ```
 
-In pipeline.v, connect out1 for cycle_count:
+In [pipeline.v](pipeline.v), connect out1 for cycle_count:
 
 ``` 
 always @ (posedge clk) begin
@@ -92,7 +92,7 @@ assign out2 = 32'd33;
 
 #### [2] Create a block design
 
-First create a vivado project and a block diagram. Then import the IP repo (the communication adapter) generated step-1, and add the comm IP to the block diagram. 
+First create a vivado project and a block diagram. Then import the IP repo (the communication adapter) generated in step-1, and add the comm IP to the block diagram. 
 
 Please see this [link](https://drive.google.com/file/d/13UJYmOdiZHjuR1avq2HrmpxkNc-HSVaM/view?usp=sharing) for a step by step demonstration.
 
@@ -107,7 +107,7 @@ You will need to connect your RISC-V processor with the communication adapter (i
 
 #### [5] Add Zynq PS module from IP repo and then use auto-connect features to complete all the connections. 
 
-The procedure for adding zynq ps is the same as how we add the comm IP into the block diagram, as demonstrated in the [video](https://drive.google.com/file/d/13UJYmOdiZHjuR1avq2HrmpxkNc-HSVaM/view?usp=sharing) above. The PS stands for the on-chip processing system (the CPU where will you run the jupyter notebook), which will communicate with the RISC-V processor through AXI lite protocol.
+The procedure for adding zynq ps is the same as how you add the comm IP into the block diagram, as demonstrated in the [video above](https://drive.google.com/file/d/13UJYmOdiZHjuR1avq2HrmpxkNc-HSVaM/view?usp=sharing). The PS stands for the on-chip processing system (where you run the jupyter notebook), which will communicate with the RISC-V processor through the AXI lite ports.
 
 The autoconnect button shows up at the top of the block diagram. Click "Run Connection Automation" and then select all modules, then click OK.
 
@@ -118,7 +118,7 @@ If clock or reset signal connections are missing, you can connect them manually.
 
 Go to “Sources” panel and right click on your block design name, click on “Create HDL wrapper”. Click on “Let Vivado manage wrapper and auto-update” option and click on “OK”. 
 
-Make the design_wrapper as a *top module* by right click it in the source code "Set as Top". 
+Make the design_wrapper as a *top module* by right click it in the source code and choose "Set as Top". 
 
 #### [7] Synthesize/implementation/generate bitstreams
 
@@ -145,7 +145,7 @@ Make sure you rename all the files to have the same name (e.g. riscv.bit, riscv.
 
 #### [11] Upload the files 
 
-Place all generated files in the above step and the [riscv_test.ipynb](riscv_test.ipynb) file in a same folder.  
+Place all the generated files in the above step and the [riscv_test.ipynb](riscv_test.ipynb) file in a same folder.  
 
 #### [12] Running on the Pynq Board
 
@@ -159,4 +159,4 @@ A screenshot of the jupyter notebook, showing the expected value in step [12].
 
 **Grading policy** 
 
-If the bitstream you submit can be successfully deployed on the pynq board and the value in step [12] are correct, you will receive full credit.
+If the bitstream you submit can be successfully deployed on the pynq board and the screenshot in step [12] is correct, you will receive full credit.
