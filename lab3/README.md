@@ -1,10 +1,10 @@
 # CS3220 Lab #3 (10 pts) 
 
-100 pts in total, will be rescaled into 11.25% of your final score of the course.  
+10 pts in total, will be rescaled into 11.25% of your final score of the course.  
 
 **Part 0: Env Setup**: 0 pts
 
-**Part 1: Deploy on Pynq-Jupyter**: 100 pts
+**Part 1: Deploy on Pynq-Jupyter**: 10 pts
 
 ***Submission ddl***: Oct 9nd
 
@@ -28,7 +28,7 @@ In this lab, you'll be working with Vivado and Vitis HLS 2020.2. For the best ex
 
 You can access the root directory of your remote machine through your browser. Refer to step 4 of the [above document](https://docs.google.com/document/d/1WEvITUjTsU5aGcmtTOyS6S6BRdve-n_P11pqTyLeIaU/edit?usp=sharing), click on the "data root directory" at the bottom of the screen. The remote desktop and pynq board shares the same data storage, so it is not needed to transfer data between them.
 
-## Part-1: Deployment on Pynq-Jupyter (7pts)
+## Part-1: Deployment on Pynq-Jupyter (10pts)
 
 In this part, you will deploy your RISC-V processor on a pynq board. The pynq board is a [field programmable gate array](https://en.wikipedia.org/wiki/Field-programmable_gate_array), which allows you to program its hardware. You will be able to communicate with the board through AXI lite protocol with a Jupyter notebook.
 
