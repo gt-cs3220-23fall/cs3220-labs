@@ -10,6 +10,12 @@
 
 This lab serves as a continuation of Lab #2. The primary aim is to guide you through the process of deploying your RISC-V processor on a Pynq board.
 
+**Learning Outcomes:**
+
+1. Learn to create and use AXI lite protocol to communicate with your RISC-V processor.
+
+2. Get familiar with Vivado and Vitis HLS toolchain.
+
 ## Part-0: Env Setup (0 pts)
 
 ### Accessing Pynq Board
@@ -149,8 +155,10 @@ Place all the generated files in the above step and the [riscv_test.ipynb](riscv
 
 #### [12] Running on the Pynq Board
 
-Open the [riscv_test.ipynb](riscv_test.ipynb) file on the request Jupyter notebook and run the code, the 0x20 address corresonds to out1 and 0x30 address corresponds to out2, out1 value will keep changing since it's a cycle count and out2 value will be the constant that you put in the beginning of step 2. 
+Open the [riscv_test.ipynb](riscv_test.ipynb) file on the requested Jupyter notebook and run the code, the 0x20 address corresonds to out1 and 0x30 address corresponds to out2, out1 value will keep changing since it's a cycle count and out2 value will be the constant you put in the beginning of step 2. 
 *include the screenshot of ipynb on your report* 
+
+## Submission Guideline
 
 **What to submit** 
 
