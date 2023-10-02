@@ -57,7 +57,7 @@ Your tasks are as follows:
 2. Adding stall logic in CPU as to cover different instruction combinations passed to ALU.
     * e.g., the operands is loaded but ALU is not ready.
 
-To pass this part and earn full credit, implement the integration described above and run your implementation on [alutest.mem](/test/part5/alutest.mem) and ensure it passes this testcase.
+To pass this part and earn full credit, implement the integration described above and run your implementation on [alutest0.mem](/test/part5/alutest0.mem) and ensure it passes this testcase.
 
 
 
@@ -85,11 +85,11 @@ Intended instruction sequence (your implementation should also work with the ins
 * store OP3, (CSR: optional)
 * store OP3, (CSR: optional)
 
-Modify [external ALU](links/to/alu) to support the above modifications.
+Modify [external ALU](links/to/alu) to support the above modifications, and pass [alutest1.mem](/test/part5/alutest1.mem). 
 
 Bonus points: 
 
-Support the following instruction sequence (your implementation should also work with the instruction sequence in Part 1 & 2)
+Support the following instruction sequence to pass [alutest2.mem](/test/part5/alutest2.mem) (your implementation should also work with the instruction sequence in Part 1 & 2)
 * load OP1, OP2, OP3
 * load OP1, OP2, OP3
 * load OP1, OP2, OP3
