@@ -74,6 +74,6 @@ Build a circuit that has two 3-bit inputs that computes the bitwise-OR of the tw
 
 Earlier, we mentioned that there are bitwise and logical versions of the various boolean operators (e.g., [norgate](https://hdlbits.01xz.net/wiki/norgate)). When using vectors, the distinction between the two operator types becomes important. A bitwise operation between two N-bit vectors replicates the operation for each bit of the vector and produces a N-bit output, while a logical operation treats the entire vector as a boolean value (true = non-zero, false = zero) and produces a 1-bit output.
 
-![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/d2d0c846-9fcf-4588-a6c7-055c03a63fcb/Untitled.png)
+![Untitled](https://hdlbits.01xz.net/mw/images/1/1b/Vectorgates.png)
 
 Look at the simulation waveforms at how the bitwise-OR and logical-OR differ.

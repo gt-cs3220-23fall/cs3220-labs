@@ -20,7 +20,7 @@ Combinational always blocks are equivalent to assign statements, thus there is a
 For example, the assign and combinational always block describe the same circuit. Both create the same blob of combinational logic. Both will recompute the output whenever any of the inputs (right side) changes value. **`assign** out1 = a & b | c ^ d;
 **always @(*)** out2 = a & b | c ^ d;`
 
-!https://hdlbits.01xz.net/mw/images/2/2b/Alwayscomb.png
+![Untitled](https://hdlbits.01xz.net/mw/images/2/2b/Alwayscomb.png)
 
 For combinational always blocks, always use a sensitivity list of (*). Explicitly listing out the signals is error-prone (if you miss one), and is ignored for hardware synthesis. If you explicitly specify the sensitivity list and miss a signal, the synthesized hardware will still behave as though (*) was specified, but the simulation will not match the hardware's behaviour. (In SystemVerilog, use always_comb.)
 
@@ -53,7 +53,7 @@ In a **combinational** always block, use **blocking** assignments. In a **c
 
 A D flip-flop is a circuit that stores a bit and is updated periodically, at the (usually) positive edge of a clock signal.
 
-!https://hdlbits.01xz.net/mw/images/6/6c/Dff.png
+![Untitled](https://hdlbits.01xz.net/mw/images/6/6c/Dff.png)
 
 D flip-flops are created by the logic synthesizer when a clocked always block is used. A D flip-flop is the simplest form of "blob of combinational logic followed by a flip-flop" where the combinational logic portion is just a wire.
 

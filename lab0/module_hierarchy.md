@@ -6,7 +6,7 @@ The figure below shows a very simple circuit with a sub-module. In this exercise
 
 When connecting modules, only the ports on the module are important. You do not need to know the code inside the module. The code for module `mod_a` looks like this:
 
-https://hdlbits.01xz.net/mw/thumb.php?f=Module_moda.png&width=101
+![Untitled](https://hdlbits.01xz.net/mw/thumb.php?f=Module_moda.png&width=101)
 
 **`module** mod_a ( **input** in1, **input** in2, **output** out );
     *// Module body*`
@@ -17,7 +17,7 @@ The hierarchy of modules is created by instantiating one module inside another, 
 
 You may connect signals to the module by port name or port position. For extra practice, try both methods.
 
-![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/bddad6db-22c7-4bfa-ae53-81d96378cb08/Untitled.png)
+![Untitled](https://hdlbits.01xz.net/mw/images/c/c0/Module.png)
 
 ### **Connecting Signals to Module Ports**
 
