@@ -73,10 +73,8 @@
 
 - Having gained a foundational understanding of the design and implementation of accelerators from academia, are you interested in exploring how industry-grade accelerators are developed? For this bonus assignment, you will **delve into the architecture and codebase of NVIDIA's Deep Learning Accelerator (NVDLA), a leading example of an industry-grade AI accelerator.**
 - This assignment is both challenging and open-ended, offering you considerable latitude in your approach. Your primary task is to
-    - 1) Write a short summary (150~250 words) of NVDLA design.
-    - 2) Choose one or more modules within the NVDLA architecture that interest you.
+    - Choose one or more modules within the NVDLA architecture that interest you.
         - Document the code, focusing on its structure, functionality, and any unique features.
-    - 3) Write a short summary (150~250 words) on how the industry-grade accelerator differs from academic accelerators in terms of design and implementation.
 - NVDLA source code: https://github.com/nvdla/hw/tree/nvdlav1/vmod/nvdla
 - NVDLA documentation: http://nvdla.org/hw/v1/hwarch.html
 - Grading:
