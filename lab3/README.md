@@ -134,7 +134,7 @@ The bistream generation takes around 10 mins, in the bottom of the screen, if yo
 
 #### [9] Export the bitstream
 
-Click on File -> Export -> Export block design.
+Click on File -> Export -> Export bitstream.
 
 #### [10] Prepare the files
 
