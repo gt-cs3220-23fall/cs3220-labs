@@ -113,7 +113,7 @@ You will need to connect your RISC-V processor with the communication adapter (i
 
 #### [5] Add Zynq PS module from IP repo and then use auto-connect features to complete all the connections. 
 
-The procedure for adding zynq ps is the same as how you add the comm IP into the block diagram, as demonstrated in the [video above](https://drive.google.com/file/d/13UJYmOdiZHjuR1avq2HrmpxkNc-HSVaM/view?usp=sharing). The PS stands for the on-chip processing system (where you run the jupyter notebook), which will communicate with the RISC-V processor through the AXI lite ports.
+The procedure for adding zynq ps is the same as how you add the comm IP into the block diagram (you do not need to import a repo for zynq ps, Vivado automatically loaded it for you), as demonstrated in the [video above](https://drive.google.com/file/d/13UJYmOdiZHjuR1avq2HrmpxkNc-HSVaM/view?usp=sharing). The PS stands for the on-chip processing system (where you run the jupyter notebook), which will communicate with the RISC-V processor through the AXI lite ports.
 
 The autoconnect button shows up at the top of the block diagram. Click "Run Connection Automation" and then select all modules, then click OK.
 
