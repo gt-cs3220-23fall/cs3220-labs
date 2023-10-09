@@ -16,7 +16,7 @@
             6. Under 1000 words; figures are welcome but do not directly copy the ones in the paper; show your understanding 
     3. **Submission**: A PDF containing the above contents
 2. **Code implementation understanding and documentation:**
-    1. **Available Modules (Location: `/storage/ice-shared/cs3220/lab_srcs/lab4_srcs/DNNBuilder_undocumented`):**
+    1. **[Available Modules](cs3220-labs/lab4/assets/DNNBuilder_undocumented)**
         1. **High-Level Modules**: These are RTL modules primarily responsible for instantiating and utilizing lower-level modules. They provide a broader view of the overall design architecture.
         2. **Low-Level Modules**: These RTL modules contain detailed logic implementations, offering a more nuanced understanding of the control scheme.
     2. **Module assignment:**
@@ -25,14 +25,13 @@
     3. **Documentation format:**
         1. Summary of the code file
         2. Line by line comments of the code (meaningless lines can be skipped, e.g., “begin”, “end”, parentheses…)
-        3. Example code documentation:
-            1. **`/storage/ice-shared/cs3220/lab_srcs/lab4_srcs/example`**
+        3. [Example code documentation](cs3220-labs/lab4/assets/examples)
     4. **Submission:**
         1. All documented code pieces
         2. Do not change the original code file name
     5. The source code is adapted from: https://github.com/IBM/AccDNN 
 3. **Submission Format:** 
-    1. Copy the makefile **`/storage/ice-shared/cs3220/lab_srcs/lab4_srcs/Makefile`** to your folder containing paper summary pdf and documented code pieces
+    1. Copy the [makefile](cs3220-labs/lab4/Makefile) to your folder containing paper summary pdf and documented code pieces
         1. Double check the zip file contain necessary contents
     2. **`make submit`**
     3. Rename submission.zip to <you_gt_user_name>.zip
