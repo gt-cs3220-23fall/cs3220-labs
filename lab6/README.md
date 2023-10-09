@@ -70,11 +70,13 @@ To support such instruction level parallelism, we will need to:
     * `OPREG1`, `OPREG2`, and `OPREG3` are 5-bit inputs that specify the registers to be used as operands for the ALU operation.
         * 4 registers for each of them; in total 12 registers
     * `OP1`, `OP2`, and `OP3` will be latched from/into registers indexed by `OPREG1`, `OPREG2` and `OPREG3` respectively.
+    * `OP1`, `OP2`, and `OP3` will be latched to/from the input and output of registers of the ALU units.
 * Modify the busy status such that the ALU is busy only when all the units are busy or no register is left to store the operands.
 * Add additional control logic decide which registers to use for the operands and subsequently, which registers the unit should read/write to.
-* We currently assume in-order executiong; then we need to sensure `OP3` is being written to in the same order as the input instructions.
+* We currently assume in-order executiong; then we need to ensure `OP3` is being written to in the same order as the input instructions.
 
 Intended instruction sequence (your implementation should also work with the instruction sequence in Part 1):
+<!-- Intended to be latched immediately -->
 * load OP1, OP2, OP3
 * load ALUOP (start the computation as ALUOP loaded)
 * load OP1, OP2, OP3
@@ -88,7 +90,7 @@ Intended instruction sequence (your implementation should also work with the ins
 Modify [external ALU](links/to/alu) to support the above modifications, and pass [alutest1.mem](/test/part5/alutest1.mem). 
 
 Bonus points: 
-
+<!-- Intended to ask them to add an queue for each operand -->
 Support the following instruction sequence to pass [alutest2.mem](/test/part5/alutest2.mem) (your implementation should also work with the instruction sequence in Part 1 & 2)
 * load OP1, OP2, OP3
 * load OP1, OP2, OP3
