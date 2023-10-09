@@ -39,6 +39,22 @@ To test your implementation, run the following command:
 
 The test script is based on the testbench provided in [axi4_ram_tb.v](links/to/axi4_ram_tb.v).
 
+
+## Bonus: AXI4 RAM Burst Mode (10 points)
+In this section, you'll modify the implementation of an AXI4 RAM to supports burst mode. We provide a new code skeleton in [axi4_ram_burst.v](links/to/axi4_ram_burst.v). Please combine with your previous parts implementation to finish all the TODOs in the code.
+
+Please refer to [Lecture xx](404.com) ~ [Lecture xx](404.com) for the details of AXI4 protocol. 
+
+Here are also some useful links for you:
++ https://www.youtube.com/watch?v=ydSy7uO60Is
++ https://www.youtube.com/watch?v=_twa6kY-ors 
++ https://www.youtube.com/watch?v=ZDNOezaQ4Fk 
++ https://www.youtube.com/watch?v=lI5Gh-1zk-s 
+
+To test your implementation, run the following command:
+
+```./run.sh axi4_ram_burst```
+
 ## Submission
 
 + Provide a zip file containing your source code. Generate the submission.zip file using the command `make submit`. Avoid manual zip file creation to prevent any issues with the autograding script, which could lead to a 30% score deduction.
