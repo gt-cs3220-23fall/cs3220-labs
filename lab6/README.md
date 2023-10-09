@@ -1,112 +1,69 @@
-# CS3220 Lab #6 : A Case Study of A RISC-V with An External ALU
+# CS3220 Lab #6 : On-chip Communication Protocols
 
 100 pts in total, will be rescaled into 11.25% of your final score of the course.  
 
-**Part 1: Connect An External ALU with A RISC-V**: 60 pts
+**Part 1: AXI-Stream FIFO**: 40 pts
 
-**Part 2: Performance Optimization**: 40 pts + 10 bonus pts
+**Part 2: AXI4 RAM**: 60 pts + 10 bonus pts
 
-***Submission ddl***: Nov 13th
+***Submission ddl***: Nov 27th
 
-This lab builds upon the knowledge you've gained from previous lectures and labs on RISC-V CPU design, as well as your research into AI accelerator implementations. Specifically, you'll be integrating the RISC-V CPU you designed in earlier labs with an external ALU to enhance its efficiency for certain complex workloads. This is the first in a series of three labs on this topic.
+In this lab, you will delve into the robust and scalable on-chip communication protocol, AXI4, along with its streaming variant, AXI-Stream. The objective is to design and implement FIFOs/RAMs that leverage these two protocols for content reading and writing. While the previous lab focused on a straightforward register-based communication protocol for data exchange between the CPU and ALU, it lacked the scalability and robustness required for intricate communication scenarios. Such scenarios might involve more advanced modules, like a systolic array. Building on the knowledge gained in this assignment, the subsequent lab will guide you in utilizing the FIFOs/RAMs you've crafted to interconnect components within a sophisticated heterogeneous system.
 
-## Part 1: Connect An External ALU with A RISC-V (60 points): 
+## Part 1: AXI-Stream FIFO: 
 
-In this section, you'll integrate the RISC-V CPU you designed in Lab #2 with a supplied external ALU. Your responsibility is to adjust the RISC-V implementation to accommodate the external ALU's operations and verify that the RISC-V CPU can accurately run the given test cases.
+In this section, you'll finish the implementation of an AXI-Stream FIFO. Please refer to [Lecture xx](404.com) ~ [Lecture xx](404.com) for the details of AXI-Stream protocol. Please also refer to the FAQ section for more design references.
 
-The [external ALU](links/to/alu) has following specifications:
-<!-- * `OPREG1`, `OPREG2`, and `OPREG3` are 5-bit inputs that specify the registers to be used as operands for the ALU operation.
-    * 4 registers for each of them; in total 12 registers -->
-* `OP1` and `OP2` are 32-bit inputs that specify the values to be used as operands for the ALU operation.
-* `OP3` is a 32-bit output that holds the result of the ALU operation.
-* `ALUOP` is a 4-bit input that specifies the ALU operation to be performed. The ALUOP values are as follows:
-    * 0000: EXP
-    * 0001: DIV
-    * `ALUOP[3]` is a 1-bit input that specifies whether the ALU operation is signed or unsigned. If `ALUOP[3]` is 0, the operation is unsigned; if `ALUOP[3]` is 1, the operation is signed.
-* `CSR_ALU` (Control/Status Register) is a 3-bit bidirectional port that specifies/control the status of the ALU operation. The `CSR_ALU` values are as follows:
-    * `CSR_ALU[0]` is a 1-bit output that signals if the ALU is READY/BUSY
-        * i.e., whether the ALU will be able to latch in your inputs (operands and ALUOP)
-    * `CSR_ALU[1]` is a 1-bit input/output that signals if the result of the ALU operation is VALID/INVALID
-        * 1: VALID; 0: INVALID
-        * After reading the output, the CPU should set `CSR_ALU[1]` to 0, indicating it's safe for ALU to overwrite the results; otherwise, the ALU will stall the current operation write the result to `OP3`.
-    * `CSR_ALU[2]` is a 1-bit input that signals the ALU ready to start the operation. When `CSR_ALU[2]` is 1, the ALU starts the operation. When `CSR_ALU[2]` is 0, the ALU stays idle.
-        * i.e., whether the data in `OP1`, `OP2`, `OP3`, and `ALUOP` are valid
-        * If `CSR_ALU[2]` is set to 1 while the ALU is busy, the ALU will ignore the request and continue the current operation.
+The code skeleton is provided in [axi_stream_fifo.v](links/to/axi_stream_fifo.v). Finish all the TODOs in the code.
 
+To test your implementation, run the following command:
 
-The specifications from RISC-V CPU is as follows:
+```./run.sh axi_stream_fifo```
 
-1. For loading the operands, we will use LW instructions, to load the operands from the memory, with dst reg ID:
-    * xxx: OP1
-    * yyy: OP2
-    * zzz: OP3
-2. For loading the `ALUOP` to configure the ALU, we will use LUI instructions, with dst reg ID
-    * 111: ALUOP
-3. For reading the result/status from the ALU, we will use SW instructions, with src reg ID
-    * xxx: OP3
-    * xxx: CSR
-4. Intended instruction sequence:
-    * load OP1, OP2, OP3
-    * load ALUOP (start the computation as ALUOP loaded)
-    * store OP3, (CSR: optional)
-
-
-
-Your tasks are as follows:
-1. Integrate the ALU with the RISC-V CPU. You will need to modify the RISC-V CPU to accommodate the ALU's operations.
-2. Adding stall logic in CPU as to cover different instruction combinations passed to ALU.
-    * e.g., the operands is loaded but ALU is not ready.
-
-To pass this part and earn full credit, implement the integration described above and run your implementation on [alutest0.mem](/test/part5/alutest0.mem) and ensure it passes this testcase.
+The test script is based on the testbench provided in [axi_stream_fifo_tb.v](links/to/axi_stream_fifo_tb.v).
 
 
 
 
-## Part 2: Performance Optimization (40 points + 10 bonus pts)
-As the current ALU uses separate hardware logic (units) to implement different operations, it is possible to overlap the execution of different operations, as long as the requested unit is not busy. For example, if the ALU is currently executing an EXP operation, it is possible to start a DIV operation, as long as the DIV unit is not busy. 
 
-To support such instruction level parallelism, we will need to:
-* Add additional sets of registers to store the operands from the different instructions:
-    * `OPREG1`, `OPREG2`, and `OPREG3` are 5-bit inputs that specify the registers to be used as operands for the ALU operation.
-        * 4 registers for each of them; in total 12 registers
-    * `OP1`, `OP2`, and `OP3` will be latched from/into registers indexed by `OPREG1`, `OPREG2` and `OPREG3` respectively.
-    * `OP1`, `OP2`, and `OP3` will be latched to/from the input and output of registers of the ALU units.
-* Modify the busy status such that the ALU is busy only when all the units are busy or no register is left to store the operands.
-* Add additional control logic decide which registers to use for the operands and subsequently, which registers the unit should read/write to.
-* We currently assume in-order executiong; then we need to ensure `OP3` is being written to in the same order as the input instructions.
 
-Intended instruction sequence (your implementation should also work with the instruction sequence in Part 1):
-<!-- Intended to be latched immediately -->
-* load OP1, OP2, OP3
-* load ALUOP (start the computation as ALUOP loaded)
-* load OP1, OP2, OP3
-* load ALUOP (start the computation as ALUOP loaded)
-* load OP1, OP2, OP3
-* load ALUOP (start the computation as ALUOP loaded)
-* store OP3, (CSR: optional)
-* store OP3, (CSR: optional)
-* store OP3, (CSR: optional)
 
-Modify [external ALU](links/to/alu) to support the above modifications, and pass [alutest1.mem](/test/part5/alutest1.mem). 
+## Part 2: AXI4 RAM (60 points + 10 bonus pts)
+In this section, you'll finish the implementation of an AXI4 RAM. Please refer to [Lecture xx](404.com) ~ [Lecture xx](404.com) for the details of AXI4 protocol. Please also refer to the FAQ section for more design references.
 
-Bonus points: 
-<!-- Intended to ask them to add an queue for each operand -->
-Support the following instruction sequence to pass [alutest2.mem](/test/part5/alutest2.mem) (your implementation should also work with the instruction sequence in Part 1 & 2)
-* load OP1, OP2, OP3
-* load OP1, OP2, OP3
-* load OP1, OP2, OP3
-* load ALUOP (start the computation as ALUOP loaded)
-* load ALUOP (start the computation as ALUOP loaded)
-* load ALUOP (start the computation as ALUOP loaded)
-* store OP3, (CSR: optional)
-* store OP3, (CSR: optional)
-* store OP3, (CSR: optional)
-    
+The code skeleton is provided in [axi4_ram.v](links/to/axi4_ram.v). Finish all the TODOs in the code.
+
+To test your implementation, run the following command:
+
+```./run.sh axi4_ram```
+
+The test script is based on the testbench provided in [axi4_ram_tb.v](links/to/axi4_ram_tb.v).
+
+
+## Bonus: AXI4 RAM Burst Mode (10 points)
+In this section, you'll modify the implementation of an AXI4 RAM to supports burst mode. We provide a new code skeleton in [axi4_ram_burst.v](links/to/axi4_ram_burst.v). Please combine with your previous parts implementation to finish all the TODOs in the code.
+
+Please refer to [Lecture xx](404.com) ~ [Lecture xx](404.com) for the details of AXI4 protocol. 
+
+Here are also some useful links for you:
++ https://www.youtube.com/watch?v=ydSy7uO60Is
++ https://www.youtube.com/watch?v=_twa6kY-ors 
++ https://www.youtube.com/watch?v=ZDNOezaQ4Fk 
++ https://www.youtube.com/watch?v=lI5Gh-1zk-s 
+
+To test your implementation, run the following command:
+
+```./run.sh axi4_ram_burst```
 
 ## Submission
 
-+ Provide a zip file containing your source code. Generate the submission.zip file using the command make submit. Avoid manual zip file creation to prevent any issues with the autograding script, which could lead to a 30% score deduction.
++ Provide a zip file containing your source code. Generate the submission.zip file using the command `make submit`. Avoid manual zip file creation to prevent any issues with the autograding script, which could lead to a 30% score deduction.
 * Late submission policy: 3 hours grace period for potential canvas submission issues; 10% per day late, up to 3 days. No credit will be given for submissions later than 3 days.
 
+
+
+## FAQ 
+[Q] Useful links to refer to for AXI4 design?\
+[A] Official AXI4 specification: [link1](https://developer.arm.com/documentation/ihi0022/g/) [link2](https://documentation-service.arm.com/static/642583d7314e245d086bc8c9?token=); Handy timing diagrams from Xilinx: [link3](https://docs.google.com/presentation/d/1fUulgpJMmuZ_iGeoqGIIaTosDAveB6BM/edit?usp=sharing&ouid=103731133449796992574&rtpof=true&sd=true); Another set of diagrams from Oakland University: [link4](https://www.secs.oakland.edu/~llamocca/Courses/ECE495/Notes%20-%20Unit%205.pdf) 
 
 

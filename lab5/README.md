@@ -1,82 +1,112 @@
-# Lab 5 - AI Accelerator Case Study - SIGMA
+# CS3220 Lab #5 : A Case Study of A RISC-V with An External ALU
 
-**Objective:** The primary aim of this lab is to synthesize the skills and knowledge acquired in previous labs focused on digital design and RTL programming. This will be applied in a practical case study centered on Artificial Intelligence (AI) accelerators.
+100 pts in total, will be rescaled into 11.25% of your final score of the course.  
 
-**Description:**  This lab consists of two main components. First, you will read, comprehend, and summarize a classic research paper on AI accelerators. The second part involves hands-on experience: based on your understanding of the paper, you will delve into the actual code implementation of the discussed accelerator. You will be assigned specific modules that make up this accelerator. Your task is to understand the code in the context of the paper's insights and to provide both a high-level summary and detailed annotations for the code.
+**Part 1: Connect An External ALU with A RISC-V**: 60 pts
 
-1. **Paper summary:**
-    1. **Paper link:** [SIGMA: A Sparse and Irregular GEMM Accelerator with Flexible Interconnects for DNN Training](https://ieeexplore.ieee.org/document/9065523)
-    2. **Format for paper summary:**
-        1. Organized section layout, comprising:
-            1. Abstract: Provide a high-level description of the paper's main contributions. (Note: Do not copy the original abstract.)
-            2. Motivation: Explain the significance of the techniques introduced in the paper.
-            3. Methods: Outline the key technical aspects and methodologies presented in the paper.
-            4. Effectiveness: Discuss how the paper's experiments validate the efficacy of the proposed techniques.
-            5. Summary: Conclude with an overall assessment of the paper's contributions and impact.
-            6. Under 1000 words; figures are welcome but do not directly copy the ones in the paper; show your understanding 
-    3. **Submission**: A PDF containing the above contents
-2. **Code implementation understanding and documentation:**
-    1. **[Available Modules](assets/SIGMA_undocumented):**
-        1. These RTL modules contain a combination of high-level module instantiation and porting and low-level detailed logic implementations
-    2. **Module assignment:**
-        1. Each student will be randomly assigned with **3** modules.
-        2. Assignment will be listed in a sheet posted in both Canvas and Piazza
-    3. **Documentation format:**
-        1. Summary of the code file
-        2. Line by line comments of the code (meaningless lines can be skipped, e.g., “begin”, “end”, parentheses…)
-        3. [Example code documentation](assets/examples)
-    4. **Submission:**
-        1. All documented code pieces
-        2. Do not change the original code file name
-3. **Submission Format:** 
-    1. Copy the [makefile](Makefile) to your folder containing paper summary pdf and documented code pieces
-    2. **`make submit`**
-    3. Rename submission.zip to <you_gt_user_name>.zip
-    4. Make sure the zip file containing the paper summary pdf and documented code pieces
+**Part 2: Performance Optimization**: 40 pts + 10 bonus pts
 
-**Due:** Oct. 30th 11:59PM EST
+***Submission ddl***: Nov 13th
 
-**Grading Policy**: 
+This lab builds upon the knowledge you've gained from previous lectures and labs on RISC-V CPU design, as well as your research into AI accelerator implementations. Specifically, you'll be integrating the RISC-V CPU you designed in earlier labs with an external ALU to enhance its efficiency for certain complex workloads. This is the first in a series of three labs on this topic.
 
-1. Paper summary (25 points): 
-    1. **Abstract (6 points)**
-        - Clarity and conciseness: 3 points
-        - Accurate representation of the paper's main contributions: 3 points
-    2. **Motivation (3 points)**
-        - Explanation of the paper's significance: 2 point
-        - Relevance to the preceding working and existing solutions: 1 point
-    3. **Methods (6 points)**
-        - Clarity in outlining key technical aspects: 4 points
-        - Depth of understanding: 2 points
-    4. **Effectiveness (4 points)**
-        - Discussion of the paper's experimental validation: 3 points
-        - Critical evaluation of the results: 1 point
-    5. **Summary (3 points)**
-        - Overall assessment of the paper: 2 points
-        - Coherence and flow of the summary: 1 points
-    6. **Formatting and Structure (3 points)**
-        - Adherence to guidelines: 2 points
-        - Grammar and spelling: 1 points
-2. Code documentation  (25 points / code file; 75 points in total):
-    1. **Summary of the Code File (5 points)**
-        - Clarity and conciseness: 2 points
-        - Accurate representation of the code's main functionalities: 3 points
-    2. **Line-by-Line Comments (15 points)**
-        - Completeness: Covering all meaningful lines of code: 7.5 points
-        - Clarity: Making complex or non-intuitive lines understandable: 7.5 points
+## Part 1: Connect An External ALU with A RISC-V (60 points): 
 
-3. Late submission policy: 3 hours grace period for potential canvas submission issues; 10% per day late, up to 3 days. No credit will be given for submissions later than 3 days.
+In this section, you'll integrate the RISC-V CPU you designed in Lab #2 with a supplied external ALU. Your responsibility is to adjust the RISC-V implementation to accommodate the external ALU's operations and verify that the RISC-V CPU can accurately run the given test cases.
 
-**Bonus Points (15 points)**: 
+The [external ALU](links/to/alu) has following specifications:
+<!-- * `OPREG1`, `OPREG2`, and `OPREG3` are 5-bit inputs that specify the registers to be used as operands for the ALU operation.
+    * 4 registers for each of them; in total 12 registers -->
+* `OP1` and `OP2` are 32-bit inputs that specify the values to be used as operands for the ALU operation.
+* `OP3` is a 32-bit output that holds the result of the ALU operation.
+* `ALUOP` is a 4-bit input that specifies the ALU operation to be performed. The ALUOP values are as follows:
+    * 0000: EXP
+    * 0001: DIV
+    * `ALUOP[3]` is a 1-bit input that specifies whether the ALU operation is signed or unsigned. If `ALUOP[3]` is 0, the operation is unsigned; if `ALUOP[3]` is 1, the operation is signed.
+* `CSR_ALU` (Control/Status Register) is a 3-bit bidirectional port that specifies/control the status of the ALU operation. The `CSR_ALU` values are as follows:
+    * `CSR_ALU[0]` is a 1-bit output that signals if the ALU is READY/BUSY
+        * i.e., whether the ALU will be able to latch in your inputs (operands and ALUOP)
+    * `CSR_ALU[1]` is a 1-bit input/output that signals if the result of the ALU operation is VALID/INVALID
+        * 1: VALID; 0: INVALID
+        * After reading the output, the CPU should set `CSR_ALU[1]` to 0, indicating it's safe for ALU to overwrite the results; otherwise, the ALU will stall the current operation write the result to `OP3`.
+    * `CSR_ALU[2]` is a 1-bit input that signals the ALU ready to start the operation. When `CSR_ALU[2]` is 1, the ALU starts the operation. When `CSR_ALU[2]` is 0, the ALU stays idle.
+        * i.e., whether the data in `OP1`, `OP2`, `OP3`, and `ALUOP` are valid
+        * If `CSR_ALU[2]` is set to 1 while the ALU is busy, the ALU will ignore the request and continue the current operation.
 
-- In this lab, you'll gain a fundamental understanding of the design and implementation of a run-time reconfigurable sparse accelerator. However, you'll notice that the current implementation is modular and not fully complete. Are you interested in diving deeper into a more comprehensive implementation? For this bonus assignment, **you'll explore the complete codebase of MAERI, a reconfigurable sparse accelerator that serves as the inspiration for SIGMA.**
-- This assignment is both challenging and open-ended, offering you considerable latitude in your approach. Your primary task is to
-    - 1) Write a short summary (150~250 words) of MAERI design.
-    - 2) Choose one or more modules within the MAERI architecture that interest you.
-        - Document the code, focusing on its structure, functionality, and any unique features.
-- Note: MAERI is written in Bluespec System Verilog which you can find more information [here](https://github.com/maeri-project/MAERI_bsv#software-requirement)
-- MAERI source code: https://github.com/maeri-project/MAERI_bsv/tree/master/src
-- MAERI paper: https://bpb-us-w2.wpmucdn.com/sites.gatech.edu/dist/c/332/files/2018/01/maeri_asplos2018.pdf
-- Grading:
-    - Two modules’ full documentation at [this level](https://github.com/maeri-project/MAERI_bsv/blob/master/src/maeri_accelerator/MAERI_Accelerator.bsv) will lead to full points
-    - Your documentation will be scaled with the above level
+
+The specifications from RISC-V CPU is as follows:
+
+1. For loading the operands, we will use LW instructions, to load the operands from the memory, with dst reg ID:
+    * xxx: OP1
+    * yyy: OP2
+    * zzz: OP3
+2. For loading the `ALUOP` to configure the ALU, we will use LUI instructions, with dst reg ID
+    * 111: ALUOP
+3. For reading the result/status from the ALU, we will use SW instructions, with src reg ID
+    * xxx: OP3
+    * xxx: CSR
+4. Intended instruction sequence:
+    * load OP1, OP2, OP3
+    * load ALUOP (start the computation as ALUOP loaded)
+    * store OP3, (CSR: optional)
+
+
+
+Your tasks are as follows:
+1. Integrate the ALU with the RISC-V CPU. You will need to modify the RISC-V CPU to accommodate the ALU's operations.
+2. Adding stall logic in CPU as to cover different instruction combinations passed to ALU.
+    * e.g., the operands is loaded but ALU is not ready.
+
+To pass this part and earn full credit, implement the integration described above and run your implementation on [alutest0.mem](/test/part5/alutest0.mem) and ensure it passes this testcase.
+
+
+
+
+## Part 2: Performance Optimization (40 points + 10 bonus pts)
+As the current ALU uses separate hardware logic (units) to implement different operations, it is possible to overlap the execution of different operations, as long as the requested unit is not busy. For example, if the ALU is currently executing an EXP operation, it is possible to start a DIV operation, as long as the DIV unit is not busy. 
+
+To support such instruction level parallelism, we will need to:
+* Add additional sets of registers to store the operands from the different instructions:
+    * `OPREG1`, `OPREG2`, and `OPREG3` are 5-bit inputs that specify the registers to be used as operands for the ALU operation.
+        * 4 registers for each of them; in total 12 registers
+    * `OP1`, `OP2`, and `OP3` will be latched from/into registers indexed by `OPREG1`, `OPREG2` and `OPREG3` respectively.
+    * `OP1`, `OP2`, and `OP3` will be latched to/from the input and output of registers of the ALU units.
+* Modify the busy status such that the ALU is busy only when all the units are busy or no register is left to store the operands.
+* Add additional control logic decide which registers to use for the operands and subsequently, which registers the unit should read/write to.
+* We currently assume in-order executiong; then we need to ensure `OP3` is being written to in the same order as the input instructions.
+
+Intended instruction sequence (your implementation should also work with the instruction sequence in Part 1):
+<!-- Intended to be latched immediately -->
+* load OP1, OP2, OP3
+* load ALUOP (start the computation as ALUOP loaded)
+* load OP1, OP2, OP3
+* load ALUOP (start the computation as ALUOP loaded)
+* load OP1, OP2, OP3
+* load ALUOP (start the computation as ALUOP loaded)
+* store OP3, (CSR: optional)
+* store OP3, (CSR: optional)
+* store OP3, (CSR: optional)
+
+Modify [external ALU](links/to/alu) to support the above modifications, and pass [alutest1.mem](/test/part5/alutest1.mem). 
+
+Bonus points: 
+<!-- Intended to ask them to add an queue for each operand -->
+Support the following instruction sequence to pass [alutest2.mem](/test/part5/alutest2.mem) (your implementation should also work with the instruction sequence in Part 1 & 2)
+* load OP1, OP2, OP3
+* load OP1, OP2, OP3
+* load OP1, OP2, OP3
+* load ALUOP (start the computation as ALUOP loaded)
+* load ALUOP (start the computation as ALUOP loaded)
+* load ALUOP (start the computation as ALUOP loaded)
+* store OP3, (CSR: optional)
+* store OP3, (CSR: optional)
+* store OP3, (CSR: optional)
+    
+
+## Submission
+
++ Provide a zip file containing your source code. Generate the submission.zip file using the command make submit. Avoid manual zip file creation to prevent any issues with the autograding script, which could lead to a 30% score deduction.
+* Late submission policy: 3 hours grace period for potential canvas submission issues; 10% per day late, up to 3 days. No credit will be given for submissions later than 3 days.
+
+
+
