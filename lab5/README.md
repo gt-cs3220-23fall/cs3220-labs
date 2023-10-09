@@ -16,7 +16,7 @@
             6. Under 1000 words; figures are welcome but do not directly copy the ones in the paper; show your understanding 
     3. **Submission**: A PDF containing the above contents
 2. **Code implementation understanding and documentation:**
-    1. **Available Modules (Location: `/server/path/to/module/src`):**
+    1. **[Available Modules](assets/SIGMA_undocumented):**
         1. These RTL modules contain a combination of high-level module instantiation and porting and low-level detailed logic implementations
     2. **Module assignment:**
         1. Each student will be randomly assigned with **3** modules.
@@ -24,13 +24,12 @@
     3. **Documentation format:**
         1. Summary of the code file
         2. Line by line comments of the code (meaningless lines can be skipped, e.g., “begin”, “end”, parentheses…)
-        3. Example code documentation:
-            1. **`/server/path/to/module/src`**
+        3. [Example code documentation](assets/examples)
     4. **Submission:**
         1. All documented code pieces
         2. Do not change the original code file name
 3. **Submission Format:** 
-    1. Copy the makefile **`/server/path/to/module/src`** to your folder containing paper summary pdf and documented code pieces
+    1. Copy the [makefile](Makefile) to your folder containing paper summary pdf and documented code pieces
     2. **`make submit`**
     3. Rename submission.zip to <you_gt_user_name>.zip
     4. Make sure the zip file containing the paper summary pdf and documented code pieces
