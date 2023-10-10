@@ -14,7 +14,7 @@
             4. Effectiveness: Discuss how the paper's experiments validate the efficacy of the proposed techniques.
             5. Summary: Conclude with an overall assessment of the paper's contributions and impact.
             6. Under 1000 words; figures are welcome but do not directly copy the ones in the paper; show your understanding 
-    3. **Submission**: A PDF containing the above contents
+    3. **Submission**: A txt file containing the above contents
 2. **Code implementation understanding and documentation:**
     1. **[Available Modules](assets/DNNBuilder_undocumented)**
         1. **High-Level Modules**: These are RTL modules primarily responsible for instantiating and utilizing lower-level modules. They provide a broader view of the overall design architecture.
@@ -28,11 +28,13 @@
         3. [Example code documentation](assets/examples)
     4. **Submission:**
         1. All documented code pieces
+            1. Summary of the code file in a separate txt file
+            2. Line by line in code comments
         2. Do not change the original code file name
     5. The source code is adapted from: https://github.com/IBM/AccDNN 
 3. **Submission Format:** 
     1. Copy the [makefile](Makefile) to your folder containing paper summary pdf and documented code pieces
-        1. Double check the zip file contain necessary contents
+        1. **Double check** the zip file contain necessary contents
     2. **`make submit`**
     3. Rename submission.zip to <you_gt_user_name>.zip
     4. Make sure the zip file containing the paper summary pdf and documented code pieces

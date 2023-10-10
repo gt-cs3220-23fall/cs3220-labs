@@ -20,10 +20,10 @@ ifneq ($(words $(CURDIR)),1)
 endif
 
 
-#zip all the pdfs and the two folders high_level_modules low_level_modules
+#zip all the txts and the two folders high_level_modules low_level_modules
 submit: 
 	@echo "-- ZIPPING ALL THE FILE ---------"
-	zip -r submission.zip high_level_modules low_level_modules *.pdf
+	zip -r submission.zip high_level_modules low_level_modules *.txt
 
 maintainer-copy::
 clean mostlyclean distclean maintainer-clean::
