@@ -10,6 +10,12 @@
 
 This lab serves as a continuation of Lab #2. The primary aim is to guide you through the process of deploying your RISC-V processor on a Pynq board.
 
+**Learning Outcomes:**
+
+1. Learn to create and use AXI lite protocol to communicate with your RISC-V processor.
+
+2. Get familiar with Vivado and Vitis HLS toolchain.
+
 ## Part-0: Env Setup (0 pts)
 
 ### Accessing Pynq Board
@@ -107,7 +113,7 @@ You will need to connect your RISC-V processor with the communication adapter (i
 
 #### [5] Add Zynq PS module from IP repo and then use auto-connect features to complete all the connections. 
 
-The procedure for adding zynq ps is the same as how you add the comm IP into the block diagram, as demonstrated in the [video above](https://drive.google.com/file/d/13UJYmOdiZHjuR1avq2HrmpxkNc-HSVaM/view?usp=sharing). The PS stands for the on-chip processing system (where you run the jupyter notebook), which will communicate with the RISC-V processor through the AXI lite ports.
+The procedure for adding zynq ps is the same as how you add the comm IP into the block diagram (you do not need to import a repo for zynq ps, Vivado automatically loaded it for you), as demonstrated in the [video above](https://drive.google.com/file/d/13UJYmOdiZHjuR1avq2HrmpxkNc-HSVaM/view?usp=sharing). The PS stands for the on-chip processing system (where you run the jupyter notebook), which will communicate with the RISC-V processor through the AXI lite ports.
 
 The autoconnect button shows up at the top of the block diagram. Click "Run Connection Automation" and then select all modules, then click OK.
 
@@ -128,7 +134,7 @@ The bistream generation takes around 10 mins, in the bottom of the screen, if yo
 
 #### [9] Export the bitstream
 
-Click on File -> Export -> Export block design.
+Click on File -> Export -> Export bitstream.
 
 #### [10] Prepare the files
 
@@ -149,8 +155,10 @@ Place all the generated files in the above step and the [riscv_test.ipynb](riscv
 
 #### [12] Running on the Pynq Board
 
-Open the [riscv_test.ipynb](riscv_test.ipynb) file on the request Jupyter notebook and run the code, the 0x20 address corresonds to out1 and 0x30 address corresponds to out2, out1 value will keep changing since it's a cycle count and out2 value will be the constant that you put in the beginning of step 2. 
+Open the [riscv_test.ipynb](riscv_test.ipynb) file on the requested Jupyter notebook and run the code, the 0x20 address corresonds to out1 and 0x30 address corresponds to out2, out1 value will keep changing since it's a cycle count and out2 value will be the constant you put in the beginning of step 2. 
 *include the screenshot of ipynb on your report* 
+
+## Submission Guideline
 
 **What to submit** 
 
