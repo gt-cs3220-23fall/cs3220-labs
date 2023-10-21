@@ -56,7 +56,7 @@ The specifications from RISC-V CPU is as follows:
     * 11010: CSR_ALU_OUT
 5. Intended instruction sequence:
     * load ALUOP 
-    * load OP1, OP2 (**OP1 and OP2 need to be loaded in order, and before ALUOP**)
+    * load OP1, OP2 (**OP1 and OP2 need to be loaded in order**)
     * store OP3
 
 
