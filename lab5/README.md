@@ -40,6 +40,9 @@ The [external ALU](external_alu_wrapper.v) has following specifications:
 * The ALUOP need to be loaded first and the operands OP1 and OP2 need to be loaded in order. 
 * The ALU is data driven, i.e., it will start the computation as soon as the operands are loaded, based on the loaded ALUOP.
 * Potential delay between the two operands' loading, i.e., ALU can potentillay not be ready to load OP2 when OP1 is loaded.
+* The ALU is adated from this implementation:
+    * https://github.com/dawsonjon/fpu
+    * https://dawsonjon.github.io/Chips-2.0/language_reference/interface.html 
 
 The specifications from RISC-V CPU is as follows:
 
