@@ -30,41 +30,41 @@ The [external ALU](external_alu_wrapper.v) has following specifications:
         * i.e., whether the ALU will be able to latch in your inputs (operands and ALUOP)
     * `CSR_ALU_OUT`[2] is a 1-bit output that signals if the result of the ALU operation is VALID/INVALID
         * 1: VALID; 0: INVALID
-* `CSR_ALU_IN` is a 2-bit output that control the status of the ALU operation. The `CSR_ALU_IN` values are as follows:
+* `CSR_ALU_IN` is a 3-bit output that control the status of the ALU operation. The `CSR_ALU_IN` values are as follows:
     * `CSR_ALU_IN`[0] is a 1-bit input that signals the the results can be overwritten by the ALU.
         * After reading the output, the CPU should set `CSR_ALU_IN`[0] to 0, indicating it's safe for ALU to overwrite the results; otherwise, the ALU will stall the current operation write the result to OP3.
     * `CSR_ALU_IN`[1] is a 1-bit input that signals the `OP1` fed to the ALU is stable
         * If it's set to 1, the ALU will latch in the `OP1` value; otherwise, the ALU will stall the current operation and wait for `OP1` to be stable.
         * It's ignored if the ALU is not ready to accept `OP1`.
     * `CSR_ALU_IN`[2] is a 1-bit input that signals the `OP2` fed to the ALU is stable
-* The ALUOP need to be loaded first and the operands OP1 and OP2 need to be loaded in order. 
+* The `ALUOP` need to be loaded first and the operands `OP1` and `OP2` need to be loaded in order. 
 * The ALU is data driven, i.e., it will start the computation as soon as the operands are loaded, based on the loaded ALUOP.
-* Potential delay between the two operands' loading, i.e., ALU can potentillay not be ready to load OP2 when OP1 is loaded.
+* Potential delay between the two operands' loading, i.e., ALU can potentillay not be ready to load `OP2` when `OP1` is loaded.
 * The ALU is adapted from this implementation:
     * https://github.com/dawsonjon/fpu
     * https://dawsonjon.github.io/Chips-2.0/language_reference/interface.html 
 
 The specifications from RISC-V CPU is as follows:
 
-1. For loading the operands, we will use LW instructions, to load the operands from the memory, with dst reg ID:
-    * 11110: OP1
-    * 11111: OP2
+1. For loading the operands, we will use `LW` instructions, to load the operands from the memory, with dst reg ID:
+    * 11110: `OP1`
+    * 11111: `OP2`
 2. For loading the `ALUOP` to configure the ALU, we will use LUI instructions, with dst reg ID
-    * 11101: ALUOP
-4. For reading the result/status from the ALU, we will use SW instructions, with src reg ID
-    * 11011: OP3
-    * 11010: CSR_ALU_OUT
+    * 11101: `ALUOP`
+4. For reading the result/status from the ALU, we will use `SW` instructions, with src reg ID
+    * 11011: `OP3`
+    * 11010: `CSR_ALU_OUT`
 5. Intended instruction sequence:
-    * load ALUOP 
-    * load OP1, OP2 (**OP1 and OP2 need to be loaded in order**)
-    * store OP3
+    * load `ALUOP` 
+    * load `OP1`, `OP2` (**`OP1` and `OP2` need to be loaded in order**)
+    * store `OP3`
 
 
 
 Your tasks are as follows:
 1. Integrate the ALU with the RISC-V CPU. You will need to modify the RISC-V CPU to accommodate the ALU's operations.
     * Go over all the TODOs and finish the implementation. ([FU_stage.v](FU_stage.v), [de_stage.v](de_stage.v))
-2. You can assume enough NOPs inserted to separate the operands loading and storing the results. 
+2. You can assume enough `NOP`s inserted to separate the operands loading and storing the results. 
     * In other words you don't need to worry about the stalls needed to handle the ALU's readiness.
 
 To pass this part and earn full credit, implement the integration described above and run your implementation on [alutest0.mem](test/part5/alutest0.mem) and ensure it passes this testcase.
@@ -74,7 +74,7 @@ To pass this part and earn full credit, implement the integration described abov
 
 
 ## Part 2: Performance Optimization (40 points + 10 bonus pts)
-What if there is no NOPs inserted between OP1 loading and OP2 loading, and the ALU might not be ready to load either OP1 or OP2?
+What if there is no `NOP`s inserted between OP1 loading and OP2 loading, and the ALU might not be ready to load either `OP1` or `OP2`?
 
 Modify the part 1 implementation to handle the stalls needed to handle the ALU's readiness. Your implementation should still work on the testcases in part 1.
 * You may modify more files (except the [external ALU](external_alu_wrapper.v) and its dependent modules) as needed.
@@ -83,7 +83,7 @@ To pass this part and earn full credit, implement the integration described abov
 * You can use the `./run_tests.sh part6` to test your implementation.
 
 Bonus points: 
-When the implementation is instructed to store ALU's results to the memory, it's possible that the ALU is still processing. It's even possible that the instruction to store OP3 is issued before ALU even finishes loading either OP1 or OP2. 
+When the implementation is instructed to store ALU's results to the memory, it's possible that the ALU is still processing. It's even possible that the instruction to store `OP3` is issued before ALU even finishes loading either `OP1` or `OP2`. 
 
 Modify the part 2 implementation to handle the stalls needed to handle stalls needed to handle the ALU's results storing to the memory. Your implementation should still work on the testcases in part 1 and part 2.
 
