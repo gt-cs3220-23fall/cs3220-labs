@@ -10,7 +10,7 @@ module AGEX_STAGE(
   output wire [`from_AGEX_to_FE_WIDTH-1:0]  from_AGEX_to_FE,
   output wire [`from_AGEX_to_DE_WIDTH-1:0]  from_AGEX_to_DE
 );
-
+  //TODO: part2/bonus modify as necessary
   `UNUSED_VAR (from_MEM_to_AGEX)
   `UNUSED_VAR (from_WB_to_AGEX)
 
@@ -24,8 +24,6 @@ module AGEX_STAGE(
   wire [`IOPBITS-1:0] op_I_AGEX;
   reg br_cond_AGEX; // 1 means a branch condition is satisified. 0 means a branch condition is not satisifed
  
-  /////////////////////////////////////////////////////////////////////////////
-  // TODO: Complete remaining code logic here!
 
   wire is_br_AGEX;
   wire is_jmp_AGEX;
@@ -47,8 +45,6 @@ module AGEX_STAGE(
   wire [7:0] pc_xor_bhr_AGEX;
 
   
-  // Calculate branch condition
-  // TODO: complete the code
   always @ (*) begin
     case (op_I_AGEX)
     `BEQ_I : br_cond_AGEX = (regval1_AGEX == regval2_AGEX);
@@ -62,7 +58,6 @@ module AGEX_STAGE(
   end
 
   // Compute ALU operations  (alu out or memory addresses)
-  // TODO: complete the code
   always @ (*) begin
     case (op_I_AGEX)
     `ADD_I:   aluout_AGEX = regval1_AGEX + regval2_AGEX; 
@@ -103,7 +98,6 @@ module AGEX_STAGE(
 
   // branch target needs to be computed here 
   // computed branch target needs to send to other pipeline stages (br_target_AGEX)
-  // TODO: complete the code
   always @(*)begin
     if (op_I_AGEX == `JAL_I) 
       br_target_AGEX  = PC_AGEX + sxt_imm_AGEX;
@@ -130,7 +124,6 @@ module AGEX_STAGE(
     pcplus_AGEX,
     pcnext_AGEX,
     op_I_AGEX,
-    // TODO: add more signals here
     regval1_AGEX,
     regval2_AGEX,
     sxt_imm_AGEX,                                
@@ -148,7 +141,6 @@ module AGEX_STAGE(
     inst_AGEX,
     PC_AGEX,
     op_I_AGEX,
-    // TODO: add more signals here
     memaddr_AGEX, 
     aluout_AGEX,
     rd_mem_AGEX,
@@ -161,6 +153,7 @@ module AGEX_STAGE(
   always @ (posedge clk) begin
     if (reset) begin
       AGEX_latch <= '0;
+    //TODO: part2/bonus modify as necessary
     end else begin
       AGEX_latch <= AGEX_latch_contents ;
     end 

@@ -1,5 +1,5 @@
 
-part2/sltu.elf:     file format elf32-littleriscv
+part3/sltu.elf:     file format elf32-littleriscv
 
 
 Disassembly of section .text:
@@ -91,7 +91,7 @@ Disassembly of section .text:
  314:	0020b733          	sltu	a4,ra,sp
  318:	00000013          	nop
  31c:	00070313          	mv	t1,a4
- 320:	00120213          	addi	tp,tp,1 # 1 <_start-0x1ff>
+ 320:	00120213          	add	tp,tp,1 # 1 <_start-0x1ff>
  324:	00200293          	li	t0,2
  328:	fe5212e3          	bne	tp,t0,30c <test_8+0x4>
  32c:	00000393          	li	t2,0
@@ -103,7 +103,7 @@ Disassembly of section .text:
  33c:	00e00093          	li	ra,14
  340:	00d00113          	li	sp,13
  344:	0020b733          	sltu	a4,ra,sp
- 348:	00120213          	addi	tp,tp,1 # 1 <_start-0x1ff>
+ 348:	00120213          	add	tp,tp,1 # 1 <_start-0x1ff>
  34c:	00200293          	li	t0,2
  350:	fe5216e3          	bne	tp,t0,33c <test_9+0x4>
  354:	00000393          	li	t2,0
@@ -117,7 +117,7 @@ Disassembly of section .text:
  36c:	00000013          	nop
  370:	00600093          	li	ra,6
  374:	0020b733          	sltu	a4,ra,sp
- 378:	00120213          	addi	tp,tp,1 # 1 <_start-0x1ff>
+ 378:	00120213          	add	tp,tp,1 # 1 <_start-0x1ff>
  37c:	00200293          	li	t0,2
  380:	fe5212e3          	bne	tp,t0,364 <test_10+0x4>
  384:	00100393          	li	t2,1

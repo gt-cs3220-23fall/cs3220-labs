@@ -1,5 +1,5 @@
 
-part2/jal.elf:     file format elf32-littleriscv
+part3/jal.elf:     file format elf32-littleriscv
 
 
 Disassembly of section .text:
@@ -49,18 +49,18 @@ Disassembly of section .text:
 
 00000294 <target_2>:
  294:	00000117          	auipc	sp,0x0
- 298:	ff410113          	addi	sp,sp,-12 # 288 <linkaddr_2>
+ 298:	ff410113          	add	sp,sp,-12 # 288 <linkaddr_2>
  29c:	02411a63          	bne	sp,tp,2d0 <fail>
 
 000002a0 <test_3>:
  2a0:	00100093          	li	ra,1
  2a4:	0140006f          	j	2b8 <test_3+0x18>
- 2a8:	00108093          	addi	ra,ra,1
- 2ac:	00108093          	addi	ra,ra,1
- 2b0:	00108093          	addi	ra,ra,1
- 2b4:	00108093          	addi	ra,ra,1
- 2b8:	00108093          	addi	ra,ra,1
- 2bc:	00108093          	addi	ra,ra,1
+ 2a8:	00108093          	add	ra,ra,1
+ 2ac:	00108093          	add	ra,ra,1
+ 2b0:	00108093          	add	ra,ra,1
+ 2b4:	00108093          	add	ra,ra,1
+ 2b8:	00108093          	add	ra,ra,1
+ 2bc:	00108093          	add	ra,ra,1
  2c0:	00300393          	li	t2,3
  2c4:	00300193          	li	gp,3
  2c8:	00709463          	bne	ra,t2,2d0 <fail>

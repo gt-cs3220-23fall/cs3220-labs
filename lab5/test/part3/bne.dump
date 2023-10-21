@@ -1,5 +1,5 @@
 
-part2/bne.elf:     file format elf32-littleriscv
+part3/bne.elf:     file format elf32-littleriscv
 
 
 Disassembly of section .text:
@@ -62,19 +62,19 @@ Disassembly of section .text:
  2c0:	00000093          	li	ra,0
  2c4:	00000113          	li	sp,0
  2c8:	04209063          	bne	ra,sp,308 <fail>
- 2cc:	00120213          	addi	tp,tp,1 # 1 <_start-0x1ff>
+ 2cc:	00120213          	add	tp,tp,1 # 1 <_start-0x1ff>
  2d0:	00200293          	li	t0,2
  2d4:	fe5216e3          	bne	tp,t0,2c0 <test_4+0x8>
 
 000002d8 <test_5>:
  2d8:	00100093          	li	ra,1
  2dc:	00009a63          	bnez	ra,2f0 <test_5+0x18>
- 2e0:	00108093          	addi	ra,ra,1
- 2e4:	00108093          	addi	ra,ra,1
- 2e8:	00108093          	addi	ra,ra,1
- 2ec:	00108093          	addi	ra,ra,1
- 2f0:	00108093          	addi	ra,ra,1
- 2f4:	00108093          	addi	ra,ra,1
+ 2e0:	00108093          	add	ra,ra,1
+ 2e4:	00108093          	add	ra,ra,1
+ 2e8:	00108093          	add	ra,ra,1
+ 2ec:	00108093          	add	ra,ra,1
+ 2f0:	00108093          	add	ra,ra,1
+ 2f4:	00108093          	add	ra,ra,1
  2f8:	00300393          	li	t2,3
  2fc:	00500193          	li	gp,5
  300:	00709463          	bne	ra,t2,308 <fail>

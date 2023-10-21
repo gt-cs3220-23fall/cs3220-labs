@@ -1,5 +1,5 @@
 
-part2/sll.elf:     file format elf32-littleriscv
+part3/sll.elf:     file format elf32-littleriscv
 
 
 Disassembly of section .text:
@@ -55,11 +55,11 @@ Disassembly of section .text:
 
 000002ac <test_4>:
  2ac:	212120b7          	lui	ra,0x21212
- 2b0:	12108093          	addi	ra,ra,289 # 21212121 <begin_signature+0x21211d51>
+ 2b0:	12108093          	add	ra,ra,289 # 21212121 <begin_signature+0x21211d51>
  2b4:	fc100113          	li	sp,-63
  2b8:	00209733          	sll	a4,ra,sp
  2bc:	424243b7          	lui	t2,0x42424
- 2c0:	24238393          	addi	t2,t2,578 # 42424242 <begin_signature+0x42423e72>
+ 2c0:	24238393          	add	t2,t2,578 # 42424242 <begin_signature+0x42423e72>
  2c4:	00400193          	li	gp,4
  2c8:	04771663          	bne	a4,t2,314 <fail>
 

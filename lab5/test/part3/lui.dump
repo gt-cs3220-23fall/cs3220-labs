@@ -1,5 +1,5 @@
 
-part2/lui.elf:     file format elf32-littleriscv
+part3/lui.elf:     file format elf32-littleriscv
 
 
 Disassembly of section .text:
@@ -45,21 +45,21 @@ Disassembly of section .text:
 
 0000028c <test_3>:
  28c:	fffff0b7          	lui	ra,0xfffff
- 290:	4010d093          	srai	ra,ra,0x1
+ 290:	4010d093          	sra	ra,ra,0x1
  294:	80000393          	li	t2,-2048
  298:	00300193          	li	gp,3
  29c:	04709063          	bne	ra,t2,2dc <fail>
 
 000002a0 <test_4>:
  2a0:	7ffff0b7          	lui	ra,0x7ffff
- 2a4:	4140d093          	srai	ra,ra,0x14
+ 2a4:	4140d093          	sra	ra,ra,0x14
  2a8:	7ff00393          	li	t2,2047
  2ac:	00400193          	li	gp,4
  2b0:	02709663          	bne	ra,t2,2dc <fail>
 
 000002b4 <test_5>:
  2b4:	800000b7          	lui	ra,0x80000
- 2b8:	4140d093          	srai	ra,ra,0x14
+ 2b8:	4140d093          	sra	ra,ra,0x14
  2bc:	80000393          	li	t2,-2048
  2c0:	00500193          	li	gp,5
  2c4:	00709c63          	bne	ra,t2,2dc <fail>

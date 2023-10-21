@@ -28,6 +28,10 @@ module pipeline (
 
   wire [`from_WB_to_MEM_WIDTH-1:0] from_WB_to_MEM; 
 
+  wire [`from_DE_to_FU_WIDTH-1:0] from_DE_to_FU;
+  wire [`from_FU_to_DE_WIDTH-1:0] from_FU_to_DE;
+  //TODO: part2/bonus modify as necessary
+
   FE_STAGE my_FE_stage(
     .clk(clk), 
     .reset(reset), 
@@ -37,7 +41,8 @@ module pipeline (
     .from_WB_to_FE(from_WB_to_FE),
     .FE_latch_out(FE_latch_out)
   ); 
-                     
+
+//TODO: part2/bonus modify as necessary
   DE_STAGE my_DE_stage(
     .clk(clk),
     .reset(reset),
@@ -45,7 +50,9 @@ module pipeline (
     .from_AGEX_to_DE(from_AGEX_to_DE),  
     .from_MEM_to_DE(from_MEM_to_DE),     
     .from_WB_to_DE(from_WB_to_DE), 
-    .from_DE_to_FE(from_DE_to_FE),   
+    .from_DE_to_FE(from_DE_to_FE),
+    .from_FU_to_DE(from_FU_to_DE),
+    .from_DE_to_FU(from_DE_to_FU), 
     .DE_latch_out(DE_latch_out)
   );
 
@@ -70,7 +77,8 @@ module pipeline (
     .from_MEM_to_DE(from_MEM_to_DE),
     .from_MEM_to_AGEX(from_MEM_to_AGEX)
   );     
-       
+
+//TODO: part2/bonus modify as necessary
   WB_STAGE my_WB_stage(
     .clk(clk),
     .reset(reset),  
@@ -79,6 +87,13 @@ module pipeline (
     .from_WB_to_DE(from_WB_to_DE),  
     .from_WB_to_AGEX(from_WB_to_AGEX),
     .from_WB_to_MEM(from_WB_to_MEM)
+  );
+
+  FU_STAGE my_FU_stage(
+    .clk(clk),
+    .reset(reset),
+    .from_DE_to_FU(from_DE_to_FU),
+    .from_FU_to_DE(from_FU_to_DE)
   );
 
   always @ (posedge clk) begin

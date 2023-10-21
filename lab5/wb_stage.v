@@ -1,5 +1,6 @@
  `include "define.vh" 
 
+//TODO: part2/bonus modify as necessary
 module WB_STAGE(
   input wire                              clk,
   input wire                              reset,  
@@ -28,14 +29,13 @@ module WB_STAGE(
     inst_WB,
     PC_WB,
     op_I_WB,
-    // TODO: add more signals here
     rd_val_WB, 
     aluout_WB, 
     wr_reg_WB,
     wregno_WB
   } = from_MEM_latch; 
-        
-  // TODO: select WB register value
+
+//TODO: part2/bonus modify as necessary
   assign regval_WB = (op_I_WB == `LW_I) ? rd_val_WB : aluout_WB;
 
   // forward signals to DE stage
@@ -52,6 +52,7 @@ module WB_STAGE(
   assign from_WB_to_AGEX = '0;
 
   // forward signals to MEM stage
+//TODO: part2/bonus modify as necessary
   assign from_WB_to_MEM = '0;
 
   // this code need to be commented out when we synthesize the code later 

@@ -18,6 +18,15 @@ case $part in
   part4) 
     rm part4_tests.log
     ;;
+  part5)
+	rm part5_tests.log
+	;;
+  part6)
+	rm part6_tests.log
+	;;
+  part7)
+	rm part7_tests.log
+	;;
   towers)
     rm -f towers_tests.log
 	;;
@@ -79,6 +88,48 @@ case $part in
 			grep -i passed part4_tests.log | wc -l
 			echo "Number of failed tests:"
 			grep -i failed part4_tests.log | wc -l
+	;;
+	part5)
+			echo RUNNING PART5$'\n'
+			for filename in $PWD/test/part5/*.mem;do
+					echo $'\n'TESTING: $filename >> part5_tests.log
+					IDMEMINITFILE=$filename make tests>> part5_tests.log
+			done
+			grep -E 'TESTING|Failed|Passed' part5_tests.log>part5_results.log
+			echo "Total number of tests:"
+			grep -i testing part5_tests.log | wc -l
+			echo "Number of passed tests:"
+			grep -i passed part5_tests.log | wc -l
+			echo "Number of failed tests:"
+			grep -i failed part5_tests.log | wc -l
+	;;
+	part6)
+			echo RUNNING PART6$'\n'
+			for filename in $PWD/test/part6/*.mem;do
+					echo $'\n'TESTING: $filename >> part6_tests.log
+					IDMEMINITFILE=$filename make tests>> part6_tests.log
+			done
+			grep -E 'TESTING|Failed|Passed' part6_tests.log>part6_results.log
+			echo "Total number of tests:"
+			grep -i testing part6_tests.log | wc -l
+			echo "Number of passed tests:"
+			grep -i passed part6_tests.log | wc -l
+			echo "Number of failed tests:"
+			grep -i failed part6_tests.log | wc -l
+	;;
+	part7)
+			echo RUNNING PART7$'\n'
+			for filename in $PWD/test/part7/*.mem;do
+					echo $'\n'TESTING: $filename >> part7_tests.log
+					IDMEMINITFILE=$filename make tests>> part7_tests.log
+			done
+			grep -E 'TESTING|Failed|Passed' part7_tests.log>part7_results.log
+			echo "Total number of tests:"
+			grep -i testing part7_tests.log | wc -l
+			echo "Number of passed tests:"
+			grep -i passed part7_tests.log | wc -l
+			echo "Number of failed tests:"
+			grep -i failed part7_tests.log | wc -l
 	;;
 	towers)
 		echo RUNNING TOWERS$'\n'
