@@ -33,11 +33,11 @@
         2. Do not change the original code file name
     5. The source code is adapted from: https://github.com/IBM/AccDNN 
 3. **Submission Format:** 
-    1. Copy the [makefile](Makefile) to your folder containing paper summary pdf and documented code pieces
-        1. **Double check** the zip file contain necessary contents
+    1. Copy the [makefile](Makefile) to your folder containing paper summary txt and documented code pieces
+        1. Double check the zip file contain necessary contents
     2. **`make submit`**
     3. Rename submission.zip to <you_gt_user_name>.zip
-    4. Make sure the zip file containing the paper summary pdf and documented code pieces
+    4. Make sure the zip file containing the paper summary txt and documented code pieces
 
 **Due:** Oct. 23th 11:59PM EST
 

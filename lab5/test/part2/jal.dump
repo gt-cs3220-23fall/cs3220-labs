@@ -49,7 +49,7 @@ Disassembly of section .text:
 
 00000294 <target_2>:
  294:	00000117          	auipc	sp,0x0
- 298:	ff410113          	addi	sp,sp,-12 # 288 <linkaddr_2>
+ 298:	ff410113          	add	sp,sp,-12 # 288 <linkaddr_2>
  29c:	02410063          	beq	sp,tp,2bc <pass>
  2a0:	00301e63          	bne	zero,gp,2bc <pass>
 

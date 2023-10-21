@@ -1,5 +1,5 @@
 
-part2/sra.elf:     file format elf32-littleriscv
+part3/sra.elf:     file format elf32-littleriscv
 
 
 Disassembly of section .text:
@@ -39,17 +39,17 @@ Disassembly of section .text:
 
 0000027c <test_2>:
  27c:	800000b7          	lui	ra,0x80000
- 280:	fff08093          	addi	ra,ra,-1 # 7fffffff <begin_signature+0x7ffffb6f>
+ 280:	fff08093          	add	ra,ra,-1 # 7fffffff <begin_signature+0x7ffffb6f>
  284:	00e00113          	li	sp,14
  288:	4020d733          	sra	a4,ra,sp
  28c:	000203b7          	lui	t2,0x20
- 290:	fff38393          	addi	t2,t2,-1 # 1ffff <begin_signature+0x1fb6f>
+ 290:	fff38393          	add	t2,t2,-1 # 1ffff <begin_signature+0x1fb6f>
  294:	00200193          	li	gp,2
  298:	14771463          	bne	a4,t2,3e0 <fail>
 
 0000029c <test_3>:
  29c:	800000b7          	lui	ra,0x80000
- 2a0:	fff08093          	addi	ra,ra,-1 # 7fffffff <begin_signature+0x7ffffb6f>
+ 2a0:	fff08093          	add	ra,ra,-1 # 7fffffff <begin_signature+0x7ffffb6f>
  2a4:	01f00113          	li	sp,31
  2a8:	4020d733          	sra	a4,ra,sp
  2ac:	00000393          	li	t2,0
@@ -58,21 +58,21 @@ Disassembly of section .text:
 
 000002b8 <test_4>:
  2b8:	818180b7          	lui	ra,0x81818
- 2bc:	18108093          	addi	ra,ra,385 # 81818181 <begin_signature+0x81817cf1>
+ 2bc:	18108093          	add	ra,ra,385 # 81818181 <begin_signature+0x81817cf1>
  2c0:	fc000113          	li	sp,-64
  2c4:	4020d733          	sra	a4,ra,sp
  2c8:	818183b7          	lui	t2,0x81818
- 2cc:	18138393          	addi	t2,t2,385 # 81818181 <begin_signature+0x81817cf1>
+ 2cc:	18138393          	add	t2,t2,385 # 81818181 <begin_signature+0x81817cf1>
  2d0:	00400193          	li	gp,4
  2d4:	10771663          	bne	a4,t2,3e0 <fail>
 
 000002d8 <test_5>:
  2d8:	818180b7          	lui	ra,0x81818
- 2dc:	18108093          	addi	ra,ra,385 # 81818181 <begin_signature+0x81817cf1>
+ 2dc:	18108093          	add	ra,ra,385 # 81818181 <begin_signature+0x81817cf1>
  2e0:	fc100113          	li	sp,-63
  2e4:	4020d733          	sra	a4,ra,sp
  2e8:	c0c0c3b7          	lui	t2,0xc0c0c
- 2ec:	0c038393          	addi	t2,t2,192 # c0c0c0c0 <begin_signature+0xc0c0bc30>
+ 2ec:	0c038393          	add	t2,t2,192 # c0c0c0c0 <begin_signature+0xc0c0bc30>
  2f0:	00500193          	li	gp,5
  2f4:	0e771663          	bne	a4,t2,3e0 <fail>
 
@@ -89,7 +89,7 @@ Disassembly of section .text:
  314:	00700113          	li	sp,7
  318:	4020d733          	sra	a4,ra,sp
  31c:	00070313          	mv	t1,a4
- 320:	00120213          	addi	tp,tp,1 # 1 <_start-0x1ff>
+ 320:	00120213          	add	tp,tp,1 # 1 <_start-0x1ff>
  324:	00200293          	li	t0,2
  328:	fe5214e3          	bne	tp,t0,310 <test_7+0x4>
  32c:	ff0003b7          	lui	t2,0xff000
@@ -101,7 +101,7 @@ Disassembly of section .text:
  33c:	800000b7          	lui	ra,0x80000
  340:	00700113          	li	sp,7
  344:	4020d733          	sra	a4,ra,sp
- 348:	00120213          	addi	tp,tp,1 # 1 <_start-0x1ff>
+ 348:	00120213          	add	tp,tp,1 # 1 <_start-0x1ff>
  34c:	00200293          	li	t0,2
  350:	fe5216e3          	bne	tp,t0,33c <test_8+0x4>
  354:	ff0003b7          	lui	t2,0xff000
@@ -113,7 +113,7 @@ Disassembly of section .text:
  364:	00700113          	li	sp,7
  368:	800000b7          	lui	ra,0x80000
  36c:	4020d733          	sra	a4,ra,sp
- 370:	00120213          	addi	tp,tp,1 # 1 <_start-0x1ff>
+ 370:	00120213          	add	tp,tp,1 # 1 <_start-0x1ff>
  374:	00200293          	li	t0,2
  378:	fe5216e3          	bne	tp,t0,364 <test_9+0x4>
  37c:	ff0003b7          	lui	t2,0xff000
@@ -143,7 +143,7 @@ Disassembly of section .text:
 000003c0 <test_13>:
  3c0:	40000093          	li	ra,1024
  3c4:	00001137          	lui	sp,0x1
- 3c8:	80010113          	addi	sp,sp,-2048 # 800 <begin_signature+0x370>
+ 3c8:	80010113          	add	sp,sp,-2048 # 800 <begin_signature+0x370>
  3cc:	4020d033          	sra	zero,ra,sp
  3d0:	00000393          	li	t2,0
  3d4:	00d00193          	li	gp,13

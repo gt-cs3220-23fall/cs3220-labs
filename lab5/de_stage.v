@@ -1,5 +1,6 @@
 `include "define.vh" 
 
+//TODO: part2/bonus modify as necessary; may need to add more inputs/outputs?
 module DE_STAGE(
   input wire                              clk,
   input wire                              reset,
@@ -7,7 +8,9 @@ module DE_STAGE(
   input wire [`from_AGEX_to_DE_WIDTH-1:0] from_AGEX_to_DE,  
   input wire [`from_MEM_to_DE_WIDTH-1:0]  from_MEM_to_DE,     
   input wire [`from_WB_to_DE_WIDTH-1:0]   from_WB_to_DE,  
-  output wire [`from_DE_to_FE_WIDTH-1:0]  from_DE_to_FE,   
+  output wire [`from_DE_to_FE_WIDTH-1:0]  from_DE_to_FE,
+  input wire [`from_FU_to_DE_WIDTH-1:0]   from_FU_to_DE,
+  output wire [`from_DE_to_FU_WIDTH-1:0]  from_DE_to_FU,   
   output wire [`DE_latch_WIDTH-1:0]       DE_latch_out
 );
 
@@ -18,6 +21,7 @@ module DE_STAGE(
   wire valid_DE;
 
   /* architecture register file */ 
+  /* verilator lint_off MULTIDRIVEN */
   reg [`DBITS-1:0] reg_file [`REGWORDS-1:0];
   
   /* decode signals */
@@ -176,7 +180,6 @@ module DE_STAGE(
   end
 
   // Decode immediate value
-  // TODO: Complete for other immediate types
   reg [`DBITS-1:0] sxt_imm_DE;
   always @(*) begin 
     case (type_immediate_DE)  
@@ -213,8 +216,7 @@ module DE_STAGE(
     pc_xor_bhr_DE
   } = from_FE_latch;  // based on the contents of the latch, you can decode the conten
   
-  /////////////////////////////////////////////////////////////////////////////
-  // TODO: Complete remaining code logic here!  
+
 
   wire [`REGNOBITS-1:0] rs1_DE;
   wire [`REGNOBITS-1:0] rs2_DE;
@@ -311,6 +313,7 @@ module DE_STAGE(
   assign has_data_hazards = (use_rs1_DE && in_use_regs[rs1_DE]) 
                          || (use_rs2_DE && in_use_regs[rs2_DE]);
 
+  //TODO: part2/bonus modify as necessary
   assign pipeline_stall_DE = has_data_hazards || br_mispred_AGEX;
 
   always @(posedge clk) begin
@@ -349,7 +352,6 @@ module DE_STAGE(
     pcplus_DE,
     pcnext_DE,
     op_I_DE,
-    // TODO: add more signals here
     rs1_val_DE,
     rs2_val_DE,    
     sxt_imm_DE,
@@ -381,5 +383,13 @@ module DE_STAGE(
 
   // send DE latch contents to next pipeline stage
   assign DE_latch_out = DE_latch;
+
+  /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //TODO: add your code here to load operands, ALUOP; 
+  //store results to memory; 
+  //forward data and control signals to FU stage; 
+  //fetch status update from FU stage; 
+  //Recommended states transition: load aluop --> load op1 --> load op2 --> alu processing --> store results to memory
+  //Need to handle the stalls from part2 
 
 endmodule

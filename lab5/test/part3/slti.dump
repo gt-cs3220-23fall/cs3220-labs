@@ -1,5 +1,5 @@
 
-part2/slti.elf:     file format elf32-littleriscv
+part3/slti.elf:     file format elf32-littleriscv
 
 
 Disassembly of section .text:
@@ -63,7 +63,7 @@ Disassembly of section .text:
  2bc:	00f00093          	li	ra,15
  2c0:	00a0a713          	slti	a4,ra,10
  2c4:	00070313          	mv	t1,a4
- 2c8:	00120213          	addi	tp,tp,1 # 1 <_start-0x1ff>
+ 2c8:	00120213          	add	tp,tp,1 # 1 <_start-0x1ff>
  2cc:	00200293          	li	t0,2
  2d0:	fe5216e3          	bne	tp,t0,2bc <test_5+0x4>
  2d4:	00000393          	li	t2,0
@@ -76,7 +76,7 @@ Disassembly of section .text:
  2e8:	00000013          	nop
  2ec:	00000013          	nop
  2f0:	00e0a713          	slti	a4,ra,14
- 2f4:	00120213          	addi	tp,tp,1 # 1 <_start-0x1ff>
+ 2f4:	00120213          	add	tp,tp,1 # 1 <_start-0x1ff>
  2f8:	00200293          	li	t0,2
  2fc:	fe5214e3          	bne	tp,t0,2e4 <test_6+0x4>
  300:	00100393          	li	t2,1
@@ -91,7 +91,7 @@ Disassembly of section .text:
 
 0000031c <test_8>:
  31c:	00ff00b7          	lui	ra,0xff0
- 320:	0ff08093          	addi	ra,ra,255 # ff00ff <begin_signature+0xfefd2f>
+ 320:	0ff08093          	add	ra,ra,255 # ff00ff <begin_signature+0xfefd2f>
  324:	fff0a013          	slti	zero,ra,-1
  328:	00000393          	li	t2,0
  32c:	00800193          	li	gp,8

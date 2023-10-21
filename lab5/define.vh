@@ -9,6 +9,17 @@
 `define STARTPC     32'h200
 `define WBCOUNTERS  8
 
+`define ALUDATABITS    32
+`define ALUOPBITS      4
+`define ALUCSROUTBITS  3
+`define ALUCSRINBITS   3
+
+`define OP1_REG_IDX 5'b11110
+`define OP2_REG_IDX 5'b11111
+`define ALUOP_REG_IDX 5'b11101
+`define OP3_REG_IDX 5'b11011
+`define CSR_OUT_REG_IDX 5'b11010
+
 // Memory mapped IO
 `define ADDRLEDR    32'hFFFFF020
 `define ADDRKEY     32'hFFFFF080
@@ -17,7 +28,7 @@
 // address space is m 0x00000000 to 0x000fffff
 // [NOTICE] please note that both imem and dmem use the SAME "IDMEMINITFILE".
 // you need to change this line to change which test file to read 
-`define IDMEMINITFILE "/home/zhifan/workspace/cs3220-23fall/lab2/test/part3/xori.mem"
+`define IDMEMINITFILE "/home/yz87/CS3220_TA/Fall_2023/cs3220-labs/lab5/test/part5/alutest0.mem"
 `define IMEMADDRBITS    16
 `define IMEMWORDBITS    2
 `define IMEMWORDS	    (1 << (`IMEMADDRBITS - `IMEMWORDBITS))
@@ -208,6 +219,12 @@
 `define from_WB_to_AGEX_WIDTH   (4)
 
 `define from_WB_to_MEM_WIDTH    (1)
+
+//TODO: part2/bonus modify as necessary
+
+
+`define from_DE_to_FU_WIDTH  (`ALUDATABITS+`ALUDATABITS+`ALUOPBITS+`ALUCSRINBITS)
+`define from_FU_to_DE_WIDTH  (`ALUDATABITS+`ALUCSROUTBITS)
 
 `define UNUSED_PARAM(x)  
 

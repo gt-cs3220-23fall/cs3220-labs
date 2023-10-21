@@ -10,7 +10,7 @@ module MEM_STAGE(
   output wire [`from_MEM_to_DE_WIDTH-1:0] from_MEM_to_DE,
   output wire [`from_WB_to_AGEX_WIDTH-1:0] from_MEM_to_AGEX
 );
-
+  //TODO: part2/bonus modify as necessary
   `UNUSED_VAR (from_WB_to_MEM)
 
   // D-MEM
@@ -57,7 +57,6 @@ module MEM_STAGE(
     inst_MEM,
     PC_MEM,
     op_I_MEM,
-    // TODO: add more signals here
     memaddr_MEM, 
     aluout_MEM,
     rd_mem_MEM,
@@ -71,7 +70,6 @@ module MEM_STAGE(
     inst_MEM,
     PC_MEM,
     op_I_MEM,
-    // TODO: add more signals here
     rd_val_MEM, 
     aluout_MEM,
     wr_reg_MEM,
@@ -82,12 +80,14 @@ module MEM_STAGE(
   always @ (posedge clk) begin
     if (reset) begin
         MEM_latch <= {`MEM_latch_WIDTH{1'b0}}; 
+    //TODO: part2/bonus modify as necessary
     end else begin 
         MEM_latch <= MEM_latch_contents;
     end    
   end
 
   // forward signals to AGEX stage
+  //TODO: part2/bonus modify as necessary
   assign from_MEM_to_AGEX = '0;
 
   // forward signals to DE stage

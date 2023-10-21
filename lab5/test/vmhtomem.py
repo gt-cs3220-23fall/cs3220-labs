@@ -29,11 +29,11 @@ with open(hexname, 'r') as hexf:
 				
 		elif line[0] == '@':
 			print (line)
-			memstart = int(line[1:9],16)/4
+			memstart = int(line[1:9],16)
 			print (memstart)
 			print (currentmem)
 			padn = (memstart - currentmem)
-			hexout.extend([PAD]*padn)
+			hexout.extend([PAD]*int(padn))
 			currentmem = memstart 
 		line = hexf.readline().strip()
 

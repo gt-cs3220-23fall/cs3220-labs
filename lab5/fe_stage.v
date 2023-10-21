@@ -149,7 +149,6 @@ module FE_STAGE(
   end
 
   // Calculate next PC
-  // TODO: Update PC on branch misprediction
   always @ (posedge clk) begin  
     if (reset) begin 
       PC_FE_latch <= `STARTPC;
@@ -173,7 +172,6 @@ module FE_STAGE(
   };
 
   // Update FE latch
-  // TODO: flush the pipeline on branch misprediction
   always @ (posedge clk) begin
     if (reset) begin 
       FE_latch <= '0; 

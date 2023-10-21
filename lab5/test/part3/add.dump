@@ -1,5 +1,5 @@
 
-part2/add.elf:     file format elf32-littleriscv
+part3/add.elf:     file format elf32-littleriscv
 
 
 Disassembly of section .text:
@@ -47,19 +47,19 @@ Disassembly of section .text:
 
 00000294 <test_3>:
  294:	800000b7          	lui	ra,0x80000
- 298:	fff08093          	addi	ra,ra,-1 # 7fffffff <begin_signature+0x7ffffb6f>
+ 298:	fff08093          	add	ra,ra,-1 # 7fffffff <begin_signature+0x7ffffb6f>
  29c:	00008137          	lui	sp,0x8
- 2a0:	fff10113          	addi	sp,sp,-1 # 7fff <begin_signature+0x7b6f>
+ 2a0:	fff10113          	add	sp,sp,-1 # 7fff <begin_signature+0x7b6f>
  2a4:	00208733          	add	a4,ra,sp
  2a8:	800083b7          	lui	t2,0x80008
- 2ac:	ffe38393          	addi	t2,t2,-2 # 80007ffe <begin_signature+0x80007b6e>
+ 2ac:	ffe38393          	add	t2,t2,-2 # 80007ffe <begin_signature+0x80007b6e>
  2b0:	00300193          	li	gp,3
  2b4:	14771263          	bne	a4,t2,3f8 <fail>
 
 000002b8 <test_4>:
  2b8:	00100093          	li	ra,1
  2bc:	80000137          	lui	sp,0x80000
- 2c0:	fff10113          	addi	sp,sp,-1 # 7fffffff <begin_signature+0x7ffffb6f>
+ 2c0:	fff10113          	add	sp,sp,-1 # 7fffffff <begin_signature+0x7ffffb6f>
  2c4:	00208733          	add	a4,ra,sp
  2c8:	800003b7          	lui	t2,0x80000
  2cc:	00400193          	li	gp,4
@@ -94,7 +94,7 @@ Disassembly of section .text:
  320:	00b00113          	li	sp,11
  324:	00208733          	add	a4,ra,sp
  328:	00070313          	mv	t1,a4
- 32c:	00120213          	addi	tp,tp,1 # 1 <_start-0x1ff>
+ 32c:	00120213          	add	tp,tp,1 # 1 <_start-0x1ff>
  330:	00200293          	li	t0,2
  334:	fe5214e3          	bne	tp,t0,31c <test_8+0x4>
  338:	01800393          	li	t2,24
@@ -108,7 +108,7 @@ Disassembly of section .text:
  350:	00000013          	nop
  354:	00b00113          	li	sp,11
  358:	00208733          	add	a4,ra,sp
- 35c:	00120213          	addi	tp,tp,1 # 1 <_start-0x1ff>
+ 35c:	00120213          	add	tp,tp,1 # 1 <_start-0x1ff>
  360:	00200293          	li	t0,2
  364:	fe5212e3          	bne	tp,t0,348 <test_9+0x4>
  368:	01a00393          	li	t2,26
@@ -122,7 +122,7 @@ Disassembly of section .text:
  380:	00e00093          	li	ra,14
  384:	00000013          	nop
  388:	00208733          	add	a4,ra,sp
- 38c:	00120213          	addi	tp,tp,1 # 1 <_start-0x1ff>
+ 38c:	00120213          	add	tp,tp,1 # 1 <_start-0x1ff>
  390:	00200293          	li	t0,2
  394:	fe5212e3          	bne	tp,t0,378 <test_10+0x4>
  398:	01900393          	li	t2,25

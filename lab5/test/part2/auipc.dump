@@ -40,21 +40,21 @@ Disassembly of section .text:
 0000027c <test_2>:
  27c:	00000013          	nop
  280:	00002517          	auipc	a0,0x2
- 284:	71c50513          	addi	a0,a0,1820 # 299c <begin_signature+0x264c>
+ 284:	71c50513          	add	a0,a0,1820 # 299c <begin_signature+0x264c>
  288:	004005ef          	jal	a1,28c <test_2+0x10>
  28c:	40b50533          	sub	a0,a0,a1
  290:	000023b7          	lui	t2,0x2
- 294:	71038393          	addi	t2,t2,1808 # 2710 <begin_signature+0x23c0>
+ 294:	71038393          	add	t2,t2,1808 # 2710 <begin_signature+0x23c0>
  298:	00200193          	li	gp,2
  29c:	02751463          	bne	a0,t2,2c4 <fail>
 
 000002a0 <test_3>:
  2a0:	ffffe517          	auipc	a0,0xffffe
- 2a4:	8fc50513          	addi	a0,a0,-1796 # ffffdb9c <begin_signature+0xffffd84c>
+ 2a4:	8fc50513          	add	a0,a0,-1796 # ffffdb9c <begin_signature+0xffffd84c>
  2a8:	004005ef          	jal	a1,2ac <test_3+0xc>
  2ac:	40b50533          	sub	a0,a0,a1
  2b0:	ffffe3b7          	lui	t2,0xffffe
- 2b4:	8f038393          	addi	t2,t2,-1808 # ffffd8f0 <begin_signature+0xffffd5a0>
+ 2b4:	8f038393          	add	t2,t2,-1808 # ffffd8f0 <begin_signature+0xffffd5a0>
  2b8:	00300193          	li	gp,3
  2bc:	00751463          	bne	a0,t2,2c4 <fail>
  2c0:	00301e63          	bne	zero,gp,2dc <pass>
@@ -77,5 +77,5 @@ Disassembly of section .text:
 000002f0 <end>:
  2f0:	00000013          	nop
  2f4:	00000013          	nop
- 2f8:	0000                	unimp
- 2fa:	0000                	unimp
+ 2f8:	0000                	.insn	2, 0x
+ 2fa:	0000                	.insn	2, 0x
