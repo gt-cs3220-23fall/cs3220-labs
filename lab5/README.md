@@ -6,7 +6,7 @@
 
 **Part 2: Performance Optimization**: 40 pts + 10 bonus pts
 
-***Submission ddl***: Nov 6th
+***Submission ddl***: Nov 6th --> Nov 8th
 
 This lab builds upon the knowledge you've gained from previous lectures and labs on RISC-V CPU design, as well as your research into AI accelerator implementations. Specifically, you'll be integrating the RISC-V CPU you designed in earlier labs with an external ALU to enhance its efficiency for certain complex workloads. This is the first in a series of three labs on this topic.
 
@@ -49,7 +49,7 @@ The specifications from RISC-V CPU is as follows:
 1. For loading the operands, we will use `LW` instructions, to load the operands from the memory, with dst reg ID:
     * 11110: `OP1`
     * 11111: `OP2`
-2. For loading the `ALUOP` to configure the ALU, we will use LUI instructions, with dst reg ID
+2. For loading the `ALUOP` to configure the ALU, we will use `LW` instructions, with dst reg ID
     * 11101: `ALUOP`
 4. For reading the result/status from the ALU, we will use `SW` instructions, with src reg ID
     * 11011: `OP3`
