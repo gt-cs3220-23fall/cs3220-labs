@@ -23,7 +23,7 @@ The [external ALU](external_alu_wrapper.v) has following specifications:
     * 0001: MULT
     * 0010: DIV
     <!-- * `ALUOP[3]` is a 1-bit input that specifies whether the ALU operation is signed or unsigned. If `ALUOP[3]` is 0, the operation is unsigned; if `ALUOP[3]` is 1, the operation is signed. -->
-* `CSR_ALU_OUT` (Control/Status Register) is a 3-bit bidirectional port that represents the status of the ALU operation. The `CSR_ALU_OUT` values are as follows:
+* `CSR_ALU_OUT` (Control/Status Register) is a 3-bit input port that represents the status of the ALU operation. The `CSR_ALU_OUT` values are as follows:
     * `CSR_ALU_OUT`[0] is a 1-bit output that signals if the ALU OP1 port is READY/BUSY
         * i.e., whether the ALU will be able to latch in your inputs (operands and ALUOP)
     * `CSR_ALU_OUT`[1] is a 1-bit output that signals if the ALU OP2 port is READY/BUSY
