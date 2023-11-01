@@ -1,26 +1,5 @@
  `include "define.vh" 
 
-// OP1 and OP2 are 32-bit inputs that specify the values to be used as operands for the ALU operation.
-// OP3 is a 32-bit output that holds the result of the ALU operation.
-// ALUOP is a 4-bit input that specifies the ALU operation to be performed. The ALUOP values are as follows:
-    // 0001: DIV
-    // 0010: MULT
-    // ALUOP[3] is a 1-bit input that specifies whether the ALU operation is signed or unsigned. If ALUOP[3] is 0, the operation is unsigned; if ALUOP[3] is 1, the operation is signed.
-// CSR_ALU_OUT (Control/Status Register) is a 3-bit bidirectional port that represents the status of the ALU operation. The CSR_ALU_OUT values are as follows:
-    // CSR_ALU_OUT[0] is a 1-bit output that signals if the ALU OP1 port is READY/BUSY
-        // i.e., whether the ALU will be able to latch in your inputs (operands and ALUOP)
-    // CSR_ALU_OUT[1] is a 1-bit output that signals if the ALU OP2 port is READY/BUSY
-        // i.e., whether the ALU will be able to latch in your inputs (operands and ALUOP)
-    // CSR_ALU_OUT[2] is a 1-bit output that signals if the result of the ALU operation is VALID/INVALID
-        // 1: VALID; 0: INVALID
-// CSR_ALU_IN is a 2-bit output that control the status of the ALU operation. The CSR_ALU_IN values are as follows:
-    // CSR_ALU_IN[0] is a 1-bit input that signals the the results can be overwritten by the ALU.
-        // After reading the output, the CPU should set CSR_ALU_IN[0] to 0, indicating it's safe for ALU to overwrite the results; otherwise, the ALU will stall the current operation write the result to OP3.
-    // CSR_ALU_IN[1] is a 1-bit input that signals the OP1 fed to the ALU is stable
-        // If it's set to 1, the ALU will latch in the OP1 value; otherwise, the ALU will stall the current operation and wait for OP1 to be stable.
-        // It's ignored if the ALU is not ready to accept OP1.
-    // CSR_ALU_IN[2] is a 1-bit input that signals the OP2 fed to the ALU is stable
-
 
  module external_alu(
     input clk,
