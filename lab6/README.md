@@ -66,6 +66,7 @@ Here are also some useful links for you:
 To test your implementation, run the following commands:
 
 ```make axi4_ram_burst```
+
 ```make axi4_ram_burst_on_non_burst```
 
 ## Submission
