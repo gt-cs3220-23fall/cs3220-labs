@@ -12,15 +12,25 @@ In this lab, you will delve into the robust and scalable on-chip communication p
 
 ## Part 1: AXI-Stream FIFO: 
 
-In this section, you'll finish the implementation of an AXI-Stream FIFO. Please refer to [Lecture xx](404.com) ~ [Lecture xx](404.com) for the details of AXI-Stream protocol. Please also refer to the FAQ section for more design references.
+In this section, you'll finish the implementation of an AXI-Stream FIFO. Please also refer to the FAQ section for more design references.
 
-The code skeleton is provided in [axi_stream_fifo.v](links/to/axi_stream_fifo.v). Finish all the TODOs in the code.
+For the FIFO part, there are two pointers corresponding to the read and write actions, respectively.
+* Each time the FIFO is read, the read pointer will be incremented by 1.
+* Each time the FIFO is written, the write pointer will be incremented by 1.
+* The read and write pointers are intentionally defined one bit wider than the bits needed to represent the FIFO address. 
+    * This is to avoid the ambiguous case for empty and full FIFOs.
+    * Thus, when the FIFO is empty, the read pointer will be equal to the write pointer. When the FIFO is full, the 1st bit of the read and write pointers need to be different (They are in different wrap-around positions), while the rest of the bits are the same.
+* For better robustness, the pointer binary code is converted to gray code: ptr = ptr ^ (ptr >> 1).
+    * The full and empty case will be conditioned on the gray code instead.
+    * Note: Following the above logic, you need to come up with new logic to decide the full and empty case.
+
+The code skeleton is provided in [axis_data_fifo.v](axis_data_fifo.v). Finish all the TODOs in the code.
 
 To test your implementation, run the following command:
 
-```./run.sh axi_stream_fifo```
+```make axis_data_fifo```
 
-The test script is based on the testbench provided in [axi_stream_fifo_tb.v](links/to/axi_stream_fifo_tb.v).
+The test script is based on the testbench provided in [tb_axis_fifo.v](tb_axis_fifo.v).
 
 
 
@@ -29,21 +39,23 @@ The test script is based on the testbench provided in [axi_stream_fifo_tb.v](lin
 
 
 ## Part 2: AXI4 RAM (60 points + 10 bonus pts)
-In this section, you'll finish the implementation of an AXI4 RAM. Please refer to [Lecture xx](404.com) ~ [Lecture xx](404.com) for the details of AXI4 protocol. Please also refer to the FAQ section for more design references.
+AXI-stream can only support accesses with a set of regular and consecutive addresses, which is limited in many applications. 
+To support more general accesses, we need to use AXI4 protocol.
+In this section, you'll finish the implementation of an AXI4 RAM. Please also refer to the FAQ section for more design references.
+Mostly, you will deal with managing the ready/valid signals and the transition among different read/write states. RAM interfaces have been handled for you.
 
-The code skeleton is provided in [axi4_ram.v](links/to/axi4_ram.v). Finish all the TODOs in the code.
+The code skeleton is provided in [axi4_ram.v](axi4_ram.v). Finish all the TODOs in the code.
 
 To test your implementation, run the following command:
 
-```./run.sh axi4_ram```
+```make axi4_ram```
 
-The test script is based on the testbench provided in [axi4_ram_tb.v](links/to/axi4_ram_tb.v).
+The test script is based on the testbench provided in [tb_axi4_ram.v](tb_axi4_ram.v).
 
 
 ## Bonus: AXI4 RAM Burst Mode (10 points)
-In this section, you'll modify the implementation of an AXI4 RAM to supports burst mode. We provide a new code skeleton in [axi4_ram_burst.v](links/to/axi4_ram_burst.v). Please combine with your previous parts implementation to finish all the TODOs in the code.
+In this section, you'll modify the implementation of an AXI4 RAM to supports burst mode. We provide a new code skeleton in [axi4_ram_burst.v](axi4_ram_burst.v). Please combine with your previous parts implementation to finish all the TODOs in the code. You code should still pass the previous tests on non-burst mode.
 
-Please refer to [Lecture xx](404.com) ~ [Lecture xx](404.com) for the details of AXI4 protocol. 
 
 Here are also some useful links for you:
 + https://www.youtube.com/watch?v=ydSy7uO60Is
@@ -51,9 +63,10 @@ Here are also some useful links for you:
 + https://www.youtube.com/watch?v=ZDNOezaQ4Fk 
 + https://www.youtube.com/watch?v=lI5Gh-1zk-s 
 
-To test your implementation, run the following command:
+To test your implementation, run the following commands:
 
-```./run.sh axi4_ram_burst```
+```make axi4_ram_burst```
+```make axi4_ram_burst_on_non_burst```
 
 ## Submission
 
