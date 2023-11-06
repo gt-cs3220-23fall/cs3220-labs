@@ -6,7 +6,7 @@
 
 **Part 2: AXI4 RAM**: 60 pts + 10 bonus pts
 
-***Submission ddl***: Nov 27th
+***Submission ddl***: Nov 19th
 
 In this lab, you will delve into the robust and scalable on-chip communication protocol, AXI4, along with its streaming variant, AXI-Stream. The objective is to design and implement FIFOs/RAMs that leverage these two protocols for content reading and writing. While the previous lab focused on a straightforward register-based communication protocol for data exchange between the CPU and ALU, it lacked the scalability and robustness required for intricate communication scenarios. Such scenarios might involve more advanced modules, like a systolic array. Building on the knowledge gained in this assignment, the subsequent lab will guide you in utilizing the FIFOs/RAMs you've crafted to interconnect components within a sophisticated heterogeneous system.
 
@@ -77,6 +77,10 @@ To test your implementation, run the following commands:
 
 ## FAQ 
 [Q] Useful links to refer to for AXI4 design?\
-[A] Official AXI4 specification: [link1](https://developer.arm.com/documentation/ihi0022/g/) [link2](https://documentation-service.arm.com/static/642583d7314e245d086bc8c9?token=); Handy timing diagrams from Xilinx: [link3](https://docs.google.com/presentation/d/1fUulgpJMmuZ_iGeoqGIIaTosDAveB6BM/edit?usp=sharing&ouid=103731133449796992574&rtpof=true&sd=true); Another set of diagrams from Oakland University: [link4](https://www.secs.oakland.edu/~llamocca/Courses/ECE495/Notes%20-%20Unit%205.pdf) 
+[A] Official AXI4 specification: [link1](https://developer.arm.com/documentation/ihi0022/g/) [link2](https://documentation-service.arm.com/static/642583d7314e245d086bc8c9?token=); 
+
+Handy timing diagrams from Xilinx: [link3](https://docs.google.com/presentation/d/1fUulgpJMmuZ_iGeoqGIIaTosDAveB6BM/edit?usp=sharing&ouid=103731133449796992574&rtpof=true&sd=true); 
+
+Another set of diagrams from Oakland University: [link4](https://www.secs.oakland.edu/~llamocca/Courses/ECE495/Notes%20-%20Unit%205.pdf) 
 
 
