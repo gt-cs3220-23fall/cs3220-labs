@@ -47,6 +47,18 @@ if __name__ == "__main__":
         with open(os.path.join(os.path.dirname(__file__), "data.txt"), "w") as f:
             f.write(generate_random_binary(32, 1024))
     else:
+        #load in the data from the data.txt file
+        with open(os.path.join(os.path.dirname(__file__), "data.txt"), "r") as f:
+            data = f.read()
+        # convert the data to a list of hex strings with 32 bits 
+        # data = [hex(int(d, 2))[2:].zfill(8) for d in data.split("\n")]
+        data = [hex(int(d, 2))[2:] for d in data.split("\n")]
+
+        data = data[:-1]+["0"]
+        # write the data to the data.log file
+        with open(os.path.join(os.path.dirname(__file__), "data.log"), "w") as f:
+            f.write("\n".join(data))
+        
         # Separate the input and output data
         din, dout = separate_din_dout(os.path.join(os.path.dirname(__file__), "axis_data_fifo.log"))
         # Write the input data to a file
@@ -56,7 +68,7 @@ if __name__ == "__main__":
         with open(os.path.join(os.path.dirname(__file__), "dout.log"), "w") as f:
             f.write("\n".join(dout))
         #compare din and dout if they are the same print Passed! else print Failed!
-        if din == dout:
+        if din == dout and din == data:
             print("Passed!")
         else:
             print("Failed!")
