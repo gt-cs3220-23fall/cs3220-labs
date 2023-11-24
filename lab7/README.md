@@ -39,17 +39,15 @@ Useful hints:
 Testing pattern and assumptions:
 - The input data will be pre-skewed and pre-rotated. You don't need to implement the skewing and rotating logic. For example:
     - For matrix mulitplication A*B=C: 
-    ```math
-    $\begin{bmatrix}1,5,4,0\\3,5,1,7\\2,6,3,6\\0,0,2,7\end{bmatrix}$ * $\begin{bmatrix}3,0,2,7\\6,6,4,4\\7,4,1,6\\4,0,6,2\end{bmatrix}$ = $\begin{bmatrix}61,46,26,51\\74,34,69,61\\87,48,67,68\\42,8,44,26\end{bmatrix}$
-    ```
-    - A: Streamed to ```row_data_in``` [systolic_array_4_4.v](systolic_array_4_4.v) from left to right as (note topmost is the first row): $\begin{bmatrix}1,5,4,0,0,0,0 \\\ 0,3,5,1,7,0,0 \\\ 0,0,2,6,3,6,0 \\\ 0,0,0,0,0,2,7 \end{bmatrix}$
-    - B: Streamed to ```col_data_in``` [systolic_array_4_4.v](systolic_array_4_4.v) from top to bottom as (note leftmost is the first column): $\begin{bmatrix}3,0,0,0\\\ 6,0,0,0\\\ 7,6,2,0\\\ 4,4,4,7\\\ 0,0,1,4\\\ 0,0,6,6\\\ 0,0,0,2 \end{bmatrix}$
-    - C: Expected to be streamed out from ```row_data_out``` [systolic_array_4_4.v](systolic_array_4_4.v) from left to right as (note topmost is the first row): $\begin{bmatrix}61,46,26,51,0,0,0 \\\ 0, 74,34,69,61,0,0 \\\ 0,0,87,48,67,68,0 \\\ 0,0,0,42,8,44,26 \end{bmatrix}$
+![Alt text](imgs/m1.png)
+    - A: Streamed to ```row_data_in``` [systolic_array_4_4.v](systolic_array_4_4.v) from left to right as (note topmost is the first row): ![Alt text](imgs/m2.png)
+    - B: Streamed to ```col_data_in``` [systolic_array_4_4.v](systolic_array_4_4.v) from top to bottom as (note leftmost is the first column): ![Alt text](imgs/m3.png)
+    - C: Expected to be streamed out from ```row_data_out``` [systolic_array_4_4.v](systolic_array_4_4.v) from left to right as (note topmost is the first row): ![Alt text](imgs/m4.png)
 - Multiple matrix multiplication operations will be performed in sequence. Your design is expected to be able to handle the next matrix multiplication operation immediately after the previous one is finished.
     - Assume the same matrix multiplication operation as above is performed again, the input data will be streamed in the same way as above.
-    - A: Streamed to ```row_data_in``` [systolic_array_4_4.v](systolic_array_4_4.v) from left to right as (note topmost is the first row): $\begin{bmatrix}1,5,4,0,1,5,4,0,0,0,0 \\\ 0,3,5,1,7,3,5,1,7,0,0 \\\ 0,0,2,6,3,6,2,6,3,6,0 \\\ 0,0,0,0,0,2,7,0,0,2,7 \end{bmatrix}$
-    - B: Streamed to ```col_data_in``` [systolic_array_4_4.v](systolic_array_4_4.v) from top to bottom as (note leftmost is the first column): $\begin{bmatrix}3,0,0,0\\\ 6,0,0,0\\\ 7,6,2,0\\\ 4,4,4,7\\\ 3,0,1,4\\\ 6,0,6,6\\\ 7,6,2,2 \\\ 4, 4, 4,7 \\\ 0,0,1,4 \\\ 0,0,6,6 \\\ 0,0,0,2\end{bmatrix}$
-    - C: Expected to be streamed out from ```row_data_out``` [systolic_array_4_4.v](systolic_array_4_4.v) from left to right as (note topmost is the first row): $\begin{bmatrix}61,46,26,51,61,46,26,51,0,0,0 \\\ 0, 74,34,69,61,74,34,69,61,0,0 \\\ 0,0,87,48,67,68,87,48,67,68,0 \\\ 0,0,0,42,8,44,26,42,8,44,26 \end{bmatrix}$
+    - A: Streamed to ```row_data_in``` [systolic_array_4_4.v](systolic_array_4_4.v) from left to right as (note topmost is the first row): ![Alt text](imgs/m5.png)
+    - B: Streamed to ```col_data_in``` [systolic_array_4_4.v](systolic_array_4_4.v) from top to bottom as (note leftmost is the first column): ![Alt text](imgs/m6.png)
+    - C: Expected to be streamed out from ```row_data_out``` [systolic_array_4_4.v](systolic_array_4_4.v) from left to right as (note topmost is the first row): ![Alt text](imgs/m7.png)
 
 Test script, a random number of tests from 4 to 8 doing 4x4 matrix multiplication will be performed. You can run the test script by:
 
