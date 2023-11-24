@@ -38,7 +38,10 @@ Useful hints:
 
 Testing pattern and assumptions:
 - The input data will be pre-skewed and pre-rotated. You don't need to implement the skewing and rotating logic. For example:
-    - For matrix mulitplication A*B=C: $\begin{bmatrix}1,5,4,0 \\\ 3,5,1,7\\\ 2,6,3,6 \\\ 0,0,2,7 \end{bmatrix}$ * $\begin{bmatrix} 3,0,2,7 \\\ 6,6,4,4\\\ 7,4,1,6 \\\ 4,0,6,2 \end{bmatrix}$ = $\begin{bmatrix} 61, 46, 26, 51\\\ 74, 34, 69, 61\\\ 87, 48, 67, 68\\\ 42, 8, 44, 26 \end{bmatrix}$
+    - For matrix mulitplication A*B=C: 
+    ```math
+    $\begin{bmatrix}1,5,4,0 \\\ 3,5,1,7\\\ 2,6,3,6 \\\ 0,0,2,7 \end{bmatrix}$ * $\begin{bmatrix} 3,0,2,7 \\\ 6,6,4,4\\\ 7,4,1,6 \\\ 4,0,6,2 \end{bmatrix}$ = $\begin{bmatrix} 61, 46, 26, 51\\\ 74, 34, 69, 61\\\ 87, 48, 67, 68\\\ 42, 8, 44, 26 \end{bmatrix}$
+    ```
     - A: Streamed to ```row_data_in``` [systolic_array_4_4.v](systolic_array_4_4.v) from left to right as (note topmost is the first row): $\begin{bmatrix}1,5,4,0,0,0,0 \\\ 0,3,5,1,7,0,0 \\\ 0,0,2,6,3,6,0 \\\ 0,0,0,0,0,2,7 \end{bmatrix}$
     - B: Streamed to ```col_data_in``` [systolic_array_4_4.v](systolic_array_4_4.v) from top to bottom as (note leftmost is the first column): $\begin{bmatrix}3,0,0,0\\\ 6,0,0,0\\\ 7,6,2,0\\\ 4,4,4,7\\\ 0,0,1,4\\\ 0,0,6,6\\\ 0,0,0,2 \end{bmatrix}$
     - C: Expected to be streamed out from ```row_data_out``` [systolic_array_4_4.v](systolic_array_4_4.v) from left to right as (note topmost is the first row): $\begin{bmatrix}61,46,26,51,0,0,0 \\\ 0, 74,34,69,61,0,0 \\\ 0,0,87,48,67,68,0 \\\ 0,0,0,42,8,44,26 \end{bmatrix}$
