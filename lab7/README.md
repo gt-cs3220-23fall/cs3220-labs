@@ -71,6 +71,10 @@ RISC-V memory preparation:
 ## Submission
 
 + Provide a zip file containing your source code. Generate the submission.zip file using the command `make submit`. Avoid manual zip file creation to prevent any issues with the autograding script, which could lead to a 30% score deduction.
+* Please also submit a screenshot of your final couse survey submission. 
+
+![](imgs/survey_submission.png)
+
 * Late submission policy: 3 hours grace period for potential canvas submission issues; 10% per day late, up to 3 days. No credit will be given for submissions later than 3 days.
 
 
