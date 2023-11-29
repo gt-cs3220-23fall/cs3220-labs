@@ -4,7 +4,7 @@
 
 **Part 1: Systolic Array**: 100 pts
 
-**Bonus: Systolic Array with RSIC-V and AXI4**: 20 pts
+**Bonus: Systolic Array with RISC-V and AXI4**: 20 pts
 
 ***Submission ddl***: Dec 4th
 
@@ -56,7 +56,7 @@ Test script, a random number of tests from 4 to 8 doing 4x4 matrix multiplicatio
 
 
 
-## Bonus: Systolic Array with RSIC-V and AXI4
+## Bonus: Systolic Array with RISC-V and AXI4
 
 Integrate the RISC-V design, axi4, and systolic array together.
 
