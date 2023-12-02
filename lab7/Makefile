@@ -73,6 +73,24 @@ ctrl:
 	obj_dir/Vctrl
 	@echo "-- DONE --------------------"
 
+mac_fixed_input:
+	@echo "-- VERILATE ----------------"
+	$(VERILATOR) $(VL_FLAGS_TEST_MAC) $(VL_FLAGS) test_mac_fixed_input.cpp -CFLAGS '$(CXXFLAGS)'
+	@echo "-- COMPILE -----------------"
+	$(MAKE) -j 4 -C obj_dir -f Vmac.mk
+	@echo "-- RUN ---------------------"
+	obj_dir/Vmac
+	@echo "-- DONE --------------------"
+
+ctrl_fixed_input:
+	@echo "-- VERILATE ----------------"
+	$(VERILATOR) $(VL_FLAGS_TEST_CTRL) $(VL_FLAGS) test_ctrl_fixed_input.cpp -CFLAGS '$(CXXFLAGS)'
+	@echo "-- COMPILE -----------------"
+	$(MAKE) -j 4 -C obj_dir -f Vctrl.mk
+	@echo "-- RUN ---------------------"
+	obj_dir/Vctrl
+	@echo "-- DONE --------------------"
+
 systolic_array:
 	@echo "-- VERILATE ----------------"
 	$(PYTHON) data_gen.py gen_data
