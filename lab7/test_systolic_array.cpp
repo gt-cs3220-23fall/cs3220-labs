@@ -151,6 +151,12 @@ int main(int argc, char** argv, char** env) {
 
     // Destroy DUT
     delete dut;
+    // Close files
+    a_matrix_bin.close();
+    b_matrix_bin.close();
+    c_matrix_bin.close();
+    results.close();
+    
     // Fin
     exit(0);
 }
