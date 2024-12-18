@@ -1,86 +1,100 @@
-# Lab 4 - AI Accelerator Case Study - DNNBuilder
+# CS3220 Lab #5 : A Case Study of A RISC-V with An External ALU
 
-**Objective:** The primary aim of this lab is to synthesize the skills and knowledge acquired in previous labs focused on digital design and RTL programming. This will be applied in a practical case study centered on Artificial Intelligence (AI) accelerators.
+100 pts in total, will be rescaled into 11.25% of your final score of the course.  
 
-**Description:**  This lab consists of two main components. First, you will read, comprehend, and summarize a classic research paper on AI accelerators. The second part involves hands-on experience: based on your understanding of the paper, you will delve into the actual code implementation of the discussed accelerator. You will be assigned specific modules that make up this accelerator. Your task is to understand the code in the context of the paper's insights and to provide both a high-level summary and detailed annotations for the code.
+**Part 1: Connect An External ALU with A RISC-V**: 60 pts
 
-1. **Paper summary:**
-    1. **Paper link:** [DNNBuilder: an Automated Tool for Building High-Performance DNN Hardware Accelerators for FPGAs](https://ieeexplore.ieee.org/document/8587697)
-    2. **Format for paper summary:**
-        1. Organized section layout, comprising:
-            1. Abstract: Provide a high-level description of the paper's main contributions. (Note: Do not copy the original abstract.)
-            2. Motivation: Explain the significance of the techniques introduced in the paper.
-            3. Methods: Outline the key technical aspects and methodologies presented in the paper.
-            4. Effectiveness: Discuss how the paper's experiments validate the efficacy of the proposed techniques.
-            5. Summary: Conclude with an overall assessment of the paper's contributions and impact.
-            6. Under 1000 words; figures are welcome but do not directly copy the ones in the paper; show your understanding 
-    3. **Submission**: A txt file containing the above contents
-2. **Code implementation understanding and documentation:**
-    1. **[Available Modules](assets/DNNBuilder_undocumented)**
-        1. **High-Level Modules**: These are RTL modules primarily responsible for instantiating and utilizing lower-level modules. They provide a broader view of the overall design architecture.
-        2. **Low-Level Modules**: These RTL modules contain detailed logic implementations, offering a more nuanced understanding of the control scheme.
-    2. **Module assignment:**
-        1. Each student will be randomly assigned with **2** high-level modules and **2** low-level modules.
-        2. Assignment will be listed in a sheet posted in both Canvas and Piazza
-    3. **Documentation format:**
-        1. Summary of the code file
-        2. Line by line comments of the code (meaningless lines can be skipped, e.g., “begin”, “end”, parentheses…)
-        3. [Example code documentation](assets/examples)
-    4. **Submission:**
-        1. All documented code pieces
-            1. Summary of the code file in a separate txt file
-            2. Line by line in code comments
-        2. Do not change the original code file name
-    5. The source code is adapted from: https://github.com/IBM/AccDNN 
-3. **Submission Format:** 
-    1. Copy the [makefile](Makefile) to your folder containing paper summary txt and documented code pieces
-        1. Double check the zip file contain necessary contents
-    2. **`make submit`**
-    3. Rename submission.zip to <you_gt_user_name>.zip
-    4. Make sure the zip file containing the paper summary txt and documented code pieces
+**Part 2: Performance Optimization**: 40 pts + 10 bonus pts
 
-**Due:** Oct. 23th 11:59PM EST
+***Submission ddl***: Nov 6th --> Nov 8th
 
-**Grading Policy**: 
+This lab builds upon the knowledge you've gained from previous lectures and labs on RISC-V CPU design, as well as your research into AI accelerator implementations. Specifically, you'll be integrating the RISC-V CPU you designed in earlier labs with an external ALU to enhance its efficiency for certain complex workloads. This is the first in a series of three labs on this topic.
 
-1. Paper summary (30 points): 
-    1. **Abstract (6 points)**
-        - Clarity and conciseness: 3 points
-        - Accurate representation of the paper's main contributions: 3 points
-    2. **Motivation (6 points)**
-        - Explanation of the paper's significance: 3 points
-        - Relevance to the preceding working and existing solutions: 3 points
-    3. **Methods (6 points)**
-        - Clarity in outlining key technical aspects: 4 points
-        - Depth of understanding: 2 points
-    4. **Effectiveness (6 points)**
-        - Discussion of the paper's experimental validation: 4 points
-        - Critical evaluation of the results: 2 points
-    5. **Summary (3 points)**
-        - Overall assessment of the paper: 2 points
-        - Coherence and flow of the summary: 1 points
-    6. **Formatting and Structure (3 points)**
-        - Adherence to guidelines: 2 points
-        - Grammar and spelling: 1 points
-2. Code documentation (17.5 points / code file; 70 points in total):
-    1. **Summary of the Code File (7.5 points)**
-        - Clarity and conciseness: 3.5 points
-        - Accurate representation of the code's main functionalities: 4 points
-    2. **Line-by-Line Comments (10 points)**
-        - Completeness: Covering all meaningful lines of code: 5 points
-        - Clarity: Making complex or non-intuitive lines understandable: 5 points
+## Part 1: Connect An External ALU with A RISC-V (60 points): 
 
-3. Late submission policy: 3 hours grace period for potential canvas submission issues; 10% per day late, up to 3 days. No credit will be given for submissions later than 3 days.
+In this section, you'll integrate the RISC-V CPU you designed in Lab #2 with a supplied external ALU. Your responsibility is to adjust the RISC-V implementation to accommodate the external ALU's operations and verify that the RISC-V CPU can accurately run the given test cases.
 
-**Bonus Points (15 points)**: 
+The [external ALU](external_alu_wrapper.v) has following specifications:
+<!-- * `OPREG1`, `OPREG2`, and `OPREG3` are 5-bit inputs that specify the registers to be used as operands for the ALU operation.
+    * 4 registers for each of them; in total 12 registers -->
+* `OP1` and `OP2` are 32-bit inputs that specify the values to be used as operands for the ALU operation. (Floating point numbers in IEEE 754 format)
+* `OP3` is a 32-bit output that holds the result of the ALU operation. (Floating point numbers in IEEE 754 format)
+* `ALUOP` is a 4-bit input that specifies the ALU operation to be performed. The ALUOP values are as follows:
+    * 0001: MULT
+    * 0010: DIV
+    <!-- * `ALUOP[3]` is a 1-bit input that specifies whether the ALU operation is signed or unsigned. If `ALUOP[3]` is 0, the operation is unsigned; if `ALUOP[3]` is 1, the operation is signed. -->
+* `CSR_ALU_OUT` (Control/Status Register) is a 3-bit input port that represents the status of the ALU operation. The `CSR_ALU_OUT` values are as follows:
+    * `CSR_ALU_OUT`[0] is a 1-bit output that signals if the ALU OP1 port is READY/BUSY
+        * i.e., whether the ALU will be able to latch in your inputs (operands and ALUOP)
+    * `CSR_ALU_OUT`[1] is a 1-bit output that signals if the ALU OP2 port is READY/BUSY
+        * i.e., whether the ALU will be able to latch in your inputs (operands and ALUOP)
+    * `CSR_ALU_OUT`[2] is a 1-bit output that signals if the result of the ALU operation is VALID/INVALID
+        * 1: VALID; 0: INVALID
+* `CSR_ALU_IN` is a 3-bit output that control the status of the ALU operation. The `CSR_ALU_IN` values are as follows:
+    * `CSR_ALU_IN`[0] is a 1-bit input that signals the the results can be overwritten by the ALU.
+        * After reading the output, the CPU should set `CSR_ALU_IN`[0] to 0, indicating it's safe for ALU to overwrite the results; otherwise, the ALU will stall the current operation write the result to OP3.
+    * `CSR_ALU_IN`[1] is a 1-bit input that signals the `OP1` fed to the ALU is stable
+        * If it's set to 1, the ALU will latch in the `OP1` value; otherwise, the ALU will stall the current operation and wait for `OP1` to be stable.
+        * It's ignored if the ALU is not ready to accept `OP1`.
+    * `CSR_ALU_IN`[2] is a 1-bit input that signals the `OP2` fed to the ALU is stable
+* The `ALUOP` need to be loaded first and the operands `OP1` and `OP2` need to be loaded in order. 
+* The ALU is data driven, i.e., it will start the computation as soon as the operands are loaded, based on the loaded ALUOP.
+* Potential delay between the two operands' loading, i.e., ALU can potentillay not be ready to load `OP2` when `OP1` is loaded.
+* The ALU is adapted from this implementation:
+    * https://github.com/dawsonjon/fpu
+    * https://dawsonjon.github.io/Chips-2.0/language_reference/interface.html 
 
-- Having gained a foundational understanding of the design and implementation of accelerators from academia, are you interested in exploring how industry-grade accelerators are developed? For this bonus assignment, you will **delve into the architecture and codebase of NVIDIA's Deep Learning Accelerator (NVDLA), a leading example of an industry-grade AI accelerator.**
-- This assignment is both challenging and open-ended, offering you considerable latitude in your approach. Your primary task is to
-    - Choose one or more modules within the NVDLA architecture that interest you.
-        - Document the code, focusing on its structure, functionality, and any unique features.
-- NVDLA source code: https://github.com/nvdla/hw/tree/nvdlav1/vmod/nvdla
-- NVDLA documentation: http://nvdla.org/hw/v1/hwarch.html
-- Grading:
-    - Two modules’ full documentation at [this level](https://github.com/nvdla/hw/blob/nvdlav1/vmod/nvdla/cmac/NV_NVDLA_CMAC_CORE_MAC_mul.v) will lead to full points
-    - Your documentation will be scaled with the above level
+The specifications from RISC-V CPU is as follows:
+
+1. For loading the operands, we will use `LW` instructions, to load the operands from the memory, with dst reg ID:
+    * 11110: `OP1`
+    * 11111: `OP2`
+2. For loading the `ALUOP` to configure the ALU, we will use `LW` instructions, with dst reg ID
+    * 11101: `ALUOP`
+4. For reading the result/status from the ALU, we will use `SW` instructions, with src reg ID
+    * 11011: `OP3`
+    * 11010: `CSR_ALU_OUT`
+5. Intended instruction sequence:
+    * load `ALUOP` 
+    * load `OP1`, `OP2` (**`OP1` and `OP2` need to be loaded in order**)
+    * store `OP3`
+
+
+
+Your tasks are as follows:
+1. Integrate the ALU with the RISC-V CPU. You will need to modify the RISC-V CPU to accommodate the ALU's operations.
+    * Go over all the TODOs and finish the implementation. ([FU_stage.v](FU_stage.v), [de_stage.v](de_stage.v))
+2. You can assume enough `NOP`s inserted to separate the operands loading and storing the results. 
+    * In other words you don't need to worry about the stalls needed to handle the ALU's readiness.
+
+To pass this part and earn full credit, implement the integration described above and run your implementation on [alutest0.mem](test/part5/alutest0.mem) and ensure it passes this testcase.
+* You can use the `./run_tests.sh part5` to test your implementation.
+
+
+
+
+## Part 2: Performance Optimization (40 points + 10 bonus pts)
+What if there is no `NOP`s inserted between OP1 loading and OP2 loading, and the ALU might not be ready to load either `OP1` or `OP2`?
+
+Modify the part 1 implementation to handle the stalls needed to handle the ALU's readiness. Your implementation should still work on the testcases in part 1.
+* You may modify more files (except the [external ALU](external_alu_wrapper.v) and its dependent modules) as needed.
+
+To pass this part and earn full credit, implement the integration described above and run your implementation on [alutest1.mem](test/part6/alutest1.mem) and ensure it passes this testcase.
+* You can use the `./run_tests.sh part6` to test your implementation.
+
+Bonus points: 
+When the implementation is instructed to store ALU's results to the memory, it's possible that the ALU is still processing. It's even possible that the instruction to store `OP3` is issued before ALU even finishes loading either `OP1` or `OP2`. 
+
+Modify the part 2 implementation to handle the stalls needed to handle stalls needed to handle the ALU's results storing to the memory. Your implementation should still work on the testcases in part 1 and part 2.
+
+To pass this part and earn full credit, implement the integration described above and run your implementation on [alutest2.mem](test/part7/alutest2.mem) and ensure it passes this testcase.
+* You can use the `./run_tests.sh part7` to test your implementation.
+
+
+## Submission
+
++ Provide a zip file containing your source code. Generate the submission.zip file using the command make submit. Avoid manual zip file creation to prevent any issues with the autograding script, which could lead to a 30% score deduction.
+* Late submission policy: 3 hours grace period for potential canvas submission issues; 10% per day late, up to 3 days. No credit will be given for submissions later than 3 days.
+
+
 

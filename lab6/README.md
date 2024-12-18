@@ -1,87 +1,87 @@
-# CS3220 Lab #6 : On-chip Communication Protocols
+# CS3220 Lab #7 : Systolic Array Design and Integration with RISC-V CPU with AXI4
 
-100 pts in total, will be rescaled into 11.25% of your final score of the course.  
+100 pts in total, will be rescaled into 12.85% of your final score of the course.  
 
-**Part 1: AXI-Stream FIFO**: 40 pts
+**Part 1: Systolic Array**: 100 pts
 
-**Part 2: AXI4 RAM**: 60 pts + 10 bonus pts
+**Bonus: Systolic Array with RISC-V and AXI4**: 20 pts
 
-***Submission ddl***: Nov 22nd
+***Submission ddl***: Dec 4th
 
-In this lab, you will delve into the robust and scalable on-chip communication protocol, AXI4, along with its streaming variant, AXI-Stream. The objective is to design and implement FIFOs/RAMs that leverage these two protocols for content reading and writing. While the previous lab focused on a straightforward register-based communication protocol for data exchange between the CPU and ALU, it lacked the scalability and robustness required for intricate communication scenarios. Such scenarios might involve more advanced modules, like a systolic array. Building on the knowledge gained in this assignment, the subsequent lab will guide you in utilizing the FIFOs/RAMs you've crafted to interconnect components within a sophisticated heterogeneous system.
+In this lab, you will explore the design of a systolic array and its integration with a RISC-V CPU using the AXI4 protocol. Systolic arrays, first introduced in the late 1980s, have since become a fundamental tool for a wide range of applications, spanning from scientific computing to machine learning. The core concept revolves around employing a regular grid of simple processing elements (PEs) to execute computations in a data-flow fashion. These PEs are interconnected in a structured manner, facilitating the streaming of data through the array. The systolic array architecture excels in efficiently handling tasks such as matrix multiplication, convolution, and other linear algebra operations. An exemplary illustration of this concept can be found in the Google TPU, which leverages systolic arrays and vector machines. One of the major key features of systolic arrays is the systolic data propagation, which is a very efficient and scalable way to move data through the array, which we will focus a lot in this lab.
 
-## Part 1: AXI-Stream FIFO: 
+## Part 1: Systolic Array:
 
-In this section, you'll finish the implementation of an AXI-Stream FIFO. Please also refer to the FAQ section for more design references.
+In this section, you'll finish the implementation of a 4x4 systolic array, with output stationary design. We will focus only on the matrix multiplication operation. 
 
-For the FIFO part, there are two pointers corresponding to the read and write actions, respectively.
-* Each time the FIFO is read, the read pointer will be incremented by 1.
-* Each time the FIFO is written, the write pointer will be incremented by 1.
-* The read and write pointers are intentionally defined one bit wider than the bits needed to represent the FIFO address. 
-    * This is to avoid the ambiguous case for empty and full FIFOs.
-    * Thus, when the FIFO is empty, the read pointer will be equal to the write pointer. When the FIFO is full, the 1st bit of the read and write pointers need to be different (They are in different wrap-around positions), while the rest of the bits are the same.
-* For better robustness, the pointer binary code is converted to gray code: ptr = ptr ^ (ptr >> 1).
-    * The full and empty case will be conditioned on the gray code instead.
-    * Note: Following the above logic, you need to come up with new logic to decide the full and empty case.
+Please be sure to read through the original systolic array paper before you start: 
 
-The code skeleton is provided in [axis_data_fifo.v](axis_data_fifo.v). Finish all the TODOs in the code.
+- [link1](https://www.princeton.edu/~kung/papers_pdf/New%20Folder/VLSI%20Array%20Processors.pdf) 
 
-To test your implementation, run the following command:
+To enhance your comprehension and offer more specific guidance on implementation, we have included a tutorial report detailing the systolic array design and implementation. This report will direct you on where to begin and outline the necessary steps:
+- [link2](CS3220_systolic_array_luke_zhang.pdf)
 
-```make axis_data_fifo```
+The code skeleton is provided in: 
+- [systolic_array_4_4.v](systolic_array_4_4.v)
+- [MAC.v](MAC.v)
+- [ctrl.v](ctrl.v)
 
-The test script is based on the testbench provided in [tb_axis_fifo.v](tb_axis_fifo.v).
+Finish all the TODOs in the code; or you can start from scratch if you prefer.
 
-
-
-
+Useful hints:
+- Pay very special attention to the timing of the signals. At what clock cycle should the sigals be expected?
+- What if two signals are expected to arrive at the same time? But one of them is a little falling behind? Remember Flip-Flop is a very useful tool to help you with this; output of a Flip-Flop is always one clock cycle behind the input; can you use this to help you with the timing?
+- Do you know what line383 in [systolic_array_4_4.v](systolic_array_4_4.v) is doing? Why is it needed? What if you remove it?
+- generate block in Verilog is a good way to save repetitive code.
 
 
 
-## Part 2: AXI4 RAM (60 points + 10 bonus pts)
-AXI-stream can only support accesses with a set of regular and consecutive addresses, which is limited in many applications. 
-To support more general accesses, we need to use AXI4 protocol.
-In this section, you'll finish the implementation of an AXI4 RAM. Please also refer to the FAQ section for more design references.
-Mostly, you will deal with managing the ready/valid signals and the transition among different read/write states. RAM interfaces have been handled for you.
+Testing pattern and assumptions:
+- The input data will be pre-skewed and pre-rotated. You don't need to implement the skewing and rotating logic. For example:
+    - For matrix mulitplication A*B=C: 
+![Alt text](imgs/m1.png)
+    - A: Streamed to ```row_data_in``` [systolic_array_4_4.v](systolic_array_4_4.v) from left to right as (note topmost is the first row): ![Alt text](imgs/m2.png)
+    - B: Streamed to ```col_data_in``` [systolic_array_4_4.v](systolic_array_4_4.v) from top to bottom as (note leftmost is the first column): ![Alt text](imgs/m3.png)
+    - C: Expected to be streamed out from ```row_data_out``` [systolic_array_4_4.v](systolic_array_4_4.v) from left to right as (note topmost is the first row): ![Alt text](imgs/m4.png)
+- Multiple matrix multiplication operations will be performed in sequence. Your design is expected to be able to handle the next matrix multiplication operation immediately after the previous one is finished.
+    - Assume the same matrix multiplication operation as above is performed again, the input data will be streamed in the same way as above.
+    - A: Streamed to ```row_data_in``` [systolic_array_4_4.v](systolic_array_4_4.v) from left to right as (note topmost is the first row): ![Alt text](imgs/m5.png)
+    - B: Streamed to ```col_data_in``` [systolic_array_4_4.v](systolic_array_4_4.v) from top to bottom as (note leftmost is the first column): ![Alt text](imgs/m6.png)
+    - C: Expected to be streamed out from ```row_data_out``` [systolic_array_4_4.v](systolic_array_4_4.v) from left to right as (note topmost is the first row): ![Alt text](imgs/m7.png)
 
-The code skeleton is provided in [axi4_ram.v](axi4_ram.v). Finish all the TODOs in the code.
+Test script, a random number of tests from 4 to 8 doing 4x4 matrix multiplication will be performed. You can run the test script by:
 
-To test your implementation, run the following command:
-
-```make axi4_ram```
-
-The test script is based on the testbench provided in [tb_axi4_ram.v](tb_axi4_ram.v).
+```make systolic_array```
 
 
-## Bonus: AXI4 RAM Burst Mode (10 points)
-In this section, you'll modify the implementation of an AXI4 RAM to supports burst mode. We provide a new code skeleton in [axi4_ram_burst.v](axi4_ram_burst.v). Please combine with your previous parts implementation to finish all the TODOs in the code. You code should still pass the previous tests on non-burst mode.
 
 
-Here are also some useful links for you:
-+ https://www.youtube.com/watch?v=ydSy7uO60Is
-+ https://www.youtube.com/watch?v=_twa6kY-ors 
-+ https://www.youtube.com/watch?v=ZDNOezaQ4Fk 
-+ https://www.youtube.com/watch?v=lI5Gh-1zk-s 
+## Bonus: Systolic Array with RISC-V and AXI4
 
-To test your implementation, run the following commands:
+Integrate the RISC-V design, axi4, and systolic array together.
 
-```make axi4_ram_burst```
-
-```make axi4_ram_burst_on_non_burst```
+RISC-V memory preparation:
+- Modify the RISC-V memory content to store the input matrix A and B, and the expected output matrix C. Use similar format as [lab5](https://github.com/gt-cs3220-23fall/cs3220-labs/blob/master/lab5/test/part7/alutest2.S).
+- Load the memory content to the RISC-V memory using ```lw```
+- Modify axis_fifo from [lab6](https://github.com/gt-cs3220-23fall/cs3220-labs/blob/master/lab6/axis_data_fifo.v) to connect the RISC-V to the systolic array. With the help of axis_fifo module, the RISC-V will write the input matrix A and B to the systolic array, and read the output matrix C from the systolic array in similar way as this lab.
+- Store the result (matrix C content) in another scratchpad memory using axi4_ram from [lab6](https://github.com/gt-cs3220-23fall/cs3220-labs/blob/master/lab6/axi4_ram.v). This action is expected to be performed during runtime, i.e., as the output data (matrix C content) is streamed in, you need to store the data in the scratchpad memory immediately. You should NOT wait until the systolic array finishes all the computation, and then store the data in the scratchpad memory.
+- Store the scratchpad memory content to file.
+- Write a test script (either C/CPP or python; if using C/CPP, please attach make scripts). Compare the scratchpad memory content with the expected output matrix C; also print out the input. 
 
 ## Submission
 
 + Provide a zip file containing your source code. Generate the submission.zip file using the command `make submit`. Avoid manual zip file creation to prevent any issues with the autograding script, which could lead to a 30% score deduction.
+* Please also submit a screenshot of your final couse survey submission. 
+
+![](imgs/survey_submission.png)
+
 * Late submission policy: 3 hours grace period for potential canvas submission issues; 10% per day late, up to 3 days. No credit will be given for submissions later than 3 days.
 
 
 
+
 ## FAQ 
-[Q] Useful links to refer to for AXI4 design?\
-[A] Official AXI4 specification: [link1](https://developer.arm.com/documentation/ihi0022/g/) [link2](https://documentation-service.arm.com/static/642583d7314e245d086bc8c9?token=); 
+[Q] Useful lecture links for systolic array design?
 
-Handy timing diagrams from Xilinx: [link3](https://docs.google.com/presentation/d/1fUulgpJMmuZ_iGeoqGIIaTosDAveB6BM/edit?usp=sharing&ouid=103731133449796992574&rtpof=true&sd=true); 
-
-Another set of diagrams from Oakland University: [link4](https://www.secs.oakland.edu/~llamocca/Courses/ECE495/Notes%20-%20Unit%205.pdf) 
-
+https://www.youtube.com/watch?v=cmy7LBaWuZ8&pp=ygUPc3lzdG9saWMgYXJhYXkg 
 

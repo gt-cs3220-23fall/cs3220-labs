@@ -35,13 +35,11 @@ export VERILATOR_ROOT
 VERILATOR = $(VERILATOR_ROOT)/bin/verilator
 endif
 
-ifdef IDMEMINITFILE
-	CXXFLAGS += -DIDMEMINITFILE=$(IDMEMINITFILE)
-endif
 
-VX_DEFINE = $(PWD)/define.vh
-SED_STRING = 's|define IDMEMINITFILE.*|define IDMEMINITFILE "$(IDMEMINITFILE)"|g' 
-VL_FLAGS += --exe -cc pipeline.v --top-module pipeline --trace --trace-structs
+PYTHON = python
+VL_FLAGS_TEST_AXIS_FIFO += --exe -cc tb_axis_fifo.v --top-module tb_axis_fifo --trace --trace-structs
+VL_FLAGS_TEST_AXI4_RAM += --exe -cc tb_axi4_ram.v --top-module tb_axi4_ram --trace --trace-structs --timing 
+VL_FLAGS_TEST_AXI4_RAM_BURST += --exe -cc tb_axi4_ram_burst.v --top-module tb_axi4_ram_burst --trace --trace-structs --timing
 #VL_FLAGS += --assert -Wall -Wpedantic -Wno-DECLFILENAME -Wno-UNUSED --x-initial unique --x-assign unique
 VL_FLAGS += --assert -Wpedantic -Wno-DECLFILENAME -Wno-UNUSED --x-initial unique --x-assign unique
 CXXFLAGS += -DVCD_OUTPUT -DDPRINTF
@@ -50,28 +48,54 @@ LDFLAGS +=
 
 default:
 	@echo "-- VERILATE ----------------"
-	$(VERILATOR) $(VL_FLAGS) sim_main.cpp fe_stage.v de_stage.v mem_stage.v wb_stage.v agex_stage.v divider.v external_alu_wrapper.v FU_stage.v multiplier.v -CFLAGS '$(CXXFLAGS)'
+	$(VERILATOR) $(VL_FLAGS_TEST_AXIS_FIFO) $(VL_FLAGS) test_axis_fifo.cpp axis_data_fifo.v -CFLAGS '$(CXXFLAGS)'
 	@echo "-- COMPILE -----------------"
-	$(MAKE) -j 4 -C obj_dir -f Vpipeline.mk 
+	$(MAKE) -j 4 -C obj_dir -f Vtb_axis_fifo.mk 
 	@echo "-- RUN ---------------------"
-	obj_dir/Vpipeline
+	obj_dir/Vtb_axis_fifo
 	@echo "-- DONE --------------------"
 	
-tests:
+axis_data_fifo:
 	@echo "-- VERILATE ----------------"
-	@echo $(IDMEMINITFILE)
-	@echo $(VX_DEFINE)
-	sed -i $(SED_STRING) $(VX_DEFINE)
-	$(VERILATOR) $(VL_FLAGS) sim_main.cpp fe_stage.v de_stage.v mem_stage.v wb_stage.v agex_stage.v divider.v external_alu_wrapper.v FU_stage.v multiplier.v -CFLAGS '$(CXXFLAGS)'
+	$(VERILATOR) $(VL_FLAGS_TEST_AXIS_FIFO) $(VL_FLAGS) test_axis_fifo.cpp axis_data_fifo.v -CFLAGS '$(CXXFLAGS)'
 	@echo "-- COMPILE -----------------"
-	$(MAKE) -j 4 -C obj_dir -f Vpipeline.mk
+	$(MAKE) -j 4 -C obj_dir -f Vtb_axis_fifo.mk
 	@echo "-- RUN ---------------------"
-	obj_dir/Vpipeline
+	obj_dir/Vtb_axis_fifo > axis_data_fifo.log
+	$(PYTHON) data_gen.py parse_log
+	@echo "-- DONE --------------------"
+
+axi4_ram:
+	@echo "-- VERILATE ----------------"
+	$(VERILATOR) $(VL_FLAGS_TEST_AXI4_RAM) $(VL_FLAGS) test_axi4_ram.cpp axi4_ram.v axi4_tester_src_non_burst/*.v -CFLAGS '$(CXXFLAGS)'
+	@echo "-- COMPILE -----------------"
+	$(MAKE) -j 4 -C obj_dir -f Vtb_axi4_ram.mk
+	@echo "-- RUN ---------------------"
+	obj_dir/Vtb_axi4_ram
+	@echo "-- DONE --------------------"
+
+axi4_ram_burst:
+	@echo "-- VERILATE ----------------"
+	$(VERILATOR) $(VL_FLAGS_TEST_AXI4_RAM_BURST) $(VL_FLAGS) test_axi4_ram_burst.cpp axi4_ram_burst.v axi4_tester_src_burst/*.v -CFLAGS '$(CXXFLAGS)'
+	@echo "-- COMPILE -----------------"
+	$(MAKE) -j 4 -C obj_dir -f Vtb_axi4_ram_burst.mk
+	@echo "-- RUN ---------------------"
+	obj_dir/Vtb_axi4_ram_burst
+	@echo "-- DONE --------------------"
+
+
+axi4_ram_burst_on_non_burst:
+	@echo "-- VERILATE ----------------"
+	$(VERILATOR) $(VL_FLAGS_TEST_AXI4_RAM_BURST) $(VL_FLAGS) test_axi4_ram_burst.cpp axi4_ram_burst.v axi4_tester_src_non_burst/*.v -CFLAGS '$(CXXFLAGS)'
+	@echo "-- COMPILE -----------------"
+	$(MAKE) -j 4 -C obj_dir -f Vtb_axi4_ram_burst.mk
+	@echo "-- RUN ---------------------"
+	obj_dir/Vtb_axi4_ram_burst
 	@echo "-- DONE --------------------"
 
 submit: 
 	@echo "-- ZIPPING ALL THE FILE ---------"
-	zip submission.zip ./*.v ./*.h ./*.vh ./sim_main.cpp ./Makefile
+	zip submission.zip ./*.v ./*.h ./*.vh ./*.cpp ./Makefile
 
 maintainer-copy::
 clean mostlyclean distclean maintainer-clean::

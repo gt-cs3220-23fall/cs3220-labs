@@ -37,9 +37,9 @@ endif
 
 
 PYTHON = python
-VL_FLAGS_TEST_AXIS_FIFO += --exe -cc tb_axis_fifo.v --top-module tb_axis_fifo --trace --trace-structs
-VL_FLAGS_TEST_AXI4_RAM += --exe -cc tb_axi4_ram.v --top-module tb_axi4_ram --trace --trace-structs --timing 
-VL_FLAGS_TEST_AXI4_RAM_BURST += --exe -cc tb_axi4_ram_burst.v --top-module tb_axi4_ram_burst --trace --trace-structs --timing
+VL_FLAGS_TEST_MAC += --exe -cc MAC.v --top-module mac --trace --trace-structs
+VL_FLAGS_TEST_CTRL += --exe -cc ctrl.v --top-module ctrl --trace --trace-structs --timing 
+VL_FLAGS_TEST_SYSTOLIC_ARRAY+= --exe -cc systolic_array_4_4.v --top-module systolic_array --trace --trace-structs --timing
 #VL_FLAGS += --assert -Wall -Wpedantic -Wno-DECLFILENAME -Wno-UNUSED --x-initial unique --x-assign unique
 VL_FLAGS += --assert -Wpedantic -Wno-DECLFILENAME -Wno-UNUSED --x-initial unique --x-assign unique
 CXXFLAGS += -DVCD_OUTPUT -DDPRINTF
@@ -48,55 +48,65 @@ LDFLAGS +=
 
 default:
 	@echo "-- VERILATE ----------------"
-	$(VERILATOR) $(VL_FLAGS_TEST_AXIS_FIFO) $(VL_FLAGS) test_axis_fifo.cpp axis_data_fifo.v -CFLAGS '$(CXXFLAGS)'
+	$(VERILATOR) $(VL_FLAGS_TEST_SYSTOLIC_ARRAY) $(VL_FLAGS) test_systolic_array.cpp systolic_array_4_4.v MAC.v ctrl.v -CFLAGS '$(CXXFLAGS)'
 	@echo "-- COMPILE -----------------"
-	$(MAKE) -j 4 -C obj_dir -f Vtb_axis_fifo.mk 
+	$(MAKE) -j 4 -C obj_dir -f Vsystolic_array.mk 
 	@echo "-- RUN ---------------------"
-	obj_dir/Vtb_axis_fifo
+	obj_dir/Vsystolic_array
 	@echo "-- DONE --------------------"
 	
-axis_data_fifo:
+mac:
 	@echo "-- VERILATE ----------------"
-	$(VERILATOR) $(VL_FLAGS_TEST_AXIS_FIFO) $(VL_FLAGS) test_axis_fifo.cpp axis_data_fifo.v -CFLAGS '$(CXXFLAGS)'
+	$(VERILATOR) $(VL_FLAGS_TEST_MAC) $(VL_FLAGS) test_mac.cpp -CFLAGS '$(CXXFLAGS)'
 	@echo "-- COMPILE -----------------"
-	$(MAKE) -j 4 -C obj_dir -f Vtb_axis_fifo.mk
+	$(MAKE) -j 4 -C obj_dir -f Vmac.mk
 	@echo "-- RUN ---------------------"
-	obj_dir/Vtb_axis_fifo > axis_data_fifo.log
-	$(PYTHON) data_gen.py parse_log
+	obj_dir/Vmac > mac.log
 	@echo "-- DONE --------------------"
 
-axi4_ram:
+ctrl:
 	@echo "-- VERILATE ----------------"
-	$(VERILATOR) $(VL_FLAGS_TEST_AXI4_RAM) $(VL_FLAGS) test_axi4_ram.cpp axi4_ram.v axi4_tester_src_non_burst/*.v -CFLAGS '$(CXXFLAGS)'
+	$(VERILATOR) $(VL_FLAGS_TEST_CTRL) $(VL_FLAGS) test_ctrl.cpp -CFLAGS '$(CXXFLAGS)'
 	@echo "-- COMPILE -----------------"
-	$(MAKE) -j 4 -C obj_dir -f Vtb_axi4_ram.mk
+	$(MAKE) -j 4 -C obj_dir -f Vctrl.mk
 	@echo "-- RUN ---------------------"
-	obj_dir/Vtb_axi4_ram
+	obj_dir/Vctrl
 	@echo "-- DONE --------------------"
 
-axi4_ram_burst:
+mac_fixed_input:
 	@echo "-- VERILATE ----------------"
-	$(VERILATOR) $(VL_FLAGS_TEST_AXI4_RAM_BURST) $(VL_FLAGS) test_axi4_ram_burst.cpp axi4_ram_burst.v axi4_tester_src_burst/*.v -CFLAGS '$(CXXFLAGS)'
+	$(VERILATOR) $(VL_FLAGS_TEST_MAC) $(VL_FLAGS) test_mac_fixed_input.cpp -CFLAGS '$(CXXFLAGS)'
 	@echo "-- COMPILE -----------------"
-	$(MAKE) -j 4 -C obj_dir -f Vtb_axi4_ram_burst.mk
+	$(MAKE) -j 4 -C obj_dir -f Vmac.mk
 	@echo "-- RUN ---------------------"
-	obj_dir/Vtb_axi4_ram_burst
+	obj_dir/Vmac
 	@echo "-- DONE --------------------"
 
-
-axi4_ram_burst_on_non_burst:
+ctrl_fixed_input:
 	@echo "-- VERILATE ----------------"
-	$(VERILATOR) $(VL_FLAGS_TEST_AXI4_RAM_BURST) $(VL_FLAGS) test_axi4_ram_burst.cpp axi4_ram_burst.v axi4_tester_src_non_burst/*.v -CFLAGS '$(CXXFLAGS)'
+	$(VERILATOR) $(VL_FLAGS_TEST_CTRL) $(VL_FLAGS) test_ctrl_fixed_input.cpp -CFLAGS '$(CXXFLAGS)'
 	@echo "-- COMPILE -----------------"
-	$(MAKE) -j 4 -C obj_dir -f Vtb_axi4_ram_burst.mk
+	$(MAKE) -j 4 -C obj_dir -f Vctrl.mk
 	@echo "-- RUN ---------------------"
-	obj_dir/Vtb_axi4_ram_burst
+	obj_dir/Vctrl
 	@echo "-- DONE --------------------"
+
+systolic_array:
+	@echo "-- VERILATE ----------------"
+	$(PYTHON) data_gen.py gen_data
+	$(VERILATOR) $(VL_FLAGS_TEST_SYSTOLIC_ARRAY) $(VL_FLAGS) test_systolic_array.cpp MAC.v ctrl.v -CFLAGS '$(CXXFLAGS)'
+	@echo "-- COMPILE -----------------"
+	$(MAKE) -j 4 -C obj_dir -f Vsystolic_array.mk
+	@echo "-- RUN ---------------------"
+	obj_dir/Vsystolic_array
+	$(PYTHON) data_gen.py verify
+	@echo "-- DONE --------------------"
+
 
 submit: 
 	@echo "-- ZIPPING ALL THE FILE ---------"
-	zip submission.zip ./*.v ./*.h ./*.vh ./*.cpp ./Makefile
+	zip submission.zip ./*.py ./*.v ./*.h ./*.vh ./*.cpp ./*.c ./Makefile
 
 maintainer-copy::
 clean mostlyclean distclean maintainer-clean::
-	-rm -rf obj_dir *.log *.dmp *.vpd core trace.vcd
+	-rm -rf obj_dir *.log *.dmp *.vpd *.bin core trace.vcd
