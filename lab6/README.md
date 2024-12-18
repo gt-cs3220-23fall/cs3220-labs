@@ -1,4 +1,4 @@
-# CS3220 Lab #7 : Systolic Array Design
+# CS3220 Lab #6 : Systolic Array Design I
 
 100 pts in total, will be rescaled into 12.85% of your final score of the course.  
 
@@ -6,7 +6,7 @@
 
 **Bonus: Non-squared Systolic Arrays**: 20 pts
 
-***Submission ddl***: Dec 4th
+***Submission ddl***: Apr. 7th
 
 In this lab, you will explore the design of a systolic array and its integration with a RISC-V CPU using the AXI4 protocol. Systolic arrays, first introduced in the late 1980s, have since become a fundamental tool for a wide range of applications, spanning from scientific computing to machine learning. The core concept revolves around employing a regular grid of simple processing elements (PEs) to execute computations in a data-flow fashion. These PEs are interconnected in a structured manner, facilitating the streaming of data through the array. The systolic array architecture excels in efficiently handling tasks such as matrix multiplication, convolution, and other linear algebra operations. An exemplary illustration of this concept can be found in the Google TPU, which leverages systolic arrays and vector machines. One of the major key features of systolic arrays is the systolic data propagation, which is a very efficient and scalable way to move data through the array, which we will focus a lot in this lab.
 
@@ -84,14 +84,14 @@ Detailed parameters will not be disclosed.
 
 
 You design should be robust and the grading rubrics as follows:
-- Test different `SEED` (**20%**)
-- Test different `MUL_LAT` (Multiplier Latency) (**20%**)
-- Test different `M` and `N` (**20%**)
-- Test different `NUM` (**20%**)
-- Test combined parameter sweep (**20%**)
+- Test different `SEED` (**20pts**)
+- Test different `MUL_LAT` (Multiplier Latency) (**20pts**)
+- Test different `M` and `N` (**20pts**)
+- Test different `NUM` (**20pts**)
+- Test combined parameter sweep (**20pts**)
 
-If and only if your score above is less than **40%**, we will offer the following partial credits:
-- If you pass our individual [ctrl.v](ctrl.v) and [MAC.v](MAC.v) test, you will get **20%** for each.
+If and only if your score above is less than **40pts**, we will offer the following partial credits:
+- If you pass our individual [ctrl.v](ctrl.v) and [MAC.v](MAC.v) test, you will get **20pts** for each; the end we will take the maximum of this result or the original score.
 
 
 
