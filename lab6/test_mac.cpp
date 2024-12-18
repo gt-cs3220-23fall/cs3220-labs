@@ -2,6 +2,11 @@
 //======================================================================
 #include <iostream>
 #include <stdint.h> 
+#include <fstream> 
+#include <cstdlib>
+#include <ctime>
+
+
 
 // Include common routines
 #include <verilated.h>
@@ -13,7 +18,7 @@
 #include <verilated_vcd_c.h>
 #endif
 
-#define RUN_CYCLES 100000
+#define RUN_CYCLES 100
 
 #define CLOCK_PERIOD 2
 
@@ -32,6 +37,40 @@ int main(int argc, char** argv, char** env) {
 
     // Construct the Verilated model
     Vmac* dut = new Vmac();
+
+    // store the generated col_data_in and row_data_in using ofstream
+    std::ofstream col_data_in("col_data_in.bins", std::ios::binary);
+    if (!col_data_in) {
+        std::cerr << "ERROR: could not open col_data_in.bins" << std::endl;
+        exit(1);
+    }
+    std::ofstream row_data_in("row_data_in.bins", std::ios::binary);
+    if (!row_data_in) {
+        std::cerr << "ERROR: could not open row_data_in.bins" << std::endl;
+        exit(1);
+    }
+    std::ofstream bypass_data_in("bypass_data_in.bins", std::ios::binary);
+    if (!bypass_data_in) {
+        std::cerr << "ERROR: could not open bypass_data_in.bins" << std::endl;
+        exit(1);
+    }
+    //store row_data_out, col_data_out, psum_out using ofstream
+    std::ofstream row_data_out("row_data_out_gold.bins", std::ios::binary);
+    if (!row_data_out) {
+        std::cerr << "ERROR: could not open row_data_out_gold.bins" << std::endl;
+        exit(1);
+    }
+    std::ofstream col_data_out("col_data_out_gold.bins", std::ios::binary);
+    if (!col_data_out) {
+        std::cerr << "ERROR: could not open col_data_out_gold.bins" << std::endl;
+        exit(1);
+    }
+    std::ofstream psum_out("psum_out_gold.bins", std::ios::binary);
+    if (!psum_out) {
+        std::cerr << "ERROR: could not open psum_out_gold.bins" << std::endl;
+        exit(1);
+    }
+
 
 #ifdef VCD_OUTPUT
     Verilated::traceEverOn(true);
@@ -63,11 +102,15 @@ int main(int argc, char** argv, char** env) {
 
         // Verilator allows to access verilator public data structure
         if (clk_transition && dut->clk) {
-            
-            dut -> col_data_in = uint8_t(timestamp % 12);
-            dut -> row_data_in = uint8_t((timestamp + 3) % 12);
-            dut -> bypass_data_in = uint8_t((timestamp + 5) % 12);
-            
+            // generate random data for col_data_in and row_data_in
+            uint8_t col_data_in_rand = rand() % 12;
+            uint8_t row_data_in_rand = rand() % 12;
+            uint8_t bypass_data_in_rand = rand() % 12;
+
+            dut -> col_data_in = col_data_in_rand;
+            dut -> row_data_in = row_data_in_rand;
+            dut -> bypass_data_in = bypass_data_in_rand;
+
             if (timestamp % 12 == 0 && timestamp > RESET_TIME){
                 dut -> rst_accumulator = 1;
             }
@@ -78,6 +121,19 @@ int main(int argc, char** argv, char** env) {
                 dut -> rst_accumulator = 0;
                 dut -> bypass_en = 0;
             }
+
+            // store the generated col_data_in and row_data_in using ofstream
+            col_data_in.write((reinterpret_cast<char*>(&col_data_in_rand)), sizeof(col_data_in_rand));
+            row_data_in.write((reinterpret_cast<char*>(&row_data_in_rand)), sizeof(row_data_in_rand));
+            bypass_data_in.write((reinterpret_cast<char*>(&bypass_data_in_rand)), sizeof(bypass_data_in_rand));
+            
+
+            // store row_data_out, col_data_out, psum_out using ofstream
+            row_data_out.write(reinterpret_cast<char*>(&dut->row_data_out), sizeof(dut->row_data_out));
+            col_data_out.write(reinterpret_cast<char*>(&dut->col_data_out), sizeof(dut->col_data_out));
+            psum_out.write(reinterpret_cast<char*>(&dut->psum_out), sizeof(dut->psum_out));
+
+            std::cout << "timestamp=" << timestamp << " col_data_in=" << (int)dut->col_data_in << " row_data_in=" << (int)dut->row_data_in << " bypass_data_in=" << (int)dut->bypass_data_in << " row_data_out=" << (int)dut->row_data_out << " col_data_out=" << (int)dut->col_data_out << " psum_out=" << (int)dut->psum_out << std::endl;
 
             timestamp_WB = timestamp - RESET_TIME;            
         }
@@ -103,6 +159,13 @@ int main(int argc, char** argv, char** env) {
 
     // Destroy DUT
     delete dut;
+    // close files
+    col_data_in.close();
+    row_data_in.close();
+    bypass_data_in.close();
+    row_data_out.close();
+    col_data_out.close();
+    psum_out.close();
     // Fin
     exit(0);
 }
