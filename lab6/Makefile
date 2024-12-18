@@ -52,8 +52,9 @@ COLS = 5
 K = 20
 NUM_TESTS = 1
 SEED = 1
+MULT_LAT = 3 
 
-CXXFLAGS_RxC = $(CXXFLAGS) -DROWS=$(ROWS) -DCOLS=$(COLS) -DK=$(K)
+CXXFLAGS_RxC = $(CXXFLAGS) -DROWS=$(ROWS) -DCOLS=$(COLS) -DK=$(K) -DMULT_LAT=$(MULT_LAT)
 
 default:
 	@echo "-- VERILATE ----------------"

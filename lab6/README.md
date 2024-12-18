@@ -85,14 +85,10 @@ Detailed parameters will not be disclosed.
 
 You design should be robust and the grading rubrics as follows:
 - Test different `SEED` (**20pts**)
-- Test different `MUL_LAT` (Multiplier Latency) (**20pts**)
+- Test different `MULT_LAT` (Multiplier Latency) (**20pts**)
 - Test different `M` and `N` (**20pts**)
 - Test different `NUM` (**20pts**)
 - Test combined parameter sweep (**20pts**)
-
-If and only if your score above is less than **40pts**, we will offer the following partial credits:
-- If you pass our individual [ctrl.v](ctrl.v) and [MAC.v](MAC.v) test, you will get **20pts** for each; the end we will take the maximum of this result or the original score.
-
 
 
 ## Bonus: General-sized Systolic Arrays
