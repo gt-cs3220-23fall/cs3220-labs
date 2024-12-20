@@ -1,57 +1,64 @@
 # CS3220 Lab #3 (10 pts) 
 
-10 pts in total, will be rescaled into 11.25% of your final score of the course.  
+This lab continues from Labs #1 and #2. In this session, you will deploy your RISC-V processor on a Pynq board and deepen your understanding of IO protocols.
 
-**Part 0: Env Setup**: 0 pts
 
-**Part 1: Deploy on Pynq-Jupyter**: 10 pts
-
-***Submission ddl***: Oct 9nd
-
-This lab serves as a continuation of Lab #2. The primary aim is to guide you through the process of deploying your RISC-V processor on a Pynq board.
 
 **Learning Outcomes:**
 
-1. Learn to create and use AXI lite protocol to communicate with your RISC-V processor.
++ Develop proficiency in creating and utilizing AXI lite ports for communication with your RISC-V processor.
 
-2. Get familiar with Vivado and Vitis HLS toolchain.
++ Gain hands-on experience with the Vivado and Vitis HLS workflow to deploy hardware designs on FPGAs.
 
-## Part-0: Env Setup (0 pts)
+**Lab Structure:**
+
++ **Part-1:** Step-by-step guidance on using AXI lite for communication with your RISC-V processor.
+
++ **Part-2:** Apply your knowledge to send instructions to your processor using external inputs via AXI lite.
+
+**Score Distribution:**
+
+The lab is worth a total of 10 points, contributing 12.85% to your final course grade.
+
++ **Part 0: Env Setup**: 0 pts
+
++ **Part 1: Deploy your RISC-V CPU on the Pynq Board**: 7 pts
+
++ **(Bonus) Part 2: Read / Write though AXI Lite**: 3 pts
+
+***Submission ddl***: Feb. 27
+
+## Part-0: Environment Setup <span style="color:blue">Not Ready (TBD after Server Ready)<span style="color:blue">
 
 ### Accessing Pynq Board
 
-We've settled remote access to the pynq board. Please follow the instructions outlined in this: [document](https://docs.google.com/document/d/1WEvITUjTsU5aGcmtTOyS6S6BRdve-n_P11pqTyLeIaU/edit?usp=sharing). 
+We've settled remote access to the pynq board. Please follow the instructions outlined in this [document](https://docs.google.com/document/d/1WEvITUjTsU5aGcmtTOyS6S6BRdve-n_P11pqTyLeIaU/edit?usp=sharing). 
 
-*Setting up the environment might take some time. Kindly be patient.*
-
-*Please note that the number of available pynq boards is limited, so please ensure you don't extend your remote session beyond 2 hours.*
+Note: Environment setup may take some time. Please be patient. Remember, the availability of Pynq boards is limited; ensure your remote session does not exceed 2 hours.
 
 ### Remote Desktop
 
-In this lab, you'll be working with Vivado and Vitis HLS 2020.2. For the best experience, we recommend accessing the remote desktop, where all the toolchains have been installed for you. Follow the same steps outlined in the [above document](https://docs.google.com/document/d/1WEvITUjTsU5aGcmtTOyS6S6BRdve-n_P11pqTyLeIaU/edit?usp=sharing), The only difference is in Step 3: Click on "Synth & Emu" > "Synthesia Desktop" instead.
+You will use Vivado and Vitis HLS 2020.2 in this lab. Access the remote desktop for the best experience, where all necessary toolchains are pre-installed. Follow the instructions in the previously mentioned [document](https://docs.google.com/document/d/1WEvITUjTsU5aGcmtTOyS6S6BRdve-n_P11pqTyLeIaU/edit?usp=sharing), selecting "Synth & Emu" > "Synthesis Desktop" at Step 3.
 
 ### Updalod & Download Files
 
-You can access the root directory of your remote machine through your browser. Refer to step 4 of the [above document](https://docs.google.com/document/d/1WEvITUjTsU5aGcmtTOyS6S6BRdve-n_P11pqTyLeIaU/edit?usp=sharing), click on the "data root directory" at the bottom of the screen. The remote desktop and pynq board share the same data storage, so it is not needed to transfer data between them.
+Access your remote machine's root directory through your browser as outlined in Step 4 of the [document](https://docs.google.com/document/d/1WEvITUjTsU5aGcmtTOyS6S6BRdve-n_P11pqTyLeIaU/edit?usp=sharing). Click on "data root directory" at the bottom of the screen. Since the remote desktop and Pynq board share the same data storage, transferring data between them is unnecessary.
 
-## Part-1: Deployment on Pynq-Jupyter (10pts)
+## Part-1: Deploy your RISC-V CPU on the Pynq Board <span style="color:blue">Ready<span style="color:blue">
 
-In this part, you will deploy your RISC-V processor on a pynq board. The pynq board provides a [field programmable gate array](https://en.wikipedia.org/wiki/Field-programmable_gate_array), which allows you to program its hardware. You will be able to communicate with the board through AXI lite protocol with a Jupyter notebook.
+In this part, you will deploy your RISC-V processor on a pynq board. The pynq board contains a [field programmable gate array (FPGA)](https://en.wikipedia.org/wiki/Field-programmable_gate_array), which allows you to program its hardware. You will be able to communicate with the board through AXI lite ports using a Jupyter notebook.
 
 ### Step-1: Vitis for Creating a Communication Adapter
 
-In this step, you will generate a communication adapter using [comm.cpp](comm.cpp) in Vitis HLS. This allows you to communicate with the verilog modules (your RISC-V processor).
+Use [comm.cpp](comm.cpp) in Vitis HLS to generate a communication adapter. This code defines ports (inputs and outputs) for Verilog modules, facilitating memory-mapped connections via AXI lite protocol. Vitis will automatically generate most of the necessary logic.
 
-The code [comm.cpp](comm.cpp) only defines ports (inputs and output arguments) to verilog modules with memory-mapped connection using AXI lite protocol. So you can consider this vitis code as an communication adapter, and vitis generates most of the necessary logics for us.
-
-For a detailed, step-by-step video demonstration, refer to this [link](https://drive.google.com/file/d/1GYrVq5hJ2KwMEMfOCgT8xiaIQPkq5pFb/view?usp=sharing). Additionally, you may find helpful guidance in the following tutorial: (https://www.hackster.io/whitney-knitter/rapid-prototyping-vitis-hls-ip-designs-using-pynq-f76910). 
-
+For a detailed, step-by-step demonstration, refer to this [video](https://drive.google.com/file/d/1GYrVq5hJ2KwMEMfOCgT8xiaIQPkq5pFb/view?usp=sharing).
 
 ### Step-2: Vivado for Bitstream Generation
 
-#### [1] Prepare your codes:
+#### [1] Code Preparation:
 
-Modify the [pipeline.v](pipeline.v) to have two additional ports and change reset to rest_n, you will interact with it from the CPU side (Jupyter Notebook) through these ports.
+Modify [pipeline.v](pipeline.v)  include two additional ports and change the reset to reset_n.
 
 Before:
 
@@ -76,7 +83,7 @@ output[31:0] out2
 wire reset = ~reset_n;  
 ```
 
-In [pipeline.v](pipeline.v), connect out1 for cycle_count:
+In [pipeline.v](pipeline.v), connect `out1` for cycle count:
 
 ``` 
 always @ (posedge clk) begin
@@ -90,45 +97,43 @@ end
 assign out1 = cycle_count;
 ```
 
-Assigned out2 to any 32-bit number you like:
+Assigned `out2` to the 10th register:
 
 ```
-assign out2 = 32'd33;  
+assign out2 = reg10_val;  
 ```
 
-#### [2] Create a block design
+#### [2] Create a Block Design
 
-First create a vivado project and a block diagram. Then import the IP repo (the communication adapter) generated in step-1, and add the comm IP to the block diagram. 
+Create a Vivado project and a block diagram. Import the IP repository (communication adapter) from Step 1 and add the comm IP to the block diagram. For a step-by-step demonstration, see this [video](https://drive.google.com/file/d/13UJYmOdiZHjuR1avq2HrmpxkNc-HSVaM/view?usp=sharing).
 
-Please see this [link](https://drive.google.com/file/d/13UJYmOdiZHjuR1avq2HrmpxkNc-HSVaM/view?usp=sharing) for a step by step demonstration.
-
-#### [3] Add the RISC-V processor to the block diagram.
+#### [3] Add the RISC-V Processor to the Block Diagram
 
 <img src="figs/addriscv.png"> 
 
-#### [4] Connect pipeline
+#### [4] Connect Modules
 
-You will need to connect your RISC-V processor with the communication adapter (in1 in common <-> out1, in2 in common <->out2) manually. 
+You will need to connect your RISC-V processor with the communication adapter (in1 in common <-> out1 in RISC-V, in2 in common <->out2 in RISC-V) manually. 
 <img src="figs/connect.png"> 
 
-#### [5] Add Zynq PS module from IP repo and then use auto-connect features to complete all the connections. 
+#### [5] Add Zynq PS Module
 
-The procedure for adding zynq ps is the same as how you add the comm IP into the block diagram (you do not need to import a repo for zynq ps, Vivado automatically loaded it for you), as demonstrated in the [video above](https://drive.google.com/file/d/13UJYmOdiZHjuR1avq2HrmpxkNc-HSVaM/view?usp=sharing). The PS stands for the on-chip processing system (where you run the jupyter notebook), which will communicate with the RISC-V processor through the AXI lite ports.
+The procedure for adding the Zynq PS module is the same as how you add the comm IP into the block diagram (you do not need to import new repo, Vivado has automatically loaded it for you), as demonstrated in the [video](https://drive.google.com/file/d/13UJYmOdiZHjuR1avq2HrmpxkNc-HSVaM/view?usp=sharing). The PS stands for the on-chip processing system (where you run the jupyter notebook), which will communicate with the RISC-V processor through AXI lite.
 
 The autoconnect button shows up at the top of the block diagram. Click "Run Connection Automation" and then select all modules, then click OK.
 
-If clock or reset signal connections are missing, you can connect them manually. The final output should be as follows:
+If clock or reset signal connections are missing, you can connect them manually. The final output should look like the following:
 <img src="figs/finaldig.png"> 
 
 #### [6] Create HDL wrapper 
 
-Go to “Sources” panel and right click on your block design name, click on “Create HDL wrapper”. Click on “Let Vivado manage wrapper and auto-update” option and click on “OK”. 
+Go to the “Sources” panel and right click on your block design, click on “Create HDL wrapper”. Click on “Let Vivado manage wrapper and auto-update” option and click on “OK”. 
 
-Make the design_wrapper as a *top module* by right click it in the source code and choose "Set as Top". 
+Make the design_wrapper as the *top module* by right click it in the source code and choose "Set as Top". 
 
 #### [7] Synthesize/implementation/generate bitstreams
 
-Go to the "Flow Navigator" panel and click "Generate Bitstream" (it will ask to synthesize etc., click yes). The bitstreams is used to tell the FPGA how to program its hardware.
+Go to the "Flow Navigator" panel and click "Generate Bitstream" (it will ask to synthesize etc., click yes). The bitstreams tells FPGA how to program its hardware.
 
 The bistream generation takes around 10 mins, in the bottom of the screen, if you select "Design Runs", you can see the progress.
 
@@ -142,6 +147,7 @@ Copy the following files:
 + `[proj_name].runs/impl_1/design_1_wrapper.bit` or where you expored the bitstream in step [9].
 + `[proj_name].runs/impl_1/design_1_wrapper.tcl`
 + `[proj_name].gen/sources_1/bd/design_1/design_1.hwh.`
+to the same folder.
 
 The name and path may be different if you use different block design name, all the paths are relative path to the project root (where you created the Vivado project).
 
@@ -149,22 +155,47 @@ Make sure you rename all the files to have the same name (e.g. riscv.bit, riscv.
 
 ### Step-3: Deploy on the Pynq Board
 
-#### [11] Upload the files 
+#### [11] Upload the Files 
 
-Place all the generated files in the above step and the [riscv_test.ipynb](riscv_test.ipynb) file in a same folder.  
+Gather the three files specified earlier along with [riscv_test.ipynb](riscv_test.ipynb) into the same directory.  
 
 #### [12] Running on the Pynq Board
 
-Open the [riscv_test.ipynb](riscv_test.ipynb) file on the requested Jupyter notebook and run the code, the 0x20 address corresonds to out1 and 0x30 address corresponds to out2, out1 value will keep changing since it's a cycle count and out2 value will be the constant you put in the beginning of step 2. 
-*include the screenshot of ipynb on your report* 
+Launch [riscv_test.ipynb](riscv_test.ipynb) within the designated Jupyter notebook environment and execute the code. The address 0x20 corresponds to `out1` and 0x30 to `out2`. The value at `out1` will continuously change, reflecting the cycle count, whereas the value at `out2` will display the static value from the 10th register.
+
+*Please include a screenshot of the Jupyter notebook displaying the output in your report.* 
+
+## Dispatch Instructions to Your Processor with AXI Lite <span style="color:blue">Ready<span style="color:blue">
+
+In Part 1, you learned to add output ports to your RISC-V processor and read values using AXI Lite. Real-world applications often require both reading outputs and sending inputs to the processor. In Part 2, you will:
+
+1. Add an input port to your RISC-V processor.;
+2. Dispatch instructions to your processor and verify the execution results.
+
+### Step-1: Revise Your Code
+
+Similar to Step-2 in Part-1, you will begin by adding a 32-bit input port to [pipeline.v](pipeline.v). Next, assign this input value to `inst_FE` in [fe_stage.v](fe_stage.v), so that the processor takes the input as the instruction.
+
+### Step-2: Bitstream Generation
+
+The bitstream generation process for the revised RISC-V design mirrors that of Step-2 in Part-1. The only difference is that you now need to connect the newly added input port to the communication adapter.
+
+### Step-3: Deploy on the Pynq Board
+
+Follow the instructions from Part-1 to upload your design to the Pynq Board. Then, load your processor design using [riscv_test2.ipynb](riscv_test2.ipynb).
+
+### Step-4: Dispatch Instructions to Your Processor
+
+After loading your processor design, you will be able to send arbitrary instructions through the newly added input port. Your task is to change the value of the 10th register to 10, refer to this [online compiler](https://riscvasm.lucasteske.dev/#) to convert your assembly instruction into a binary code. The value of the 10th register can be accessed via `out2` from the Jupyter notebook.
 
 ## Submission Guideline
 
 **What to submit** 
 
-A zip file containing your .bit, .tcl, .hwh files;
-A screenshot of the jupyter notebook, showing the expected value in step [12].
++ **Part-1:** Submit a zip file containing your `.bit`, `.tcl`, and `.hwh` files along with a screenshot of the Jupyter notebook demonstrating the expected values from Step-3 of Part-1.
+
++ **Part-2:** Submit a zip file containing your .bit, .tcl, and `.hwh` files, plus a screenshot of the Jupyter notebook demonstrating the expected values from Step-4 of Part-2.
 
 **Grading policy** 
 
-If the bitstream you submit can be successfully deployed on the pynq board and the screenshot in step [12] is correct, you will receive full credit.
+You will receive full credit for each part if the submitted bitstream can be successfully deployed on the Pynq board and the provided screenshots accurately display the correct outputs.

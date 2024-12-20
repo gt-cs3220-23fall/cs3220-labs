@@ -14,12 +14,8 @@ module FE_STAGE(
   `UNUSED_VAR (from_WB_to_FE)
 
   // I-MEM
-  (* ram_init_file = `IDMEMINITFILE *)
   reg [`DBITS-1:0] imem [`IMEMWORDS-1:0];
  
-  initial begin
-      $readmemh(`IDMEMINITFILE , imem);
-  end
   /*
   // Display memory contents with verilator 
   always @(posedge clk) begin
@@ -42,6 +38,7 @@ module FE_STAGE(
   wire [`FE_latch_WIDTH-1:0] FE_latch_contents;  // the signals that will be FE latch contents 
   
   // reading instruction from imem 
+  // TODO: Assign external input to inst_FE
   assign inst_FE = imem[PC_FE_latch[`IMEMADDRBITS-1:`IMEMWORDBITS]];  // this code works. imem is stored 4B together
   
   // This is the value of "incremented PC", computed in the FE stage
@@ -61,7 +58,6 @@ module FE_STAGE(
   } = from_AGEX_to_FE;
 
   // Calculate next PC
-  // TODO: Update PC on branch misprediction
   always @ (posedge clk) begin  
     if (reset) begin 
       PC_FE_latch <= `STARTPC;
@@ -82,7 +78,6 @@ module FE_STAGE(
   };
 
   // Update FE latch
-  // TODO: flush the pipeline on branch misprediction
   always @ (posedge clk) begin
     if (reset) begin 
       FE_latch <= 0; 

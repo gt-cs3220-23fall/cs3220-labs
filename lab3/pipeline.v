@@ -2,7 +2,7 @@
 
 module pipeline (
   input wire clk,
-  input wire reset,
+  input wire reset
 );
   
   reg [`DBITS-1:0] cycle_count; /* for debugging purpose */ 

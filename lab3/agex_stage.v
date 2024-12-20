@@ -24,7 +24,6 @@ module AGEX_STAGE(
   reg br_cond_AGEX; // 1 means a branch condition is satisified. 0 means a branch condition is not satisifed
  
   /////////////////////////////////////////////////////////////////////////////
-  // TODO: Complete remaining code logic here!
 
   wire is_br_AGEX;
   wire is_jmp_AGEX;
@@ -43,7 +42,6 @@ module AGEX_STAGE(
   wire br_mispred_AGEX;
   
   // Calculate branch condition
-  // TODO: complete the code
   always @ (*) begin
     case (op_I_AGEX)
     `BEQ_I : br_cond_AGEX = (regval1_AGEX == regval2_AGEX);
@@ -57,7 +55,6 @@ module AGEX_STAGE(
   end
 
   // Compute ALU operations  (alu out or memory addresses)
-  // TODO: complete the code
   always @ (*) begin
     case (op_I_AGEX)
     `ADD_I:   aluout_AGEX = regval1_AGEX + regval2_AGEX; 
@@ -98,7 +95,6 @@ module AGEX_STAGE(
 
   // branch target needs to be computed here 
   // computed branch target needs to send to other pipeline stages (br_target_AGEX)
-  // TODO: complete the code
   always @(*)begin
     if (op_I_AGEX == `JAL_I) 
       br_target_AGEX  = PC_AGEX + sxt_imm_AGEX;
@@ -121,7 +117,6 @@ module AGEX_STAGE(
     PC_AGEX,
     pcplus_AGEX,
     op_I_AGEX,
-    // TODO: add more signals here
     regval1_AGEX,
     regval2_AGEX,
     sxt_imm_AGEX,                                
@@ -138,7 +133,6 @@ module AGEX_STAGE(
     inst_AGEX,
     PC_AGEX,
     op_I_AGEX,
-    // TODO: add more signals here
     memaddr_AGEX, 
     aluout_AGEX,
     rd_mem_AGEX,
