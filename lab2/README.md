@@ -6,7 +6,7 @@
 
 **Part 2: Performance Measurement & Optimization**: 40 pts + 10 bonus pts
 
-***Submission ddl***: Oct 2nd
+***Submission ddl***: Feb 10th
 
 This lab is a continuation of lab #1. In this project, you will implement a branch predictor for your RISC-V CPU. You are suggested to work on top of the solution for lab #1 from the TAs, which are located in the current folder. Alternatively, you can copy your *.v and *.vh files from lab #1 and start from your own implementation.
 

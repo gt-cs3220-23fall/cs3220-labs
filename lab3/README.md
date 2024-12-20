@@ -2,7 +2,7 @@
 
 This lab continues from Labs #1 and #2. In this session, you will deploy your RISC-V processor on a Pynq board and deepen your understanding of IO protocols.
 
-
+***Submission ddl***: Feb 24th
 
 **Learning Outcomes:**
 

@@ -2,11 +2,13 @@
 
 100 pts in total, will be rescaled into 11.25% of your final score of the course.  
 
-**Part 1**: 50 pts, submission ddl: Sep 11th
+**Part 1**: 50 pts
 
-**Part 2**: 50 pts, submission ddl: Sep 18th
+**Part 2**: 50 pts
 
-**Part 3 (Optional)**: 20 bonus pts, submission ddl: Sep 18th
+**Part 3 (Optional)**: 20 bonus pts
+
+***Submission ddl***: Jan 27th
 
 **Description**:
 In this assignment, you will create a 5-stage RISC-V pipelined processor using Verilog, focusing on a subset of the RISC-V ISA. We will be using the Tiny RISC-V version from Cornell, which is provided in the [Tiny RISC-V ISA](tinyrv-isa.txt) file. 
