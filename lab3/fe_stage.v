@@ -7,19 +7,16 @@ module FE_STAGE(
   input wire  [`from_AGEX_to_FE_WIDTH-1:0] from_AGEX_to_FE,   
   input wire  [`from_MEM_to_FE_WIDTH-1:0] from_MEM_to_FE,   
   input wire  [`from_WB_to_FE_WIDTH-1:0]  from_WB_to_FE, 
-  output wire [`FE_latch_WIDTH-1:0]       FE_latch_out
+  output wire [`FE_latch_WIDTH-1:0]       FE_latch_out,
+  input wire [31:0] in1
 );
 
   `UNUSED_VAR (from_MEM_to_FE)
   `UNUSED_VAR (from_WB_to_FE)
 
   // I-MEM
-  (* ram_init_file = `IDMEMINITFILE *)
   reg [`DBITS-1:0] imem [`IMEMWORDS-1:0];
  
-  initial begin
-      $readmemh(`IDMEMINITFILE , imem);
-  end
   /*
   // Display memory contents with verilator 
   always @(posedge clk) begin
@@ -42,7 +39,8 @@ module FE_STAGE(
   wire [`FE_latch_WIDTH-1:0] FE_latch_contents;  // the signals that will be FE latch contents 
   
   // reading instruction from imem 
-  assign inst_FE = imem[PC_FE_latch[`IMEMADDRBITS-1:`IMEMWORDBITS]];  // this code works. imem is stored 4B together
+  // assign inst_FE = imem[PC_FE_latch[`IMEMADDRBITS-1:`IMEMWORDBITS]];  // this code works. imem is stored 4B together
+  assign inst_FE = in1;
   
   // This is the value of "incremented PC", computed in the FE stage
   assign pcplus_FE = PC_FE_latch + `INSTSIZE;
@@ -61,7 +59,6 @@ module FE_STAGE(
   } = from_AGEX_to_FE;
 
   // Calculate next PC
-  // TODO: Update PC on branch misprediction
   always @ (posedge clk) begin  
     if (reset) begin 
       PC_FE_latch <= `STARTPC;
@@ -82,7 +79,6 @@ module FE_STAGE(
   };
 
   // Update FE latch
-  // TODO: flush the pipeline on branch misprediction
   always @ (posedge clk) begin
     if (reset) begin 
       FE_latch <= 0; 

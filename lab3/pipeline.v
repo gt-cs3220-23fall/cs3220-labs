@@ -1,9 +1,15 @@
  `include "define.vh" 
 
-module pipeline (
-  input wire clk,
-  input wire reset,
+module pipeline(
+input clk,
+input reset_n, 
+output[31:0] out1,
+output[31:0] out2,
+input wire[31:0] in1
 );
+
+
+  wire reset = ~reset_n;  
   
   reg [`DBITS-1:0] cycle_count; /* for debugging purpose */ 
 
@@ -36,7 +42,8 @@ module pipeline (
     .from_AGEX_to_FE(from_AGEX_to_FE),
     .from_MEM_to_FE(from_MEM_to_FE),
     .from_WB_to_FE(from_WB_to_FE),
-    .FE_latch_out(FE_latch_out)
+    .FE_latch_out(FE_latch_out),
+    .in1(in1)
   ); 
                      
   DE_STAGE my_DE_stage(
@@ -82,6 +89,19 @@ module pipeline (
     .from_WB_to_MEM(from_WB_to_MEM),
     .reg10_val(reg10_val)
   );
+
+
+  always @ (posedge clk) begin
+    if (reset) begin
+      cycle_count <= 0; 
+    end else begin
+      cycle_count <= cycle_count + 1;    
+    end
+  end
+
+  assign out1 = cycle_count;
+
+  assign out2 = reg10_val;
 
 endmodule
 

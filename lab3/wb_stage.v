@@ -19,7 +19,7 @@ module WB_STAGE(
   wire wr_reg_WB; // is this instruction writing into a register file? 
   
   wire [`REGNOBITS-1:0] wregno_WB; // destination register ID 
-  wire [`DBITS-1:0] regval_WB;  // the contents to be written in the register file (or CSR )
+  wire [`DBITS-1:0] regval_WB;  // the contents to be wraitten in the register file (or CSR )
   
   wire [`DBITS-1:0] aluout_WB;
   wire [`DBITS-1:0] rd_val_WB;
@@ -29,14 +29,12 @@ module WB_STAGE(
     inst_WB,
     PC_WB,
     op_I_WB,
-    // TODO: add more signals here
     rd_val_WB, 
     aluout_WB, 
     wr_reg_WB,
     wregno_WB
   } = from_MEM_latch; 
         
-  // TODO: select WB register value
   assign regval_WB = (op_I_WB == `LW_I) ? rd_val_WB : aluout_WB;
 
   // forward signals to DE stage
@@ -96,8 +94,8 @@ module WB_STAGE(
         reg10_val <= 0;
     end
     else begin
-        if (wr_reg_WB && wregno_WB == 10 && reg10_val == 0)
-            reg10_val <= 32'hff;
+        if (wr_reg_WB && wregno_WB == 10)
+            reg10_val <= regval_WB;
     end
   end
 

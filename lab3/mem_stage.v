@@ -14,13 +14,8 @@ module MEM_STAGE(
   `UNUSED_VAR (from_WB_to_MEM)
 
   // D-MEM
-  (* ram_init_file = `IDMEMINITFILE *)
   reg [`DBITS-1:0] dmem[`DMEMWORDS-1:0];
  
-  // DMEM and IMEM should contains the same contents 
-  initial begin
-     $readmemh(`IDMEMINITFILE , dmem);
-  end 
   
   reg [`MEM_latch_WIDTH-1:0] MEM_latch; 
   wire valid_MEM;
@@ -57,7 +52,6 @@ module MEM_STAGE(
     inst_MEM,
     PC_MEM,
     op_I_MEM,
-    // TODO: add more signals here
     memaddr_MEM, 
     aluout_MEM,
     rd_mem_MEM,
@@ -71,7 +65,6 @@ module MEM_STAGE(
     inst_MEM,
     PC_MEM,
     op_I_MEM,
-    // TODO: add more signals here
     rd_val_MEM, 
     aluout_MEM,
     wr_reg_MEM,
