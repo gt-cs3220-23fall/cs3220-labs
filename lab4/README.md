@@ -1,4 +1,4 @@
-# CS3220 Lab #5 : A Case Study of A RISC-V with An External ALU
+# CS3220 Lab #4 : A Case Study of A RISC-V with An External ALU
 
 100 pts in total, will be rescaled into 11.25% of your final score of the course.  
 
@@ -6,7 +6,7 @@
 
 **Part 2: Performance Optimization**: 40 pts + 10 bonus pts
 
-***Submission ddl***: Nov 6th --> Nov 8th
+***Submission ddl***: Mar 10th
 
 This lab builds upon the knowledge you've gained from previous lectures and labs on RISC-V CPU design, as well as your research into AI accelerator implementations. Specifically, you'll be integrating the RISC-V CPU you designed in earlier labs with an external ALU to enhance its efficiency for certain complex workloads. This is the first in a series of three labs on this topic.
 
